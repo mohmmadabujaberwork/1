@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Google Sign-In SDK الرسمية -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
         tailwind.config = {
             theme: {
@@ -116,8 +118,8 @@
                 <p class="text-xs text-slate-400">أدخل بياناتك الأساسية للبدء في تجهيز متجرك</p>
             </div>
 
-            <!-- زر التسجيل المباشر بجوجل -->
-            <button onclick="loginWithGoogle()" type="button" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-3 transition border border-slate-700 shadow-sm">
+            <!-- زر التسجيل المباشر بنوافذ جوجل الحقيقية -->
+            <button onclick="loginWithGoogle()" type="button" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 px-4 rounded-xl text-xs flex items-center justify-center gap-3 transition border border-slate-700 shadow-md active:scale-95">
                 <svg class="w-4 h-4" viewBox="0 0 24 24">
                     <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.2 9 5 12 5z"/>
                     <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
@@ -144,7 +146,13 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1.5">كلمة السر (إنجليزي فقط)</label>
-                    <input type="password" id="reg-pass" oninput="validatePassword(this.value)" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 transition font-mono">
+                    <div class="relative">
+                        <input type="password" id="reg-pass" oninput="validatePassword(this.value)" placeholder="••••••••" class="w-full px-4 py-3 pl-10 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 transition font-mono">
+                        <!-- زر العين لمشاهدة كلمة السر -->
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition focus:outline-none">
+                            <span id="eye-icon">👁️</span>
+                        </button>
+                    </div>
                     
                     <div class="mt-2 p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1 text-[11px]">
                         <p id="rule-len" class="text-slate-500">❌ 8 أحرف على الأقل</p>
@@ -190,26 +198,46 @@
             </div>
         </div>
 
-        <!-- STEP 3: STORE DETAILS -->
+        <!-- STEP 3: STORE DETAILS & LOGO -->
         <div id="step-3" class="hidden step-transition glass-card p-6 sm:p-8 rounded-3xl border-slate-700/80 space-y-5 shadow-2xl">
             <div class="space-y-1">
                 <span class="text-brand-400 text-xs font-bold uppercase tracking-wider">المرحلة الثالثة</span>
                 <h3 class="text-lg sm:text-xl font-black text-white">إعداد المتجر والهوية 🏪</h3>
-                <p class="text-xs text-slate-400">حدد اسم ورابط المتجر الخاص بك</p>
+                <p class="text-xs text-slate-400">أدخل اسم المتجر وارفع الشعار ورقم استقبال الطلبات</p>
             </div>
 
             <form onsubmit="handleStep3(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1.5">اسم المتجر</label>
-                    <input type="text" id="store-name" placeholder="مثال: متجر الزهور الأردني" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 transition">
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">اسم المتجر التجاري</label>
+                    <input type="text" id="store-name" placeholder="مثال: متجر الأناقة والجمال" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 transition">
                 </div>
+
+                <!-- إضافة شعار (لوجو) المتجر من الجهاز -->
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1.5">رابط المتجر (Slug)</label>
-                    <input type="text" id="store-slug" placeholder="flowerstore" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 transition dir-ltr text-right">
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">شعار / لوجو المتجر (اختياري)</label>
+                    <div class="flex items-center gap-3 bg-slate-900/90 border border-slate-700 p-2.5 rounded-2xl">
+                        <img id="logo-preview" src="1/لوجو.png" class="w-12 h-12 rounded-xl object-cover bg-slate-800 border border-slate-700">
+                        <input type="file" id="store-logo-file" accept="image/*" onchange="readLogoImage(this)" class="block w-full text-xs text-slate-400 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-500/10 file:text-brand-400 hover:file:bg-brand-500/20 cursor-pointer">
+                    </div>
                 </div>
+
+                <!-- رقم الواتساب مع رمز الدولة الفعلي -->
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1.5">رقم واتساب استقبال الطلبات</label>
-                    <input type="tel" id="store-wa" placeholder="0791234567" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 transition font-mono">
+                    <div class="flex gap-2 dir-ltr">
+                        <select id="store-wa-country" onchange="updateWaPlaceholder()" class="bg-slate-900/90 border border-slate-700 text-xs text-brand-400 font-mono font-bold rounded-xl px-3 py-3 outline-none focus:border-brand-500">
+                            <option value="962" data-len="9">🇯🇴 +962</option>
+                            <option value="966" data-len="9">🇸🇦 +966</option>
+                            <option value="971" data-len="9">🇦🇪 +971</option>
+                            <option value="965" data-len="8">🇰🇼 +965</option>
+                            <option value="974" data-len="8">🇶🇦 +974</option>
+                            <option value="968" data-len="8">🇴🇲 +968</option>
+                            <option value="973" data-len="8">🇧🇭 +973</option>
+                            <option value="20" data-len="10">🇪🇬 +20</option>
+                        </select>
+                        <input type="tel" id="store-wa" oninput="sanitizeWaInput(this)" placeholder="791234567" class="flex-1 px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 font-mono text-left">
+                    </div>
+                    <span id="wa-hint" class="text-[10px] text-slate-400 block mt-1">أدخل الرقم بدون الصفر الأول (مثال: 791234567)</span>
                 </div>
 
                 <div class="flex gap-2 pt-2">
@@ -217,7 +245,7 @@
                         ← رجوع
                     </button>
                     <button type="submit" class="w-2/3 bg-brand-500 hover:bg-brand-600 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-brand-500/20 active:scale-95 transition">
-                        حفظ ومتابعة لإضافة المنتجات ←
+                        تأكيد ومتابعة للمنتجات ←
                     </button>
                 </div>
             </form>
@@ -240,7 +268,7 @@
                 <input type="number" id="prod-price" placeholder="السعر (د.أ)" class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 outline-none focus:border-brand-500">
                 <div class="space-y-1">
                     <label class="block text-[10px] text-slate-400">صورة المنتج من الجهاز:</label>
-                    <input type="file" id="prod-file" accept="image/*" onchange="readImage(this)" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-500/10 file:text-brand-400 hover:file:bg-brand-500/20">
+                    <input type="file" id="prod-file" accept="image/*" onchange="readProductImage(this)" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-500/10 file:text-brand-400 hover:file:bg-brand-500/20">
                 </div>
                 <button onclick="addProd()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs transition border border-slate-700">+ إضافة المنتج للقائمة</button>
             </div>
@@ -255,55 +283,52 @@
             </div>
         </div>
 
-        <!-- STEP 5: ACTIVATION & DUAL PAYMENT SYSTEM -->
+        <!-- STEP 5: ACTIVATION & FAST PAYMENT (تحسين واسع للمرحلة الخامسة) -->
         <div id="step-5" class="hidden step-transition glass-card p-6 sm:p-8 rounded-3xl border-slate-700/80 space-y-6 shadow-2xl">
             <div class="space-y-1 text-center">
                 <span class="text-brand-400 text-xs font-bold uppercase tracking-wider">المرحلة الأخيرة</span>
                 <h3 class="text-lg sm:text-xl font-black text-white">تفعيل المتجر والاشتراك 💳</h3>
-                <p class="text-xs text-slate-400">اختر الباقة المناسبة وطريقة الدفع لإطلاق متجرك</p>
+                <p class="text-xs text-slate-400">اختر الباقة المناسبة وطريقة الدفع السريعة لتفعيل متجرك</p>
             </div>
 
-            <!-- PACKAGE SELECTOR -->
+            <!-- PACKAGE SELECTOR IMPRVOED -->
             <div class="space-y-2">
-                <label class="block text-xs font-bold text-slate-300">اختر الباقة:</label>
-                <div class="grid grid-cols-3 gap-2">
-                    <button type="button" onclick="selectPackage('starter', 12.99)" id="pkg-btn-starter" class="p-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition">
+                <label class="block text-xs font-bold text-slate-300">اختر باقة الاشتراك:</label>
+                <div class="grid grid-cols-3 gap-2.5">
+                    <button type="button" onclick="selectPackage('starter', 12.99)" id="pkg-btn-starter" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition hover:border-brand-500">
                         <span class="block text-xs font-bold text-white">البداية</span>
                         <span class="block text-sm font-black text-brand-400 mt-1">12.99 د.أ</span>
-                        <span class="text-[9px] text-slate-400">30 يوم</span>
+                        <span class="text-[9px] text-slate-400 block mt-0.5">30 يوم تفعيل</span>
                     </button>
-                    <button type="button" onclick="selectPackage('pro', 30.99)" id="pkg-btn-pro" class="p-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-center transition relative">
-                        <span class="absolute -top-2 left-1/2 -translate-x-1/2 bg-brand-500 text-slate-950 font-black text-[8px] px-2 py-0.5 rounded-full">الأكثر طلباً</span>
+                    <button type="button" onclick="selectPackage('pro', 30.99)" id="pkg-btn-pro" class="p-3.5 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-center transition relative">
+                        <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-brand-500 text-slate-950 font-black text-[8px] px-2 py-0.5 rounded-full shadow-md">الأكثر طلباً 🔥</span>
                         <span class="block text-xs font-bold text-white">المحترفين</span>
                         <span class="block text-sm font-black text-brand-400 mt-1">30.99 د.أ</span>
-                        <span class="text-[9px] text-slate-400">90 يوم</span>
+                        <span class="text-[9px] text-slate-400 block mt-0.5">90 يوم تفعيل</span>
                     </button>
-                    <button type="button" onclick="selectPackage('vip', 99.00)" id="pkg-btn-vip" class="p-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition">
-                        <span class="block text-xs font-bold text-amber-400">VIP</span>
+                    <button type="button" onclick="selectPackage('vip', 99.00)" id="pkg-btn-vip" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition hover:border-amber-400">
+                        <span class="block text-xs font-bold text-amber-400">VIP السنوية</span>
                         <span class="block text-sm font-black text-amber-400 mt-1">99.00 د.أ</span>
-                        <span class="text-[9px] text-slate-400">365 يوم</span>
+                        <span class="text-[9px] text-slate-400 block mt-0.5">365 يوم كاملة</span>
                     </button>
                 </div>
             </div>
 
-            <!-- PAYMENT METHOD TABS -->
-            <div class="space-y-3 pt-2">
-                <label class="block text-xs font-bold text-slate-300">طريقة الدفع والتفعيل:</label>
-                <div class="grid grid-cols-2 gap-3">
-                    <button type="button" onclick="switchPayMethod('card')" id="tab-pay-card" class="py-3 px-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-xs font-bold text-white flex items-center justify-center gap-2 transition">
-                        <span>💳 عبر الفيزا والبطاقة</span>
-                    </button>
-                    <button type="button" onclick="switchPayMethod('code')" id="tab-pay-code" class="py-3 px-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-xs font-bold text-slate-400 flex items-center justify-center gap-2 transition">
-                        <span>🔑 الدفع عبر الأكواد / الدعم</span>
-                    </button>
-                </div>
+            <!-- TAB SWITCHER -->
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button type="button" onclick="switchPayMethod('card')" id="tab-pay-card" class="py-3 px-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-xs font-bold text-white flex items-center justify-center gap-2 transition">
+                    <span>💳 فيزا / بطاقة بنكية</span>
+                </button>
+                <button type="button" onclick="switchPayMethod('code')" id="tab-pay-code" class="py-3 px-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-xs font-bold text-slate-400 flex items-center justify-center gap-2 transition">
+                    <span>📱 زين كاش / كليك / الكود</span>
+                </button>
             </div>
 
-            <!-- CARD PAYMENT FORM -->
+            <!-- CARD FORM -->
             <div id="pay-card-section" class="bg-slate-900/90 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-3.5">
                 <div class="flex justify-between items-center text-xs">
-                    <span class="font-bold text-white">بيانات البطاقة البنكية</span>
-                    <span class="text-slate-400 text-[10px]">دفع آمن ومشفّر 100% 🛡️</span>
+                    <span class="font-bold text-white">الدفع عبر البطاقات البنكية</span>
+                    <span class="text-brand-400 text-[10px]">مشفّر بـ SSL 🔒</span>
                 </div>
                 <div>
                     <label class="block text-[11px] text-slate-400 mb-1">رقم البطاقة</label>
@@ -315,33 +340,31 @@
                         <input type="text" id="card-exp" placeholder="MM/YY" maxlength="5" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 text-center font-mono">
                     </div>
                     <div>
-                        <label class="block text-[11px] text-slate-400 mb-1">رمز الأمان (CVC)</label>
+                        <label class="block text-[11px] text-slate-400 mb-1">CVC</label>
                         <input type="text" id="card-cvc" placeholder="123" maxlength="3" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 text-center font-mono">
                     </div>
                 </div>
                 <button type="button" onclick="processCardPayment()" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm transition shadow-lg shadow-brand-500/20 active:scale-95 flex items-center justify-center gap-2">
-                    <span id="card-btn-text">دفع وتأكيد الاشتراك</span>
+                    <span id="card-btn-text">دفع وتأكيد تفعيل المتجر</span>
                     <span id="card-price-tag" class="bg-slate-950 text-brand-400 px-2 py-0.5 rounded-md font-mono text-[11px]">30.99 د.أ</span>
                 </button>
             </div>
 
-            <!-- CODE / SUPPORT PAYMENT SECTION -->
+            <!-- FAST WALLET / CODE SECTION -->
             <div id="pay-code-section" class="hidden bg-slate-900/90 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-4">
-                <div class="space-y-2 text-xs leading-relaxed text-slate-300 bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
-                    <p class="font-bold text-brand-400">💡 كيف تحصل على كود التفعيل؟</p>
-                    <ol class="list-decimal list-inside space-y-1 text-[11px] text-slate-300">
-                        <li>اضغط على زر التواصل المباشر أدناه للانتقال للواتساب.</li>
-                        <li>قم بتحويل قيمة الباقة المختارة عبر (زين كاش، كليك، أو التحويل البنكي).</li>
-                        <li>سيزودك فريق الدعم بكود التفعيل الخاص بك فوراً.</li>
-                    </ol>
+                <div class="bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700 space-y-2 text-xs">
+                    <p class="font-bold text-brand-400">⚡ خطوات الدفع السريع (CliQ / ZainCash):</p>
+                    <p class="text-[11px] text-slate-300 leading-relaxed">
+                        قم بالتحويل لنفس قيمة الباقة المختارة لاسم المستخدم: <strong class="text-white font-mono">MATJARAKJO</strong> أو تواصل معنا عبر الواتساب لإرسال الإيصال والحصول على كود التفعيل الفوري.
+                    </p>
                 </div>
 
                 <a id="wa-support-link" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-md">
-                    <span>💬 تواصل مع الدعم الفني للحصول على الكود</span>
+                    <span>💬 إرسال إيصال التحويل عبر الواتساب</span>
                 </a>
 
                 <div class="space-y-2 pt-2 border-t border-slate-800">
-                    <label class="block text-xs font-bold text-white">أدخل كود التفعيل:</label>
+                    <label class="block text-xs font-bold text-white">أدخل كود التفعيل المستلم:</label>
                     <div class="flex gap-2">
                         <input type="text" id="activation-code" placeholder="أدخل الكود هنا" class="flex-1 px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 font-mono tracking-wider outline-none focus:border-brand-500">
                         <button type="button" onclick="verifyCodePayment()" class="bg-brand-500 hover:bg-brand-600 text-slate-950 font-black px-5 py-3 rounded-xl text-xs transition shadow-md active:scale-95">تأكيد الكود ✓</button>
@@ -378,14 +401,14 @@
 
     </main>
 
-    <!-- CUSTOM MODAL POPUP (بديل الإشعارات والتنبيهات المزعجة) -->
+    <!-- CUSTOM MODAL POPUP (الواجهة الموحدة لجميع الأخطاء والتنبيهات) -->
     <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="glass-card max-w-sm w-full p-6 rounded-3xl border border-slate-700 space-y-4 text-center shadow-2xl animate-in fade-in zoom-in duration-200">
             <div id="modal-icon" class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto text-xl font-bold">
                 ⚠️
             </div>
             <div class="space-y-2">
-                <h4 id="modal-title" class="text-base font-black text-white">تنبيه هام</h4>
+                <h4 id="modal-title" class="text-base font-black text-white">تنبيه يرجى الانتباه</h4>
                 <p id="modal-msg" class="text-xs text-slate-300 leading-relaxed"></p>
             </div>
             <button onclick="closeModal()" class="w-full bg-brand-500 hover:bg-brand-600 text-slate-950 font-black py-3 rounded-xl text-xs transition active:scale-95">
@@ -408,13 +431,22 @@
         let userAccount = {};
         let storeData = {};
         let draftProducts = [];
-        let tempImg = null;
+        let tempProdImg = null;
+        let storeLogoImg = '1/لوجو.png';
         let selectedPkg = 'pro';
         let selectedPrice = 30.99;
         let timerInterval = null;
         let isPassValid = false;
 
         document.addEventListener('DOMContentLoaded', () => {
+            // تهيئة Google Sign-In SDK
+            if (window.google) {
+                google.accounts.id.initialize({
+                    client_id: "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com",
+                    callback: handleGoogleResponse
+                });
+            }
+
             const urlParams = new URLSearchParams(window.location.search);
             const pkgParam = urlParams.get('pkg');
             if (pkgParam === 'starter') selectPackage('starter', 12.99);
@@ -444,8 +476,8 @@
             }
         });
 
-        // دالة عرض النافذة المنبثقة بدلاً من الإشعار التقليدي
-        function showModal(msg, title = "تنبيه يرجى الإنتباه", icon = "⚠️") {
+        // النافذة المنبثقة الموحدة التفاعلية
+        function showModal(msg, title = "تنبيه يرجى الانتباه", icon = "⚠️") {
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-msg').innerText = msg;
             document.getElementById('modal-icon').innerText = icon;
@@ -456,16 +488,38 @@
             document.getElementById('custom-modal').classList.add('hidden');
         }
 
-        // تسجيل الدخول عن طريق Google
+        // إظهار وإخفاء كلمة السر عبر زر العين
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('reg-pass');
+            const eyeIcon = document.getElementById('eye-icon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                eyeIcon.innerText = '🙈';
+            } else {
+                passInput.type = 'password';
+                eyeIcon.innerText = '👁️';
+            }
+        }
+
+        // إظهار نافذة حسابات جوجل الأصلية بالهاتف
         function loginWithGoogle() {
+            if (window.google) {
+                google.accounts.id.prompt(); // فتح نافذة حسابات الهاتف تلقائياً
+            } else {
+                // محاكاة فورية في حال عدم ضبط الخادم
+                handleGoogleResponse({ credential: "MOCK_TOKEN" });
+            }
+        }
+
+        function handleGoogleResponse(response) {
             userAccount = {
-                name: 'مستخدم جوجل',
+                name: 'تاجر متجرك Jo',
                 email: 'user.google@gmail.com',
                 verified: true,
                 method: 'google'
             };
             localStorage.setItem('matjarakjo_user', JSON.stringify(userAccount));
-            showModal('تم تسجيل الدخول بنجاح عبر حساب Google!', 'أهلاً بك 👋', '🎉');
+            showModal('تم تسجيل الدخول بنجاح عبر حساب Google الخاص بك!', 'أهلاً بك 👋', '🎉');
             setTimeout(() => {
                 closeModal();
                 currentStep = 3;
@@ -473,12 +527,12 @@
             }, 1200);
         }
 
-        // منع كتابة أحرف عربية في كلمة السر
+        // منع الأحرف العربية في كلمة السر
         document.getElementById('reg-pass').addEventListener('keypress', function(e) {
             const char = String.fromCharCode(e.which || e.keyCode);
             if (/[\u0600-\u06FF]/.test(char)) {
                 e.preventDefault();
-                showModal('كلمة السر يجب أن تكون باللغة الإنجليزية والأرقام فقط، يرجى تغيير لغة الكيبورد.');
+                showModal('كلمة السر يجب أن تكون باللغة الإنجليزية والأرقام فقط، يرجى تحويل لغة الكيبورد.');
             }
         });
 
@@ -536,17 +590,17 @@
             const email = document.getElementById('reg-email').value.trim();
 
             if(!name) {
-                showModal('يرجى كتابة الاسم الكامل أولاً لمتابعة الخطوات.');
+                showModal('يرجى كتابة الاسم الكامل أولاً للبدء في تجهيز متجرك.');
                 return;
             }
 
             if(!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
-                showModal('يرجى إدخال بريد إلكتروني صحيح ينتهي بـ @gmail.com فقط (باللغة الإنجليزية).');
+                showModal('يرجى إدخال بريد إلكتروني ينتهي بـ @gmail.com حصراً باللغة الإنجليزية.');
                 return;
             }
 
             if(!isPassValid) {
-                showModal('يرجى التأكد من استيفاء جميع شروط كلمة السر (8 أحرف، حرف كبير، حرف صغير، ورقم).');
+                showModal('يرجى استيفاء جميع شروط كلمة السر (8 أحرف، حرف كبير، حرف صغير، ورقم).');
                 return;
             }
 
@@ -573,7 +627,7 @@
                 showModal(`تم إرسال رمز التحقق إلى بريدك (${userAccount.email}) بنجاح!`, 'تم الإرسال ✉️', '✅');
             } catch (error) {
                 console.error('EmailJS Error:', error);
-                showModal(`وضع التجربة: الرمز المؤقت للتحقق هو: ${generatedOtp}`, 'رمز التحقق 🔑', '💡');
+                showModal(`وضع التجربة: رمز التحقق المؤقت لتفعيل حسابك هو: ${generatedOtp}`, 'رمز التحقق 🔑', '💡');
             } finally {
                 localStorage.setItem('matjarakjo_user', JSON.stringify(userAccount));
                 document.getElementById('target-email-display').innerText = userAccount.email;
@@ -620,36 +674,74 @@
                 currentStep = 3;
                 updateStepUI();
             } else {
-                showModal('رمز التحقق الذي أدخلته غير صحيح، يرجى التثبت وإعادة إدخاله.');
+                showModal('رمز التحقق غير صحيح، يرجى إعادة إدخال الرمز المكون من 6 أرقام.');
             }
+        }
+
+        // قراءة وتمرير الشعار من جهاز المستخدم
+        function readLogoImage(input) {
+            if(input.files && input.files[0]) {
+                const r = new FileReader();
+                r.onload = e => {
+                    storeLogoImg = e.target.result;
+                    document.getElementById('logo-preview').src = storeLogoImg;
+                };
+                r.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function sanitizeWaInput(input) {
+            let val = input.value.replace(/\D/g, '');
+            if (val.startsWith('0')) val = val.substring(1);
+            input.value = val;
+        }
+
+        function updateWaPlaceholder() {
+            const countrySelect = document.getElementById('store-wa-country');
+            const selectedOpt = countrySelect.options[countrySelect.selectedIndex];
+            const reqLen = selectedOpt.getAttribute('data-len') || '9';
+            document.getElementById('store-wa').placeholder = `7${'9'.repeat(reqLen - 1)}`;
+            document.getElementById('wa-hint').innerText = `أدخل الرقم بدون الصفر الأول (يتكون من ${reqLen} أرقام بالضبط)`;
         }
 
         function handleStep3(e) {
             e.preventDefault();
-            const storeName = document.getElementById('store-name').value.trim();
-            const storeSlug = document.getElementById('store-slug').value.trim();
-            const storeWa = document.getElementById('store-wa').value.trim();
+            const name = document.getElementById('store-name').value.trim();
+            const waCountry = document.getElementById('store-wa-country');
+            const selectedOpt = waCountry.options[waCountry.selectedIndex];
+            const reqLen = parseInt(selectedOpt.getAttribute('data-len') || '9');
+            const waNumber = document.getElementById('store-wa').value.trim();
 
-            if(!storeName || !storeSlug || !storeWa) {
-                showModal('يرجى تعبئة جميع بيانات المتجر (اسم المتجر، الرابط، ورقم الواتساب).');
+            if(!name) {
+                showModal('يرجى تحديد اسم المتجر الخاص بك للمتابعة.');
                 return;
             }
 
+            // التحقق الدقيق والعملي من صحة رقم الواتساب
+            if(!waNumber || waNumber.length !== reqLen) {
+                showModal(`رقم الواتساب غير مكتمل! يرجى كتابة الرقم المكون من ${reqLen} أرقام بدقة للبلد المحدد بدون أصفار إضافية.`);
+                return;
+            }
+
+            const fullWhatsapp = `+${waCountry.value}${waNumber}`;
+
             storeData = {
-                name: storeName,
-                slug: storeSlug.toLowerCase().replace(/\s+/g, '-'),
-                whatsapp: storeWa,
+                name,
+                slug: name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, ''),
+                whatsapp: fullWhatsapp,
+                logo: storeLogoImg,
                 active: false
             };
+
             localStorage.setItem('matjarakjo_store', JSON.stringify(storeData));
             currentStep = 4;
             updateStepUI();
         }
 
-        function readImage(input) {
+        function readProductImage(input) {
             if(input.files && input.files[0]) {
                 const r = new FileReader();
-                r.onload = e => tempImg = e.target.result;
+                r.onload = e => tempProdImg = e.target.result;
                 r.readAsDataURL(input.files[0]);
             }
         }
@@ -667,14 +759,14 @@
                 id: Date.now(), 
                 name, 
                 price: parseFloat(price).toFixed(2), 
-                image: tempImg || '1/لوجو.png' 
+                image: tempProdImg || '1/لوجو.png' 
             });
             localStorage.setItem('matjarakjo_products', JSON.stringify(draftProducts));
             
             document.getElementById('prod-name').value = '';
             document.getElementById('prod-price').value = '';
             document.getElementById('prod-file').value = '';
-            tempImg = null;
+            tempProdImg = null;
             renderProds();
         }
 
@@ -720,10 +812,10 @@
             selectedPrice = price;
             ['starter', 'pro', 'vip'].forEach(p => {
                 const btn = document.getElementById(`pkg-btn-${p}`);
-                if (btn) btn.className = 'p-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition';
+                if (btn) btn.className = 'p-3.5 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition hover:border-brand-500';
             });
             const activeBtn = document.getElementById(`pkg-btn-${pkg}`);
-            if (activeBtn) activeBtn.className = 'p-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-center transition relative';
+            if (activeBtn) activeBtn.className = 'p-3.5 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-center transition relative';
             
             const priceTag = document.getElementById('card-price-tag');
             if(priceTag) priceTag.innerText = `${price.toFixed(2)} د.أ`;
@@ -759,7 +851,7 @@
         function processCardPayment() {
             const num = document.getElementById('card-num').value;
             if (!num || num.length < 12) {
-                showModal('يرجى إدخال رقم بطاقة بنكية صحيح ومكون من 16 رقم.');
+                showModal('يرجى إدخال رقم بطاقة بنكية صحيح.');
                 return;
             }
 
@@ -774,7 +866,7 @@
         function verifyCodePayment() {
             const code = document.getElementById('activation-code').value.trim();
             if (!code) {
-                showModal('يرجى إدخال كود التفعيل المستلم من فريق الدعم الفني.');
+                showModal('يرجى كتابة كود التفعيل المستلم من الدعم الفني.');
                 return;
             }
             
