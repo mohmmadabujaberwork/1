@@ -6,6 +6,8 @@
     <title>إنشاء متجرك - متجرك Jo</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- EmailJS SDK لإرسال الإيميلات الفعلية -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -81,10 +83,12 @@
             </div>
         </a>
 
-        <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-white px-3 py-1.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 transition flex items-center gap-1">
-            <span>←</span>
-            <span>الرئيسية</span>
-        </a>
+        <div id="header-actions" class="flex items-center gap-2">
+            <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-white px-3 py-1.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 transition flex items-center gap-1">
+                <span>←</span>
+                <span>الرئيسية</span>
+            </a>
+        </div>
     </header>
 
     <!-- MAIN CONTAINER -->
@@ -109,7 +113,7 @@
             <div class="space-y-1">
                 <span class="text-brand-400 text-xs font-bold uppercase tracking-wider">المرحلة الأولى</span>
                 <h3 class="text-lg sm:text-xl font-black text-white">إنشاء حساب التاجر 👤</h3>
-                <p class="text-xs text-slate-400">أدخل بياناتك الأساسية للبدء في تجهيز متجرك</p>
+                <p class="text-xs text-slate-400">أدخل بياناتك لإنشاء الحساب وتلقي رمز التحقق</p>
             </div>
 
             <form onsubmit="handleStep1(event)" class="space-y-4">
@@ -119,15 +123,28 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1.5">البريد الإلكتروني (جيميل)</label>
-                    <input type="email" id="reg-email" required placeholder="name@gmail.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition">
+                    <input type="email" id="reg-email" required placeholder="name@gmail.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition dir-ltr text-right">
                     <p id="email-error" class="hidden text-[11px] text-rose-400 font-bold mt-1.5"></p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">كلمة السر (إنجليزي فقط)</label>
+                    <input type="password" id="reg-pass" required oninput="validatePassword(this.value)" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition font-mono">
+                    <p id="pass-error" class="hidden text-[11px] text-rose-400 font-bold mt-1.5"></p>
+                    
+                    <!-- شروط كلمة السر -->
+                    <div class="mt-2 p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1 text-[11px]">
+                        <p id="rule-len" class="text-slate-500">❌ 8 أحرف على الأقل</p>
+                        <p id="rule-upper" class="text-slate-500">❌ حرف كبير واحد على الأقل (A-Z)</p>
+                        <p id="rule-lower" class="text-slate-500">❌ حرف صغير واحد على الأقل (a-z)</p>
+                        <p id="rule-num" class="text-slate-500">❌ رقم واحد على الأقل (0-9)</p>
+                    </div>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1.5">رقم الهاتف الأردني</label>
                     <input type="tel" id="reg-phone" required placeholder="0791234567" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition">
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-brand-500/20 active:scale-95 transition flex items-center justify-center gap-2">
-                    <span>إرسال رمز التحقق إلى الجيميل</span>
+                <button type="submit" id="btn-send-otp" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-brand-500/20 active:scale-95 transition flex items-center justify-center gap-2">
+                    <span id="btn-send-text">إرسال رمز التحقق الفعلي إلى الجيميل</span>
                     <span>←</span>
                 </button>
             </form>
@@ -138,16 +155,20 @@
             <div class="w-14 h-14 bg-brand-500/10 border border-brand-500/30 text-brand-400 rounded-2xl flex items-center justify-center mx-auto text-2xl font-bold">✉️</div>
             <div class="space-y-1">
                 <h3 class="text-lg sm:text-xl font-black text-white">تأكيد البريد الإلكتروني</h3>
-                <p class="text-xs text-slate-400">تم إرسال رمز التحقق (OTP) إلى بريدك الإلكتروني.</p>
-            </div>
-
-            <div class="bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs p-3 rounded-2xl max-w-sm mx-auto">
-                💡 رمز التحقق التجريبي: <strong id="debug-otp" class="font-mono text-sm font-black text-white">123456</strong>
+                <p class="text-xs text-slate-400">تم إرسال رمز التحقق (OTP) بالفعل إلى بريدك:</p>
+                <p id="target-email-display" class="text-xs font-mono font-bold text-brand-400 dir-ltr"></p>
             </div>
 
             <div class="max-w-xs mx-auto space-y-4">
-                <input type="text" id="otp-input" maxlength="6" placeholder="1 2 3 4 5 6" class="w-full text-center text-2xl font-black tracking-widest py-3 bg-slate-900/90 border border-slate-700 rounded-2xl text-white outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition">
+                <input type="text" id="otp-input" maxlength="6" placeholder="• • • • • •" class="w-full text-center text-2xl font-black tracking-widest py-3 bg-slate-900/90 border border-slate-700 rounded-2xl text-white outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition font-mono">
                 <button onclick="verifyOTP()" class="w-full bg-brand-500 hover:bg-brand-600 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-brand-500/20 active:scale-95 transition">التحقق والمتابعة ✓</button>
+                
+                <!-- زر إعادة الإرسال والعداد -->
+                <div class="pt-2">
+                    <button id="resend-btn" disabled onclick="resendOTP()" class="text-xs text-slate-500 font-bold disabled:cursor-not-allowed">
+                        لم يصلك الرمز؟ <span id="timer-label">إعادة الإرسال بعد (60) ثانية</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -181,7 +202,7 @@
             <div class="flex justify-between items-center">
                 <div class="space-y-1">
                     <span class="text-brand-400 text-xs font-bold uppercase tracking-wider">المرحلة الرابعة</span>
-                    <h3 class="text-lg sm:text-xl font-black text-white">إضافة المنتجات 📦</h3>
+                    <h3 class="text-lg sm:text-xl font-black text-white">إضافة المنتجات (من الجهاز) 📦</h3>
                 </div>
                 <span id="badge-count" class="bg-brand-500/10 text-brand-400 font-bold text-xs px-3 py-1.5 rounded-full border border-brand-500/30">0 من 3 منتجات</span>
             </div>
@@ -191,7 +212,10 @@
             <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 space-y-3">
                 <input type="text" id="prod-name" placeholder="اسم المنتج" class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 outline-none focus:border-brand-500">
                 <input type="number" id="prod-price" placeholder="السعر (د.أ)" class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 outline-none focus:border-brand-500">
-                <input type="file" id="prod-file" accept="image/*" onchange="readImage(this)" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-500/10 file:text-brand-400 hover:file:bg-brand-500/20">
+                <div class="space-y-1">
+                    <label class="block text-[10px] text-slate-400">صورة المنتج من الجهاز:</label>
+                    <input type="file" id="prod-file" accept="image/*" onchange="readImage(this)" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-500/10 file:text-brand-400 hover:file:bg-brand-500/20">
+                </div>
                 <button onclick="addProd()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs transition border border-slate-700">+ إضافة المنتج للقائمة</button>
             </div>
 
@@ -324,25 +348,28 @@
 
     <!-- SCRIPT -->
     <script>
+        // --- تهيئة EmailJS ---
+        // استبدل المفتاح أدناه بـ PUBLIC_KEY الخاص بك من موقع EmailJS
+        emailjs.init("YOUR_EMAILJS_PUBLIC_KEY");
+
         let currentStep = 1;
-        let generatedOtp = '123456';
+        let generatedOtp = '';
         let userAccount = {};
         let storeData = {};
         let draftProducts = [];
         let tempImg = null;
         let selectedPkg = 'pro';
         let selectedPrice = 30.99;
+        let timerInterval = null;
+        let isPassValid = false;
 
-        // Auto load existing state on DOM Ready
         document.addEventListener('DOMContentLoaded', () => {
-            // Check query param package
             const urlParams = new URLSearchParams(window.location.search);
             const pkgParam = urlParams.get('pkg');
             if (pkgParam === 'starter') selectPackage('starter', 12.99);
             else if (pkgParam === 'vip') selectPackage('vip', 99.00);
             else selectPackage('pro', 30.99);
 
-            // Restore state if available
             const savedUser = localStorage.getItem('matjarakjo_user');
             const savedStore = localStorage.getItem('matjarakjo_store');
             const savedProds = localStorage.getItem('matjarakjo_products');
@@ -360,45 +387,179 @@
                 currentStep = 4;
                 updateStepUI();
                 renderProds();
-            } else if (userAccount.email) {
+            } else if (userAccount.email && userAccount.verified) {
                 currentStep = 3;
                 updateStepUI();
             }
         });
 
+        // منع كتابة أحرف عربية في كلمة السر بشكل لحظي
+        document.getElementById('reg-pass').addEventListener('keypress', function(e) {
+            const char = String.fromCharCode(e.which || e.keyCode);
+            if (/[\u0600-\u06FF]/.test(char)) {
+                e.preventDefault();
+                document.getElementById('pass-error').innerText = 'يمنع كتابة الأحرف العربية في كلمة السر!';
+                document.getElementById('pass-error').classList.remove('hidden');
+            } else {
+                document.getElementById('pass-error').classList.add('hidden');
+            }
+        });
+
+        function validatePassword(pass) {
+            const hasLen = pass.length >= 8;
+            const hasUpper = /[A-Z]/.test(pass);
+            const hasLower = /[a-z]/.test(pass);
+            const hasNum = /[0-9]/.test(pass);
+
+            document.getElementById('rule-len').innerHTML = hasLen ? '✅ 8 أحرف على الأقل' : '❌ 8 أحرف على الأقل';
+            document.getElementById('rule-len').className = hasLen ? 'text-emerald-400 font-bold' : 'text-slate-500';
+
+            document.getElementById('rule-upper').innerHTML = hasUpper ? '✅ حرف كبير واحد على الأقل (A-Z)' : '❌ حرف كبير واحد على الأقل (A-Z)';
+            document.getElementById('rule-upper').className = hasUpper ? 'text-emerald-400 font-bold' : 'text-slate-500';
+
+            document.getElementById('rule-lower').innerHTML = hasLower ? '✅ حرف صغير واحد على الأقل (a-z)' : '❌ حرف صغير واحد على الأقل (a-z)';
+            document.getElementById('rule-lower').className = hasLower ? 'text-emerald-400 font-bold' : 'text-slate-500';
+
+            document.getElementById('rule-num').innerHTML = hasNum ? '✅ رقم واحد على الأقل (0-9)' : '❌ رقم واحد على الأقل (0-9)';
+            document.getElementById('rule-num').className = hasNum ? 'text-emerald-400 font-bold' : 'text-slate-500';
+
+            isPassValid = hasLen && hasUpper && hasLower && hasNum;
+        }
+
         function updateStepUI() {
             for(let i=1; i<=5; i++) {
-                document.getElementById(`step-${i}`).classList.add('hidden');
-                document.getElementById(`step-label-${i}`).className = 'text-slate-500';
+                const el = document.getElementById(`step-${i}`);
+                if(el) el.classList.add('hidden');
+                const lbl = document.getElementById(`step-label-${i}`);
+                if(lbl) lbl.className = 'text-slate-500';
             }
-            document.getElementById('step-success').classList.add('hidden');
-            document.getElementById(`step-${currentStep}`).classList.remove('hidden');
-            document.getElementById(`step-label-${currentStep}`).className = 'text-brand-400 font-bold';
-            document.getElementById('onboarding-progress-bar').style.width = `${(currentStep/5)*100}%`;
+            const successEl = document.getElementById('step-success');
+            if(successEl) successEl.classList.add('hidden');
+            
+            const currentEl = document.getElementById(`step-${currentStep}`);
+            if(currentEl) currentEl.classList.remove('hidden');
+            
+            const currentLbl = document.getElementById(`step-label-${currentStep}`);
+            if(currentLbl) currentLbl.className = 'text-brand-400 font-bold';
+            
+            const progressBar = document.getElementById('onboarding-progress-bar');
+            if(progressBar) progressBar.style.width = `${(currentStep/5)*100}%`;
+            
             updateSupportLink();
         }
 
-        function handleStep1(e) {
+        async function handleStep1(e) {
             e.preventDefault();
             const email = document.getElementById('reg-email').value.trim();
+            const pass = document.getElementById('reg-pass').value;
+
+            // 1. التأكد الجذري من الجيميل
             if(!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
-                document.getElementById('email-error').innerText = 'يجب إدخال بريد إلكتروني ينتهي بـ @gmail.com';
-                document.getElementById('email-error').classList.remove('hidden');
+                const err = document.getElementById('email-error');
+                err.innerText = 'يجب إدخال بريد إلكتروني ينتهي بـ @gmail.com فقط (باللغة الإنجليزية)';
+                err.classList.remove('hidden');
+                return;
+            } else {
+                document.getElementById('email-error').classList.add('hidden');
+            }
+
+            // 2. التأكد من شروط كلمة السر
+            if(!isPassValid) {
+                alert('يرجى استيفاء جميع شروط كلمة السر (8 أحرف، حرف كبير، حرف صغير، ورقم)');
                 return;
             }
-            userAccount = { name: document.getElementById('reg-name').value, email, phone: document.getElementById('reg-phone').value };
-            localStorage.setItem('matjarakjo_user', JSON.stringify(userAccount));
+
+            userAccount = { 
+                name: document.getElementById('reg-name').value, 
+                email, 
+                phone: document.getElementById('reg-phone').value,
+                verified: false
+            };
+
+            // إرسال الرمز الفعلي
+            await sendRealOTP();
+        }
+
+        async function sendRealOTP() {
+            const btnSend = document.getElementById('btn-send-otp');
+            const btnText = document.getElementById('btn-send-text');
+            
+            btnSend.disabled = true;
+            btnText.innerText = 'جاري إرسال الرمز للبريد... ⏳';
+
+            // توليد رمز OTP حقيقي مكون من 6 أرقام
             generatedOtp = Math.floor(100000 + Math.random()*900000).toString();
-            document.getElementById('debug-otp').innerText = generatedOtp;
-            currentStep = 2;
-            updateStepUI();
+
+            try {
+                // إرسال الرمز الفعلي باستخدام EmailJS
+                // استبدل YOUR_SERVICE_ID و YOUR_TEMPLATE_ID بمعرفاتك
+                await emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                    to_email: userAccount.email,
+                    user_name: userAccount.name,
+                    otp_code: generatedOtp
+                });
+
+                alert('تم إرسال رمز التحقق إلى بريدك الإلكتروني بنجاح! ✉️');
+                
+                localStorage.setItem('matjarakjo_user', JSON.stringify(userAccount));
+                document.getElementById('target-email-display').innerText = userAccount.email;
+                
+                currentStep = 2;
+                updateStepUI();
+                startResendTimer();
+
+            } catch (error) {
+                console.error('EmailJS Error:', error);
+                // محاكاة سريعة في حال عدم ربط مفاتيح EmailJS مباشرة
+                alert(`(وضع التجربة): تعذر الإرسال عبر السيرفر. الرمز التجريبي المولد هو: ${generatedOtp}`);
+                localStorage.setItem('matjarakjo_user', JSON.stringify(userAccount));
+                document.getElementById('target-email-display').innerText = userAccount.email;
+                currentStep = 2;
+                updateStepUI();
+                startResendTimer();
+            } finally {
+                btnSend.disabled = false;
+                btnText.innerText = 'إرسال رمز التحقق الفعلي إلى الجيميل';
+            }
+        }
+
+        function startResendTimer() {
+            let timeLeft = 60;
+            const resendBtn = document.getElementById('resend-btn');
+            const timerLabel = document.getElementById('timer-label');
+            
+            resendBtn.disabled = true;
+            resendBtn.className = "text-xs text-slate-500 font-bold disabled:cursor-not-allowed";
+
+            if(timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerLabel.innerText = `إعادة الإرسال بعد (${timeLeft}) ثانية`;
+                
+                if(timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    resendBtn.disabled = false;
+                    resendBtn.className = "text-xs text-brand-400 hover:underline font-bold cursor-pointer";
+                    timerLabel.innerText = "إعادة إرسال الرمز الآن 🔄";
+                }
+            }, 1000);
+        }
+
+        async function resendOTP() {
+            await sendRealOTP();
         }
 
         function verifyOTP() {
-            if(document.getElementById('otp-input').value.trim() === generatedOtp || document.getElementById('otp-input').value.trim() === '123456') {
+            const inputOtp = document.getElementById('otp-input').value.trim();
+            if(inputOtp === generatedOtp) {
+                userAccount.verified = true;
+                localStorage.setItem('matjarakjo_user', JSON.stringify(userAccount));
                 currentStep = 3;
                 updateStepUI();
-            } else alert('رمز غير صحيح، يرجى إدخال 123456 أو الرمز الموضح');
+            } else {
+                alert('رمز التحقق غير صحيح، يرجى كتابة الرمز المرسل إلى إيميلك بتركيز.');
+            }
         }
 
         function handleStep3(e) {
@@ -426,10 +587,18 @@
             const name = document.getElementById('prod-name').value;
             const price = document.getElementById('prod-price').value;
             if(!name || !price) return alert('يرجى إدخال اسم المنتج وسعره');
-            draftProducts.push({ id: Date.now(), name, price: parseFloat(price).toFixed(2), image: tempImg || '1/لوجو.png' });
+            
+            draftProducts.push({ 
+                id: Date.now(), 
+                name, 
+                price: parseFloat(price).toFixed(2), 
+                image: tempImg || '1/لوجو.png' 
+            });
             localStorage.setItem('matjarakjo_products', JSON.stringify(draftProducts));
+            
             document.getElementById('prod-name').value = '';
             document.getElementById('prod-price').value = '';
+            document.getElementById('prod-file').value = '';
             tempImg = null;
             renderProds();
         }
@@ -437,8 +606,15 @@
         function renderProds() {
             const container = document.getElementById('draft-prods-list');
             container.innerHTML = '';
-            draftProducts.forEach(p => {
-                container.innerHTML += `<div class="flex justify-between items-center bg-slate-900/90 border border-slate-800 p-2.5 rounded-2xl text-xs"><div class="flex items-center gap-3"><img src="${p.image}" class="w-10 h-10 rounded-xl object-cover bg-slate-800"><p class="font-bold text-white">${p.name} <span class="text-brand-400 font-mono">(${p.price} د.أ)</span></p></div></div>`;
+            draftProducts.forEach((p, idx) => {
+                container.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-900/90 border border-slate-800 p-2.5 rounded-2xl text-xs">
+                        <div class="flex items-center gap-3">
+                            <img src="${p.image}" class="w-10 h-10 rounded-xl object-cover bg-slate-800">
+                            <p class="font-bold text-white">${p.name} <span class="text-brand-400 font-mono">(${p.price} د.أ)</span></p>
+                        </div>
+                        <button onclick="removeProd(${idx})" class="text-rose-400 hover:text-rose-300 px-2 py-1 text-[10px]">حذف</button>
+                    </div>`;
             });
             document.getElementById('badge-count').innerText = `${draftProducts.length} من 3 منتجات`;
             const btn = document.getElementById('btn-to-pay');
@@ -446,7 +622,17 @@
                 btn.disabled = false;
                 btn.className = 'w-full bg-brand-500 hover:bg-brand-600 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm cursor-pointer transition shadow-lg shadow-brand-500/20 active:scale-95';
                 btn.innerText = 'المتابعة لمرحلة التفعيل والاشتراك ←';
+            } else {
+                btn.disabled = true;
+                btn.className = 'w-full bg-slate-800 text-slate-500 font-bold py-3.5 rounded-xl text-xs sm:text-sm transition cursor-not-allowed';
+                btn.innerText = `يجب إضافة ${3 - draftProducts.length} منتجات أخرى على الأقل`;
             }
+        }
+
+        function removeProd(index) {
+            draftProducts.splice(index, 1);
+            localStorage.setItem('matjarakjo_products', JSON.stringify(draftProducts));
+            renderProds();
         }
 
         function goToStep5() {
@@ -459,15 +645,13 @@
             selectedPrice = price;
             ['starter', 'pro', 'vip'].forEach(p => {
                 const btn = document.getElementById(`pkg-btn-${p}`);
-                if (btn) {
-                    btn.className = 'p-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition';
-                }
+                if (btn) btn.className = 'p-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition';
             });
             const activeBtn = document.getElementById(`pkg-btn-${pkg}`);
-            if (activeBtn) {
-                activeBtn.className = 'p-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-center transition relative';
-            }
-            document.getElementById('card-price-tag').innerText = `${price.toFixed(2)} د.أ`;
+            if (activeBtn) activeBtn.className = 'p-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-center transition relative';
+            
+            const priceTag = document.getElementById('card-price-tag');
+            if(priceTag) priceTag.innerText = `${price.toFixed(2)} د.أ`;
             updateSupportLink();
         }
 
@@ -493,7 +677,8 @@
         function updateSupportLink() {
             const storeName = storeData.name || 'متجري';
             const msg = encodeURIComponent(`مرحباً فريق متجرك Jo، أريد الاشتراك بـ (${selectedPkg.toUpperCase()}) لمتجري: ${storeName}`);
-            document.getElementById('wa-support-link').href = `https://wa.me/962791234567?text=${msg}`;
+            const waLink = document.getElementById('wa-support-link');
+            if(waLink) waLink.href = `https://wa.me/962791234567?text=${msg}`;
         }
 
         function processCardPayment() {
@@ -510,27 +695,40 @@
 
         function verifyCodePayment() {
             const code = document.getElementById('activation-code').value.trim();
-            if (!code) return alert('يرجى إدخال كود التفعيل');
-            activateStoreSuccess();
+            if (!code) return alert('يرجى إدخال كود التفعيل المرسل من الدعم الفني');
+            
+            setTimeout(() => {
+                activateStoreSuccess();
+            }, 800);
         }
 
         function activateStoreSuccess() {
             storeData.active = true;
-            localStorage.setItem('matjarakjo_user', JSON.stringify(userAccount));
+            storeData.package = selectedPkg;
             localStorage.setItem('matjarakjo_store', JSON.stringify(storeData));
-            localStorage.setItem('matjarakjo_products', JSON.stringify(draftProducts));
             showSuccessScreen();
         }
 
         function showSuccessScreen() {
             for(let i=1; i<=5; i++) {
-                document.getElementById(`step-${i}`).classList.add('hidden');
+                const el = document.getElementById(`step-${i}`);
+                if(el) el.classList.add('hidden');
             }
-            document.getElementById('progress-container').classList.add('hidden');
-            document.getElementById('step-success').classList.remove('hidden');
-            
-            const slug = storeData.slug || 'mystore';
-            document.getElementById('final-store-url').innerText = `matjarakjo.com/${slug}`;
+            const prog = document.getElementById('progress-container');
+            if(prog) prog.classList.add('hidden');
+
+            const headerActions = document.getElementById('header-actions');
+            if(headerActions) headerActions.style.display = 'none';
+
+            const successSec = document.getElementById('step-success');
+            if(successSec) successSec.classList.remove('hidden');
+
+            const slug = storeData.slug || 'my-store';
+            const urlEl = document.getElementById('final-store-url');
+            if(urlEl) {
+                urlEl.innerText = `matjarakjo.com/${slug}`;
+                urlEl.href = `store.html?slug=${slug}`;
+            }
         }
     </script>
 </body>
