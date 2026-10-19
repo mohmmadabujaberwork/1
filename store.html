@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجرك Jo - المتجر ولوحة التحكم</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#2e7d32', // Olive / Forest Green like image
+                            600: '#1b5e20',
+                            700: '#0f3811',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Tajawal', sans-serif; min-height: 100vh; background-color: #f7f6f0; color: #2d3748; transition: all 0.3s ease; }
+        
+        /* Modal Bottom Sheet Animation */
+        .bottom-sheet {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bottom-sheet.closed {
+            transform: translateY(100%);
+        }
+        .bottom-sheet.open {
+            transform: translateY(0);
+        }
+
+        .product-card-border {
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+    </style>
+</head>
+<body id="store-body" class="flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <!-- HEADER / NAVBAR -->
+    <header id="main-header" class="sticky top-0 z-40 bg-[#f7f6f0]/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
+        
+        <!-- CART BUTTON (STOREFRONT) -->
+        <button id="btn-cart-trigger" onclick="openCartModal()" class="hidden relative bg-brand-500 hover:bg-brand-600 text-white font-bold p-2.5 sm:px-4 sm:py-2 rounded-2xl text-xs flex items-center gap-2 transition active:scale-95 shadow-sm">
+            <span>🛒</span>
+            <span class="hidden sm:inline">السلة</span>
+            <span id="cart-badge-count" class="bg-white text-brand-700 font-black font-mono text-[11px] w-5 h-5 rounded-full flex items-center justify-center">0</span>
+        </button>
+
+        <!-- VIEW TOGGLE BUTTONS -->
+        <div class="flex items-center gap-1.5 bg-slate-200/80 p-1 rounded-2xl">
+            <button onclick="switchView('dash')" id="tab-dash" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-800 text-white transition">
+                ⚙️ لوحة التحكم
+            </button>
+            <button onclick="switchView('store')" id="tab-store" class="text-xs font-bold px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition">
+                👁️ معاينة المتجر
+            </button>
+        </div>
+
+        <!-- STORE BRANDING -->
+        <div class="flex items-center gap-2.5">
+            <div class="text-right leading-tight">
+                <span id="header-store-name" class="text-sm font-black text-slate-900 block">جواها لبنة</span>
+                <span class="text-[9px] text-brand-500 font-bold block">زيت زيتون بلدي 100%</span>
+            </div>
+            <img id="header-logo-img" src="1/لوجو.png" alt="شعار المتجر" class="w-9 h-9 sm:w-10 sm:h-10 object-cover rounded-full border border-slate-200 bg-white" onerror="this.src='1/لوجو.png'">
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-5 sm:py-8 space-y-6">
+
+        <!-- ==================== VIEW 1: MERCHANT DASHBOARD ==================== -->
+        <section id="view-dashboard" class="space-y-6">
+            
+            <!-- STORE INFO HEADER -->
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3.5">
+                    <img id="dash-logo-preview" src="1/لوجو.png" class="w-12 h-12 rounded-full object-cover bg-slate-100 border border-slate-200" onerror="this.src='1/لوجو.png'">
+                    <div>
+                        <h2 id="dash-store-title" class="text-base sm:text-lg font-black text-slate-900">جواها لبنة</h2>
+                        <span id="dash-store-slug" class="text-xs text-brand-500 font-mono font-bold dir-ltr block">matjarakjo.com/jawahalabneh</span>
+                    </div>
+                </div>
+                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3.5 py-1.5 rounded-full">
+                    🟢 المتجر نشط ومستعد للطلبات
+                </span>
+            </div>
+
+            <!-- THEME COLOR PICKER (6 PRESETS WITH AUTO BORDER CONTRAST) -->
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+                <h3 class="text-xs sm:text-sm font-black text-slate-900">🎨 اختر ثيم المتجر (6 ألوان متناسقة):</h3>
+                <div class="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
+                    <button onclick="applyTheme('#f7f6f0', '#ffffff', '#2d3748', 'rgba(0,0,0,0.08)')" class="p-3 rounded-2xl border-2 border-brand-500 bg-[#f7f6f0] text-center text-xs font-bold text-slate-800">بيج كريمي</button>
+                    <button onclick="applyTheme('#ffffff', '#f8fafc', '#0f172a', '#e2e8f0')" class="p-3 rounded-2xl border border-slate-200 bg-white text-center text-xs font-bold text-slate-900">أبيض ناصع</button>
+                    <button onclick="applyTheme('#f0fdf4', '#ffffff', '#14532d', '#bbf7d0')" class="p-3 rounded-2xl border border-slate-200 bg-emerald-50 text-center text-xs font-bold text-emerald-900">أخضر هادئ</button>
+                    <button onclick="applyTheme('#fff8f0', '#ffffff', '#7c2d12', '#fed7aa')" class="p-3 rounded-2xl border border-slate-200 bg-orange-50 text-center text-xs font-bold text-orange-950">دافيء</button>
+                    <button onclick="applyTheme('#0f172a', '#1e293b', '#f8fafc', '#334155')" class="p-3 rounded-2xl border border-slate-200 bg-slate-900 text-center text-xs font-bold text-white">داكن عصري</button>
+                    <button onclick="applyTheme('#18181b', '#27272a', '#f4f4f5', '#3f3f46')" class="p-3 rounded-2xl border border-slate-200 bg-zinc-900 text-center text-xs font-bold text-white">أسود ملكي</button>
+                </div>
+            </div>
+
+            <!-- ADD PRODUCT FORM -->
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-xs sm:text-sm font-black text-slate-900">➕ إضافة منتج جديد</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <input type="text" id="p-name" placeholder="اسم المنتج (مثال: مقدوس جواها لبنة)" class="px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 outline-none focus:border-brand-500">
+                    <input type="number" id="p-price" placeholder="السعر الأساسي (د.أ)" class="px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 outline-none focus:border-brand-500">
+                    <input type="file" id="p-file" accept="image/*" onchange="readImage(this)" class="block w-full text-xs text-slate-500 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-100 file:text-slate-700">
+                </div>
+                <button onclick="addProduct()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-3 rounded-xl text-xs transition active:scale-95 shadow-sm">
+                    + نشر المنتج بالمتجر
+                </button>
+            </div>
+
+            <!-- PRODUCTS MANAGEMENT LIST -->
+            <div class="space-y-3">
+                <h3 class="text-xs sm:text-sm font-black text-slate-900">📦 المنتجات الحالية بالمتجر:</h3>
+                <div id="dash-prods-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+
+        </section>
+
+
+        <!-- ==================== VIEW 2: CUSTOMER STOREFRONT (MATCHING PHOTO 1) ==================== -->
+        <section id="view-storefront" class="hidden space-y-6">
+            
+            <!-- CATEGORY HEADER TITLE (LIKE PHOTO 1) -->
+            <div class="flex justify-between items-center border-b border-slate-200/60 pb-3">
+                <h2 class="text-base sm:text-lg font-black text-slate-900">محاشي اللبنة والمؤنة 🫙</h2>
+                <span class="text-xs font-bold text-slate-500">طازج وبلدي 100%</span>
+            </div>
+
+            <!-- PRODUCTS GRID (2 COLUMNS ON MOBILE - EXACTLY LIKE PHOTO 1) -->
+            <div id="store-prods-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==================== PRODUCT DETAILS BOTTOM SHEET MODAL (EXACTLY LIKE PHOTO 2) ==================== -->
+    <div id="product-modal-backdrop" onclick="closeProductModal()" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50"></div>
+
+    <div id="product-modal" class="bottom-sheet closed fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-white text-slate-900 rounded-t-3xl z-50 p-5 sm:p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
+        <!-- Close Handle & Button -->
+        <div class="flex justify-between items-center">
+            <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto -mr-6"></div>
+            <button onclick="closeProductModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:text-slate-900 flex items-center justify-center font-bold text-xs">✕</button>
+        </div>
+
+        <!-- Product Image -->
+        <div class="w-full h-48 sm:h-56 rounded-2xl overflow-hidden bg-slate-100">
+            <img id="modal-p-img" src="" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Product Title & Description -->
+        <div class="space-y-1">
+            <h3 id="modal-p-title" class="text-lg font-black text-slate-900">مقدوس جواها لبنة</h3>
+            <p id="modal-p-desc" class="text-xs text-slate-500 leading-relaxed">مقدوس بلدي طازج محشو باللبنة الفاخرة، موضوع بزيت الزيتون الصافي 100%.</p>
+        </div>
+
+        <!-- Option 1: Size Selector -->
+        <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-800">الحجم</label>
+            <div class="grid grid-cols-2 gap-2">
+                <button type="button" id="opt-size-big" onclick="selectOptionSize('big')" class="py-2.5 px-3 rounded-2xl border-2 border-brand-500 bg-brand-50 text-brand-700 text-xs font-bold text-center transition">
+                    كبير (500 جرام)
+                </button>
+                <button type="button" id="opt-size-small" onclick="selectOptionSize('small')" class="py-2.5 px-3 rounded-2xl border border-slate-200 bg-white text-slate-700 text-xs font-bold text-center transition">
+                    صغير (250 جرام)
+                </button>
+            </div>
+        </div>
+
+        <!-- Option 2: Flavor Selector -->
+        <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-800">النكهة</label>
+            <div class="grid grid-cols-2 gap-2">
+                <button type="button" id="opt-flavor-norm" onclick="selectOptionFlavor('norm')" class="py-2.5 px-3 rounded-2xl border-2 border-brand-500 bg-brand-50 text-brand-700 text-xs font-bold text-center transition">
+                    عادي
+                </button>
+                <button type="button" id="opt-flavor-spicy" onclick="selectOptionFlavor('spicy')" class="py-2.5 px-3 rounded-2xl border border-slate-200 bg-white text-slate-700 text-xs font-bold text-center transition">
+                    سبايسي 🔥
+                </button>
+            </div>
+        </div>
+
+        <!-- Quantity Selector -->
+        <div class="flex justify-between items-center pt-2">
+            <span class="text-xs font-bold text-slate-800">الكمية</span>
+            <div class="flex items-center gap-3 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+                <button onclick="changeModalQty(-1)" class="w-6 h-6 rounded-full bg-white text-slate-900 font-bold flex items-center justify-center text-xs shadow-sm">-</button>
+                <span id="modal-qty-val" class="font-mono font-bold text-slate-900 text-sm">1</span>
+                <button onclick="changeModalQty(1)" class="w-6 h-6 rounded-full bg-white text-slate-900 font-bold flex items-center justify-center text-xs shadow-sm">+</button>
+            </div>
+        </div>
+
+        <!-- Add To Cart Submit Button -->
+        <button onclick="submitAddToCartFromModal()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-3.5 rounded-2xl text-xs sm:text-sm transition active:scale-95 shadow-md flex items-center justify-center gap-2">
+            <span>+ إضافة إلى السلة</span>
+            <span id="modal-btn-price" class="font-mono font-black">(5.00 د.أ)</span>
+        </button>
+    </div>
+
+
+    <!-- ==================== TWO-STEP CART MODAL ==================== -->
+    <div id="cart-modal-backdrop" onclick="closeCartModal()" class="hidden fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50"></div>
+
+    <div id="cart-modal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-md bg-white text-slate-900 rounded-3xl z-50 p-5 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto border border-slate-200">
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+                <span class="text-xl">🛒</span>
+                <h3 id="cart-step-title" class="text-sm font-black text-slate-900">سلة الشراء (مراجعة المنتجات)</h3>
+            </div>
+            <button onclick="closeCartModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 hover:text-slate-900 flex items-center justify-center font-bold text-xs">✕</button>
+        </div>
+
+        <!-- STEP 1: PRODUCTS REVIEW -->
+        <div id="cart-step-1" class="space-y-4">
+            <div id="cart-items-container" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                <p class="text-xs text-slate-400 text-center py-6">السلة فارغة حالياً</p>
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-1 text-xs">
+                <div class="flex justify-between text-slate-500">
+                    <span>مجموع المنتجات:</span>
+                    <span id="val-subtotal" class="font-mono font-bold text-slate-900">0.00 د.أ</span>
+                </div>
+                <div class="flex justify-between text-slate-500">
+                    <span>التوصيل المتوقع:</span>
+                    <span id="val-shipping" class="font-mono font-bold text-slate-900">2.00 د.أ</span>
+                </div>
+                <div class="flex justify-between font-black text-slate-900 pt-1.5 border-t border-slate-200">
+                    <span>المجموع الإجمالي:</span>
+                    <span id="val-total" class="font-mono text-brand-500 text-sm">2.00 د.أ</span>
+                </div>
+            </div>
+
+            <button onclick="goToCartStep2()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-3.5 rounded-2xl text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-md">
+                <span>تأكيد المتابعة لتعبئة العنوان ←</span>
+            </button>
+        </div>
+
+        <!-- STEP 2: CUSTOMER INFO FORM -->
+        <div id="cart-step-2" class="hidden space-y-3 text-xs">
+            <div>
+                <label class="block font-bold text-slate-800 mb-1">الاسم الكامل (أحرف فقط)</label>
+                <input type="text" id="cust-name" oninput="validateName(this)" placeholder="مثال: أحمد العبدالله" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 outline-none focus:border-brand-500">
+                <p id="err-name" class="hidden text-[10px] text-rose-500 font-bold mt-1">يمنع إدخال الأرقام في حقل الاسم!</p>
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-800 mb-1">رقم الهاتف الأردني</label>
+                <input type="tel" id="cust-phone" maxlength="10" placeholder="0791234567" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 outline-none focus:border-brand-500 font-mono">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-800 mb-1">منطقة التوصيل</label>
+                <select id="cust-city" onchange="calcTotal()" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 outline-none focus:border-brand-500">
+                    <option value="2.00">عمان (توصيل: 2.00 د.أ)</option>
+                    <option value="3.00">باقي المحافظات (توصيل: 3.00 د.أ)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-800 mb-1">العنوان التفصيلي</label>
+                <input type="text" id="cust-address" placeholder="المنطقة، الشارع، البناية" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 outline-none focus:border-brand-500">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-800 mb-1">ملاحظات الطلب (اختياري)</label>
+                <input type="text" id="cust-notes" placeholder="أي ملاحظات حول التوصيل" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 outline-none focus:border-brand-500">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-800 mb-1">رابط الموقع الجغرافي GPS (اختياري)</label>
+                <input type="url" id="cust-location" placeholder="https://maps.google.com/..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 outline-none focus:border-brand-500 font-mono text-[10px]">
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button onclick="goToCartStep1()" class="w-1/3 bg-slate-100 text-slate-700 font-bold py-3 rounded-xl text-xs">رجوع</button>
+                <button onclick="sendWAOrder()" class="w-2/3 bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition active:scale-95 shadow-md">
+                    <span>إرسال عبر الواتساب</span>
+                    <span>💬</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-200/80 py-6 text-center text-slate-500 text-xs px-4">
+        جميع الحقوق محفوظة © 2026 منصة متجرك Jo 🇯🇴
+    </footer>
+
+
+    <!-- JAVASCRIPT CONTROLLER -->
+    <script>
+        let storeData = JSON.parse(localStorage.getItem('matjarakjo_store') || 'null');
+        let products = JSON.parse(localStorage.getItem('matjarakjo_products') || '[]');
+        let cart = [];
+        let activeProductModal = null;
+        let selectedSize = 'big';
+        let selectedFlavor = 'norm';
+        let modalQty = 1;
+        let tempImg = null;
+
+        // Default Sample Products like Images
+        if (!storeData) {
+            storeData = { name: 'جواها لبنة', slug: 'jawahalabneh', whatsapp: '0791234567', active: true };
+        }
+        if (products.length === 0) {
+            products = [
+                { id: 201, name: 'مقدوس جواها لبنة', price: '5.00', image: '1/لوجو.png' },
+                { id: 202, name: 'دوالي جواها لبنة', price: '5.00', image: '1/لوجو.png' },
+                { id: 203, name: 'زيتون مشوي جواها لبنة', price: '5.00', image: '1/لوجو.png' },
+                { id: 204, name: 'زيتون اسود جواها لبنة', price: '5.00', image: '1/لوجو.png' }
+            ];
+            localStorage.setItem('matjarakjo_products', JSON.stringify(products));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initData();
+            renderDashProds();
+        });
+
+        function initData() {
+            document.getElementById('header-store-name').innerText = storeData.name;
+            document.getElementById('dash-store-title').innerText = storeData.name;
+            document.getElementById('dash-store-slug').innerText = `matjarakjo.com/${storeData.slug || 'store'}`;
+
+            if (storeData.logo) {
+                document.getElementById('header-logo-img').src = storeData.logo;
+                document.getElementById('dash-logo-preview').src = storeData.logo;
+            }
+        }
+
+        function switchView(mode) {
+            const btnCart = document.getElementById('btn-cart-trigger');
+            if (mode === 'dash') {
+                document.getElementById('view-dashboard').classList.remove('hidden');
+                document.getElementById('view-storefront').classList.add('hidden');
+                btnCart.classList.add('hidden');
+
+                document.getElementById('tab-dash').className = 'text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-800 text-white transition';
+                document.getElementById('tab-store').className = 'text-xs font-bold px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition';
+            } else {
+                document.getElementById('view-dashboard').classList.add('hidden');
+                document.getElementById('view-storefront').classList.remove('hidden');
+                btnCart.classList.remove('hidden');
+
+                document.getElementById('tab-dash').className = 'text-xs font-bold px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition';
+                document.getElementById('tab-store').className = 'text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-800 text-white transition';
+
+                renderStorefront();
+            }
+        }
+
+        function applyTheme(bgColor, cardColor, textColor, borderColor) {
+            document.getElementById('store-body').style.backgroundColor = bgColor;
+            document.getElementById('store-body').style.color = textColor;
+            
+            storeData.themeBg = bgColor;
+            localStorage.setItem('matjarakjo_store', JSON.stringify(storeData));
+        }
+
+        function readImage(input) {
+            if (input.files && input.files[0]) {
+                const r = new FileReader();
+                r.onload = e => tempImg = e.target.result;
+                r.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function addProduct() {
+            const name = document.getElementById('p-name').value;
+            const price = document.getElementById('p-price').value;
+            if (!name || !price) return alert('يرجى إدخال اسم المنتج وسعره');
+
+            products.push({ id: Date.now(), name, price: parseFloat(price).toFixed(2), image: tempImg || '1/لوجو.png' });
+            localStorage.setItem('matjarakjo_products', JSON.stringify(products));
+
+            document.getElementById('p-name').value = '';
+            document.getElementById('p-price').value = '';
+            tempImg = null;
+            renderDashProds();
+        }
+
+        function renderDashProds() {
+            const list = document.getElementById('dash-prods-list');
+            list.innerHTML = '';
+            products.forEach((p, idx) => {
+                list.innerHTML += `
+                    <div class="bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img src="${p.image}" class="w-10 h-10 rounded-xl object-cover bg-slate-100" onerror="this.src='1/لوجو.png'">
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-900">${p.name}</h4>
+                                <span class="text-xs text-brand-500 font-mono font-bold">${p.price} د.أ</span>
+                            </div>
+                        </div>
+                        <button onclick="removeProd(${idx}, ${p.id})" class="text-rose-600 text-xs font-bold bg-rose-50 hover:bg-rose-100 px-3 py-1.5 rounded-xl border border-rose-200">حذف</button>
+                    </div>`;
+            });
+        }
+
+        function removeProd(idx, pId) {
+            products.splice(idx, 1);
+            localStorage.setItem('matjarakjo_products', JSON.stringify(products));
+
+            cart = cart.filter(item => item.id !== pId);
+            renderCart();
+
+            renderDashProds();
+        }
+
+        function renderStorefront() {
+            const grid = document.getElementById('store-prods-grid');
+            grid.innerHTML = '';
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="bg-white rounded-3xl p-2.5 border product-card-border shadow-sm flex flex-col justify-between space-y-2 relative overflow-hidden">
+                        <div class="relative w-full h-36 sm:h-40 rounded-2xl overflow-hidden bg-slate-100">
+                            <img src="${p.image}" class="w-full h-full object-cover" onerror="this.src='1/لوجو.png'">
+                            <!-- PLUS BUTTON (EXACTLY LIKE PHOTO 1) -->
+                            <button onclick="openProductModal(${p.id})" class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-bold flex items-center justify-center text-base shadow-md transition active:scale-95">
+                                +
+                            </button>
+                        </div>
+                        <div class="px-1 space-y-0.5">
+                            <h3 class="text-xs sm:text-sm font-bold text-slate-900 line-clamp-1">${p.name}</h3>
+                            <span class="text-xs font-black text-brand-500 font-mono">${p.price} د.أ</span>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        // OPEN PRODUCT MODAL (LIKE PHOTO 2)
+        function openProductModal(pId) {
+            activeProductModal = products.find(p => p.id === pId);
+            if (!activeProductModal) return;
+
+            document.getElementById('modal-p-title').innerText = activeProductModal.name;
+            document.getElementById('modal-p-img').src = activeProductModal.image;
+
+            selectedSize = 'big';
+            selectedFlavor = 'norm';
+            modalQty = 1;
+            updateModalUI();
+
+            document.getElementById('product-modal-backdrop').classList.remove('hidden');
+            document.getElementById('product-modal').classList.remove('closed');
+            document.getElementById('product-modal').classList.add('open');
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal-backdrop').classList.add('hidden');
+            document.getElementById('product-modal').classList.remove('open');
+            document.getElementById('product-modal').classList.add('closed');
+        }
+
+        function selectOptionSize(size) {
+            selectedSize = size;
+            updateModalUI();
+        }
+
+        function selectOptionFlavor(flavor) {
+            selectedFlavor = flavor;
+            updateModalUI();
+        }
+
+        function changeModalQty(delta) {
+            modalQty += delta;
+            if (modalQty < 1) modalQty = 1;
+            updateModalUI();
+        }
+
+        function updateModalUI() {
+            const btnBig = document.getElementById('opt-size-big');
+            const btnSmall = document.getElementById('opt-size-small');
+
+            if (selectedSize === 'big') {
+                btnBig.className = "py-2.5 px-3 rounded-2xl border-2 border-brand-500 bg-brand-50 text-brand-700 text-xs font-bold text-center transition";
+                btnSmall.className = "py-2.5 px-3 rounded-2xl border border-slate-200 bg-white text-slate-700 text-xs font-bold text-center transition";
+            } else {
+                btnSmall.className = "py-2.5 px-3 rounded-2xl border-2 border-brand-500 bg-brand-50 text-brand-700 text-xs font-bold text-center transition";
+                btnBig.className = "py-2.5 px-3 rounded-2xl border border-slate-200 bg-white text-slate-700 text-xs font-bold text-center transition";
+            }
+
+            const btnNorm = document.getElementById('opt-flavor-norm');
+            const btnSpicy = document.getElementById('opt-flavor-spicy');
+
+            if (selectedFlavor === 'norm') {
+                btnNorm.className = "py-2.5 px-3 rounded-2xl border-2 border-brand-500 bg-brand-50 text-brand-700 text-xs font-bold text-center transition";
+                btnSpicy.className = "py-2.5 px-3 rounded-2xl border border-slate-200 bg-white text-slate-700 text-xs font-bold text-center transition";
+            } else {
+                btnSpicy.className = "py-2.5 px-3 rounded-2xl border-2 border-brand-500 bg-brand-50 text-brand-700 text-xs font-bold text-center transition";
+                btnNorm.className = "py-2.5 px-3 rounded-2xl border border-slate-200 bg-white text-slate-700 text-xs font-bold text-center transition";
+            }
+
+            document.getElementById('modal-qty-val').innerText = modalQty;
+
+            // Price Calculation (e.g. Small decreases 1.50 JOD)
+            let unitPrice = parseFloat(activeProductModal.price);
+            if (selectedSize === 'small') unitPrice = Math.max(1, unitPrice - 1.50);
+
+            const totalPrice = (unitPrice * modalQty).toFixed(2);
+            document.getElementById('modal-btn-price').innerText = `(${totalPrice} د.أ)`;
+        }
+
+        function submitAddToCartFromModal() {
+            let unitPrice = parseFloat(activeProductModal.price);
+            if (selectedSize === 'small') unitPrice = Math.max(1, unitPrice - 1.50);
+
+            const sizeLabel = selectedSize === 'big' ? 'كبير (500g)' : 'صغير (250g)';
+            const flavorLabel = selectedFlavor === 'spicy' ? 'سبايسي 🔥' : 'عادي';
+
+            const cartItemName = `${activeProductModal.name} [${sizeLabel} - ${flavorLabel}]`;
+
+            const existing = cart.find(i => i.name === cartItemName);
+            if (existing) {
+                existing.qty += modalQty;
+            } else {
+                cart.push({ id: activeProductModal.id, name: cartItemName, price: unitPrice.toFixed(2), qty: modalQty, image: activeProductModal.image });
+            }
+
+            renderCart();
+            closeProductModal();
+        }
+
+        // CART MODAL FUNCTIONS
+        function openCartModal() {
+            goToCartStep1();
+            document.getElementById('cart-modal-backdrop').classList.remove('hidden');
+            document.getElementById('cart-modal').classList.remove('hidden');
+        }
+
+        function closeCartModal() {
+            document.getElementById('cart-modal-backdrop').classList.add('hidden');
+            document.getElementById('cart-modal').classList.add('hidden');
+        }
+
+        function goToCartStep1() {
+            document.getElementById('cart-step-title').innerText = 'سلة الشراء (مراجعة المنتجات)';
+            document.getElementById('cart-step-1').classList.remove('hidden');
+            document.getElementById('cart-step-2').classList.add('hidden');
+        }
+
+        function goToCartStep2() {
+            if (cart.length === 0) return alert('السلة فارغة، يرجى إضافة منتجات أولاً');
+            document.getElementById('cart-step-title').innerText = 'تعبئة معلومات التوصيل';
+            document.getElementById('cart-step-1').classList.add('hidden');
+            document.getElementById('cart-step-2').classList.remove('hidden');
+        }
+
+        function validateName(input) {
+            const err = document.getElementById('err-name');
+            if (/\d/.test(input.value)) {
+                input.value = input.value.replace(/\d/g, '');
+                err.classList.remove('hidden');
+            } else {
+                err.classList.add('hidden');
+            }
+        }
+
+        function updateQty(idx, delta) {
+            cart[idx].qty += delta;
+            if (cart[idx].qty <= 0) cart.splice(idx, 1);
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-badge-count');
+
+            const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
+            badge.innerText = totalQty;
+
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">السلة فارغة حالياً</p>`;
+            } else {
+                container.innerHTML = '';
+                cart.forEach((item, idx) => {
+                    container.innerHTML += `
+                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-2xl border border-slate-200 text-xs">
+                            <div class="flex items-center gap-2">
+                                <img src="${item.image}" class="w-8 h-8 rounded-lg object-cover" onerror="this.src='1/لوجو.png'">
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-[11px]">${item.name}</h4>
+                                    <span class="text-brand-500 font-mono text-[10px]">${(item.price * item.qty).toFixed(2)} د.أ</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1.5 bg-slate-200 px-2 py-1 rounded-xl">
+                                <button onclick="updateQty(${idx}, -1)" class="text-slate-800 font-bold px-1">-</button>
+                                <span class="font-mono font-bold text-slate-900 text-[11px]">${item.qty}</span>
+                                <button onclick="updateQty(${idx}, 1)" class="text-slate-800 font-bold px-1">+</button>
+                            </div>
+                        </div>`;
+                });
+            }
+
+            calcTotal();
+        }
+
+        function calcTotal() {
+            const subtotal = cart.reduce((sum, i) => sum + (parseFloat(i.price) * i.qty), 0);
+            const shipping = parseFloat(document.getElementById('cust-city').value || '2.00');
+            const total = subtotal + (cart.length > 0 ? shipping : 0);
+
+            document.getElementById('val-subtotal').innerText = `${subtotal.toFixed(2)} د.أ`;
+            document.getElementById('val-shipping').innerText = `${shipping.toFixed(2)} د.أ`;
+            document.getElementById('val-total').innerText = `${total.toFixed(2)} د.أ`;
+        }
+
+        function sendWAOrder() {
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+            const notes = document.getElementById('cust-notes').value.trim();
+            const location = document.getElementById('cust-location').value.trim();
+
+            if (!name || /\d/.test(name)) return alert('أدخل اسماً صحيحاً بدون أرقام');
+            if (!phone || phone.length < 9) return alert('أدخل رقم هاتف أردني صحيح');
+            if (!address) return alert('أدخل عنوان التوصيل التفصيلي');
+
+            const citySelect = document.getElementById('cust-city');
+            const cityText = citySelect.options[citySelect.selectedIndex].text;
+
+            let itemsText = cart.map(i => `• ${i.name} (${i.qty}x) = ${(i.price * i.qty).toFixed(2)} د.أ`).join('\n');
+
+            const subtotal = cart.reduce((sum, i) => sum + (parseFloat(i.price) * i.qty), 0);
+            const shipping = parseFloat(citySelect.value);
+            const total = subtotal + shipping;
+
+            const waNum = (storeData.whatsapp || '0791234567').replace(/^0/, '962');
+
+            let message =
+                `مرحباً ${storeData.name} 👋\nطلب جديد من المتجر:\n\n${itemsText}\n\n` +
+                `--- تفاصيل الزبون والتوصيل ---\n` +
+                `👤 الاسم: ${name}\n` +
+                `📞 الهاتف: ${phone}\n` +
+                `📍 العنوان: ${address} (${cityText})\n`;
+
+            if (notes) message += `📝 ملاحظات: ${notes}\n`;
+            if (location) message += `🗺️ موقع GPS: ${location}\n`;
+
+            message += `\n💰 الإجمالي شامل التوصيل: ${total.toFixed(2)} د.أ`;
+
+            window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    </script>
+</body>
+</html>

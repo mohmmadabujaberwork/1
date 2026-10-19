@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء متجرك - متجرك Jo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: #f8fafc; min-height: 100vh; overflow-x: hidden; }
+        
+        .site-bg {
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(34, 197, 94, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+                radial-gradient(rgba(34, 197, 94, 0.08) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 24px 24px;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-header {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 50%, #16a34a 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .step-transition {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="site-bg min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-slate-950">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 glass-header border-b border-slate-800/80 px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2.5 group">
+            <img src="1/لوجو.png" alt="لوجو متجرك Jo" class="w-9 h-9 sm:w-10 sm:h-10 object-contain rounded-xl shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none;" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-brand-400 to-brand-700 items-center justify-center text-slate-950 font-black text-lg">
+                مـ
+            </div>
+            <div class="leading-tight">
+                <span class="text-base sm:text-lg font-black text-white block">متجرك <span class="gradient-text">Jo</span></span>
+                <span class="text-[9px] sm:text-[10px] text-brand-400 font-bold block -mt-1">خطوات إنشاء المتجر</span>
+            </div>
+        </a>
+
+        <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-white px-3 py-1.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 transition flex items-center gap-1">
+            <span>←</span>
+            <span>الرئيسية</span>
+        </a>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-1 max-w-xl lg:max-w-2xl w-full mx-auto px-4 py-6 sm:py-10 space-y-5">
+        
+        <!-- DYNAMIC PROGRESS BAR -->
+        <div id="progress-container" class="glass-card p-4 rounded-3xl border-slate-800 space-y-3 shadow-xl">
+            <div class="flex justify-between items-center text-[10px] sm:text-xs font-bold text-slate-400">
+                <span id="step-label-1" class="text-brand-400">1. الحساب</span>
+                <span id="step-label-2">2. التحقق</span>
+                <span id="step-label-3">3. المتجر</span>
+                <span id="step-label-4">4. المنتجات</span>
+                <span id="step-label-5">5. التفعيل</span>
+            </div>
+            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                <div id="onboarding-progress-bar" class="bg-gradient-to-r from-brand-500 to-brand-400 h-full w-1/5 rounded-full transition-all duration-500 shadow-sm shadow-brand-500/50"></div>
+            </div>
+        </div>
+
+        <!-- STEP 1: ACCOUNT REGISTRATION -->
+        <div id="step-1" class="step-transition glass-card p-6 sm:p-8 rounded-3xl border-slate-700/80 space-y-5 shadow-2xl">
+            <div class="space-y-1">
+                <span class="text-brand-400 text-xs font-bold uppercase tracking-wider">المرحلة الأولى</span>
+                <h3 class="text-lg sm:text-xl font-black text-white">إنشاء حساب التاجر 👤</h3>
+                <p class="text-xs text-slate-400">أدخل بياناتك الأساسية للبدء في تجهيز متجرك</p>
+            </div>
+
+            <form onsubmit="handleStep1(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">الاسم الكامل</label>
+                    <input type="text" id="reg-name" required placeholder="مثال: أحمد العبدالله" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">البريد الإلكتروني (جيميل)</label>
+                    <input type="email" id="reg-email" required placeholder="name@gmail.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition">
+                    <p id="email-error" class="hidden text-[11px] text-rose-400 font-bold mt-1.5"></p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">رقم الهاتف الأردني</label>
+                    <input type="tel" id="reg-phone" required placeholder="0791234567" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-brand-500/20 active:scale-95 transition flex items-center justify-center gap-2">
+                    <span>إرسال رمز التحقق إلى الجيميل</span>
+                    <span>←</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- STEP 2: OTP VERIFICATION -->
+        <div id="step-2" class="hidden step-transition glass-card p-6 sm:p-8 rounded-3xl border-slate-700/80 space-y-5 text-center shadow-2xl">
+            <div class="w-14 h-14 bg-brand-500/10 border border-brand-500/30 text-brand-400 rounded-2xl flex items-center justify-center mx-auto text-2xl font-bold">✉️</div>
+            <div class="space-y-1">
+                <h3 class="text-lg sm:text-xl font-black text-white">تأكيد البريد الإلكتروني</h3>
+                <p class="text-xs text-slate-400">تم إرسال رمز التحقق (OTP) إلى بريدك الإلكتروني.</p>
+            </div>
+
+            <div class="bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs p-3 rounded-2xl max-w-sm mx-auto">
+                💡 رمز التحقق التجريبي: <strong id="debug-otp" class="font-mono text-sm font-black text-white">123456</strong>
+            </div>
+
+            <div class="max-w-xs mx-auto space-y-4">
+                <input type="text" id="otp-input" maxlength="6" placeholder="1 2 3 4 5 6" class="w-full text-center text-2xl font-black tracking-widest py-3 bg-slate-900/90 border border-slate-700 rounded-2xl text-white outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition">
+                <button onclick="verifyOTP()" class="w-full bg-brand-500 hover:bg-brand-600 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-brand-500/20 active:scale-95 transition">التحقق والمتابعة ✓</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: STORE DETAILS -->
+        <div id="step-3" class="hidden step-transition glass-card p-6 sm:p-8 rounded-3xl border-slate-700/80 space-y-5 shadow-2xl">
+            <div class="space-y-1">
+                <span class="text-brand-400 text-xs font-bold uppercase tracking-wider">المرحلة الثالثة</span>
+                <h3 class="text-lg sm:text-xl font-black text-white">إعداد المتجر والهوية 🏪</h3>
+                <p class="text-xs text-slate-400">حدد اسم ورابط المتجر الخاص بك</p>
+            </div>
+
+            <form onsubmit="handleStep3(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">اسم المتجر</label>
+                    <input type="text" id="store-name" required placeholder="مثال: متجر الزهور الأردني" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">رابط المتجر (Slug)</label>
+                    <input type="text" id="store-slug" required placeholder="flowerstore" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">رقم واتساب استقبال الطلبات</label>
+                    <input type="tel" id="store-wa" required placeholder="0791234567" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 transition">
+                </div>
+                <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-brand-500/20 active:scale-95 transition">حفظ ومتابعة لإضافة المنتجات ←</button>
+            </form>
+        </div>
+
+        <!-- STEP 4: ADD PRODUCTS -->
+        <div id="step-4" class="hidden step-transition glass-card p-6 sm:p-8 rounded-3xl border-slate-700/80 space-y-5 shadow-2xl">
+            <div class="flex justify-between items-center">
+                <div class="space-y-1">
+                    <span class="text-brand-400 text-xs font-bold uppercase tracking-wider">المرحلة الرابعة</span>
+                    <h3 class="text-lg sm:text-xl font-black text-white">إضافة المنتجات 📦</h3>
+                </div>
+                <span id="badge-count" class="bg-brand-500/10 text-brand-400 font-bold text-xs px-3 py-1.5 rounded-full border border-brand-500/30">0 من 3 منتجات</span>
+            </div>
+
+            <div id="draft-prods-list" class="space-y-2.5"></div>
+
+            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 space-y-3">
+                <input type="text" id="prod-name" placeholder="اسم المنتج" class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 outline-none focus:border-brand-500">
+                <input type="number" id="prod-price" placeholder="السعر (د.أ)" class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 outline-none focus:border-brand-500">
+                <input type="file" id="prod-file" accept="image/*" onchange="readImage(this)" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-500/10 file:text-brand-400 hover:file:bg-brand-500/20">
+                <button onclick="addProd()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs transition border border-slate-700">+ إضافة المنتج للقائمة</button>
+            </div>
+
+            <button id="btn-to-pay" disabled onclick="goToStep5()" class="w-full bg-slate-800 text-slate-500 font-bold py-3.5 rounded-xl text-xs sm:text-sm transition cursor-not-allowed">يجب إضافة 3 منتجات على الأقل</button>
+        </div>
+
+        <!-- STEP 5: ACTIVATION & DUAL PAYMENT SYSTEM -->
+        <div id="step-5" class="hidden step-transition glass-card p-6 sm:p-8 rounded-3xl border-slate-700/80 space-y-6 shadow-2xl">
+            <div class="space-y-1 text-center">
+                <span class="text-brand-400 text-xs font-bold uppercase tracking-wider">المرحلة الأخيرة</span>
+                <h3 class="text-lg sm:text-xl font-black text-white">تفعيل المتجر والاشتراك 💳</h3>
+                <p class="text-xs text-slate-400">اختر الباقة المناسبة وطريقة الدفع لإطلاق متجرك</p>
+            </div>
+
+            <!-- PACKAGE SELECTOR -->
+            <div class="space-y-2">
+                <label class="block text-xs font-bold text-slate-300">اختر الباقة:</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <button type="button" onclick="selectPackage('starter', 12.99)" id="pkg-btn-starter" class="p-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition">
+                        <span class="block text-xs font-bold text-white">البداية</span>
+                        <span class="block text-sm font-black text-brand-400 mt-1">12.99 د.أ</span>
+                        <span class="text-[9px] text-slate-400">30 يوم</span>
+                    </button>
+                    <button type="button" onclick="selectPackage('pro', 30.99)" id="pkg-btn-pro" class="p-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-center transition relative">
+                        <span class="absolute -top-2 left-1/2 -translate-x-1/2 bg-brand-500 text-slate-950 font-black text-[8px] px-2 py-0.5 rounded-full">الأكثر طلباً</span>
+                        <span class="block text-xs font-bold text-white">المحترفين</span>
+                        <span class="block text-sm font-black text-brand-400 mt-1">30.99 د.أ</span>
+                        <span class="text-[9px] text-slate-400">90 يوم</span>
+                    </button>
+                    <button type="button" onclick="selectPackage('vip', 99.00)" id="pkg-btn-vip" class="p-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition">
+                        <span class="block text-xs font-bold text-amber-400">VIP</span>
+                        <span class="block text-sm font-black text-amber-400 mt-1">99.00 د.أ</span>
+                        <span class="text-[9px] text-slate-400">365 يوم</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAYMENT METHOD TABS -->
+            <div class="space-y-3 pt-2">
+                <label class="block text-xs font-bold text-slate-300">طريقة الدفع والتفعيل:</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="switchPayMethod('card')" id="tab-pay-card" class="py-3 px-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-xs font-bold text-white flex items-center justify-center gap-2 transition">
+                        <span>💳 عبر الفيزا والبطاقة</span>
+                    </button>
+                    <button type="button" onclick="switchPayMethod('code')" id="tab-pay-code" class="py-3 px-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-xs font-bold text-slate-400 flex items-center justify-center gap-2 transition">
+                        <span>🔑 الدفع عبر الأكواد / الدعم</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARD PAYMENT FORM -->
+            <div id="pay-card-section" class="bg-slate-900/90 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-3.5">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="font-bold text-white">بيانات البطاقة البنكية</span>
+                    <span class="text-slate-400 text-[10px]">دفع آمن ومشفّر 100% 🛡️</span>
+                </div>
+                <div>
+                    <label class="block text-[11px] text-slate-400 mb-1">رقم البطاقة</label>
+                    <input type="text" id="card-num" placeholder="4000 0000 0000 0000" maxlength="19" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 font-mono">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] text-slate-400 mb-1">تاريخ الانتهاء</label>
+                        <input type="text" id="card-exp" placeholder="MM/YY" maxlength="5" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 text-center font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-slate-400 mb-1">رمز الأمان (CVC)</label>
+                        <input type="text" id="card-cvc" placeholder="123" maxlength="3" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-500 text-center font-mono">
+                    </div>
+                </div>
+                <button type="button" onclick="processCardPayment()" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm transition shadow-lg shadow-brand-500/20 active:scale-95 flex items-center justify-center gap-2">
+                    <span id="card-btn-text">دفع وتأكيد الاشتراك</span>
+                    <span id="card-price-tag" class="bg-slate-950 text-brand-400 px-2 py-0.5 rounded-md font-mono text-[11px]">30.99 د.أ</span>
+                </button>
+            </div>
+
+            <!-- CODE / SUPPORT PAYMENT SECTION -->
+            <div id="pay-code-section" class="hidden bg-slate-900/90 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-4">
+                <div class="space-y-2 text-xs leading-relaxed text-slate-300 bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
+                    <p class="font-bold text-brand-400">💡 كيف تحصل على كود التفعيل؟</p>
+                    <ol class="list-decimal list-inside space-y-1 text-[11px] text-slate-300">
+                        <li>اضغط على زر التواصل المباشر أدناه للانتقال للواتساب.</li>
+                        <li>قم بتحويل قيمة الباقة المختارة عبر (زين كاش، كليك، أو التحويل البنكي).</li>
+                        <li>سيزودك فريق الدعم بكود التفعيل الخاص بك فوراً.</li>
+                    </ol>
+                </div>
+
+                <a id="wa-support-link" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-md">
+                    <span>💬 تواصل مع الدعم الفني للحصول على الكود</span>
+                </a>
+
+                <div class="space-y-2 pt-2 border-t border-slate-800">
+                    <label class="block text-xs font-bold text-white">أدخل كود التفعيل:</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="activation-code" placeholder="أدخل الكود هنا" class="flex-1 px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 font-mono tracking-wider outline-none focus:border-brand-500">
+                        <button type="button" onclick="verifyCodePayment()" class="bg-brand-500 hover:bg-brand-600 text-slate-950 font-black px-5 py-3 rounded-xl text-xs transition shadow-md active:scale-95">تأكيد الكود ✓</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUCCESS SCREEN -->
+        <div id="step-success" class="hidden step-transition glass-card p-8 sm:p-10 rounded-3xl border-2 border-brand-500/80 space-y-6 text-center shadow-2xl">
+            <div class="w-20 h-20 bg-brand-500 text-slate-950 rounded-full flex items-center justify-center mx-auto text-4xl font-black shadow-xl shadow-brand-500/30 animate-bounce">
+                ✓
+            </div>
+            
+            <div class="space-y-2">
+                <span class="bg-brand-500/10 text-brand-400 font-bold text-xs px-3.5 py-1 rounded-full border border-brand-500/30">تم التأكد من الدفع والتفعيل بنجاح! 🎉</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white">تم إنشاء متجرك بنجاح 🚀</h2>
+                <p class="text-xs sm:text-sm text-slate-300">أهلاً بك في منصة متجرك Jo! متجرك الآن جاهز لاستقبال الزبائن والطلبات.</p>
+            </div>
+
+            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 space-y-1">
+                <span class="text-[10px] text-slate-400 font-bold block">رابط متجرك المباشر:</span>
+                <a id="final-store-url" href="store.html" class="text-xs sm:text-sm font-mono font-black text-brand-400 underline dir-ltr block">matjarakjo.com/store</a>
+            </div>
+
+            <a href="store.html" class="block w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-slate-950 font-black py-4 rounded-2xl text-sm shadow-xl shadow-brand-500/25 active:scale-95 transition">
+                الانتقال لمتجري الآن 🚀
+            </a>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-8 border-t border-slate-800/80 bg-slate-950/90 py-6 text-center text-slate-500 space-y-1 px-4">
+        <p class="text-xs font-bold text-slate-400">جميع الحقوق محفوظة © 2026 متجرك Jo 🇯🇴</p>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        let currentStep = 1;
+        let generatedOtp = '123456';
+        let userAccount = {};
+        let storeData = {};
+        let draftProducts = [];
+        let tempImg = null;
+        let selectedPkg = 'pro';
+        let selectedPrice = 30.99;
+
+        // Auto load existing state on DOM Ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check query param package
+            const urlParams = new URLSearchParams(window.location.search);
+            const pkgParam = urlParams.get('pkg');
+            if (pkgParam === 'starter') selectPackage('starter', 12.99);
+            else if (pkgParam === 'vip') selectPackage('vip', 99.00);
+            else selectPackage('pro', 30.99);
+
+            // Restore state if available
+            const savedUser = localStorage.getItem('matjarakjo_user');
+            const savedStore = localStorage.getItem('matjarakjo_store');
+            const savedProds = localStorage.getItem('matjarakjo_products');
+
+            if (savedUser) userAccount = JSON.parse(savedUser);
+            if (savedStore) storeData = JSON.parse(savedStore);
+            if (savedProds) draftProducts = JSON.parse(savedProds);
+
+            if (storeData && storeData.active) {
+                showSuccessScreen();
+            } else if (draftProducts.length >= 3) {
+                currentStep = 5;
+                updateStepUI();
+            } else if (storeData.name) {
+                currentStep = 4;
+                updateStepUI();
+                renderProds();
+            } else if (userAccount.email) {
+                currentStep = 3;
+                updateStepUI();
+            }
+        });
+
+        function updateStepUI() {
+            for(let i=1; i<=5; i++) {
+                document.getElementById(`step-${i}`).classList.add('hidden');
+                document.getElementById(`step-label-${i}`).className = 'text-slate-500';
+            }
+            document.getElementById('step-success').classList.add('hidden');
+            document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+            document.getElementById(`step-label-${currentStep}`).className = 'text-brand-400 font-bold';
+            document.getElementById('onboarding-progress-bar').style.width = `${(currentStep/5)*100}%`;
+            updateSupportLink();
+        }
+
+        function handleStep1(e) {
+            e.preventDefault();
+            const email = document.getElementById('reg-email').value.trim();
+            if(!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
+                document.getElementById('email-error').innerText = 'يجب إدخال بريد إلكتروني ينتهي بـ @gmail.com';
+                document.getElementById('email-error').classList.remove('hidden');
+                return;
+            }
+            userAccount = { name: document.getElementById('reg-name').value, email, phone: document.getElementById('reg-phone').value };
+            localStorage.setItem('matjarakjo_user', JSON.stringify(userAccount));
+            generatedOtp = Math.floor(100000 + Math.random()*900000).toString();
+            document.getElementById('debug-otp').innerText = generatedOtp;
+            currentStep = 2;
+            updateStepUI();
+        }
+
+        function verifyOTP() {
+            if(document.getElementById('otp-input').value.trim() === generatedOtp || document.getElementById('otp-input').value.trim() === '123456') {
+                currentStep = 3;
+                updateStepUI();
+            } else alert('رمز غير صحيح، يرجى إدخال 123456 أو الرمز الموضح');
+        }
+
+        function handleStep3(e) {
+            e.preventDefault();
+            storeData = {
+                name: document.getElementById('store-name').value,
+                slug: document.getElementById('store-slug').value.toLowerCase().replace(/\s+/g, '-'),
+                whatsapp: document.getElementById('store-wa').value,
+                active: false
+            };
+            localStorage.setItem('matjarakjo_store', JSON.stringify(storeData));
+            currentStep = 4;
+            updateStepUI();
+        }
+
+        function readImage(input) {
+            if(input.files && input.files[0]) {
+                const r = new FileReader();
+                r.onload = e => tempImg = e.target.result;
+                r.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function addProd() {
+            const name = document.getElementById('prod-name').value;
+            const price = document.getElementById('prod-price').value;
+            if(!name || !price) return alert('يرجى إدخال اسم المنتج وسعره');
+            draftProducts.push({ id: Date.now(), name, price: parseFloat(price).toFixed(2), image: tempImg || '1/لوجو.png' });
+            localStorage.setItem('matjarakjo_products', JSON.stringify(draftProducts));
+            document.getElementById('prod-name').value = '';
+            document.getElementById('prod-price').value = '';
+            tempImg = null;
+            renderProds();
+        }
+
+        function renderProds() {
+            const container = document.getElementById('draft-prods-list');
+            container.innerHTML = '';
+            draftProducts.forEach(p => {
+                container.innerHTML += `<div class="flex justify-between items-center bg-slate-900/90 border border-slate-800 p-2.5 rounded-2xl text-xs"><div class="flex items-center gap-3"><img src="${p.image}" class="w-10 h-10 rounded-xl object-cover bg-slate-800"><p class="font-bold text-white">${p.name} <span class="text-brand-400 font-mono">(${p.price} د.أ)</span></p></div></div>`;
+            });
+            document.getElementById('badge-count').innerText = `${draftProducts.length} من 3 منتجات`;
+            const btn = document.getElementById('btn-to-pay');
+            if(draftProducts.length >= 3) {
+                btn.disabled = false;
+                btn.className = 'w-full bg-brand-500 hover:bg-brand-600 text-slate-950 font-black py-3.5 rounded-xl text-xs sm:text-sm cursor-pointer transition shadow-lg shadow-brand-500/20 active:scale-95';
+                btn.innerText = 'المتابعة لمرحلة التفعيل والاشتراك ←';
+            }
+        }
+
+        function goToStep5() {
+            currentStep = 5;
+            updateStepUI();
+        }
+
+        function selectPackage(pkg, price) {
+            selectedPkg = pkg;
+            selectedPrice = price;
+            ['starter', 'pro', 'vip'].forEach(p => {
+                const btn = document.getElementById(`pkg-btn-${p}`);
+                if (btn) {
+                    btn.className = 'p-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-center transition';
+                }
+            });
+            const activeBtn = document.getElementById(`pkg-btn-${pkg}`);
+            if (activeBtn) {
+                activeBtn.className = 'p-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-center transition relative';
+            }
+            document.getElementById('card-price-tag').innerText = `${price.toFixed(2)} د.أ`;
+            updateSupportLink();
+        }
+
+        function switchPayMethod(method) {
+            const cardSec = document.getElementById('pay-card-section');
+            const codeSec = document.getElementById('pay-code-section');
+            const tabCard = document.getElementById('tab-pay-card');
+            const tabCode = document.getElementById('tab-pay-code');
+
+            if (method === 'card') {
+                cardSec.classList.remove('hidden');
+                codeSec.classList.add('hidden');
+                tabCard.className = 'py-3 px-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-xs font-bold text-white flex items-center justify-center gap-2 transition';
+                tabCode.className = 'py-3 px-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-xs font-bold text-slate-400 flex items-center justify-center gap-2 transition';
+            } else {
+                cardSec.classList.add('hidden');
+                codeSec.classList.remove('hidden');
+                tabCode.className = 'py-3 px-3 rounded-2xl border-2 border-brand-500 bg-brand-500/10 text-xs font-bold text-white flex items-center justify-center gap-2 transition';
+                tabCard.className = 'py-3 px-3 rounded-2xl border border-slate-700 bg-slate-900/60 text-xs font-bold text-slate-400 flex items-center justify-center gap-2 transition';
+            }
+        }
+
+        function updateSupportLink() {
+            const storeName = storeData.name || 'متجري';
+            const msg = encodeURIComponent(`مرحباً فريق متجرك Jo، أريد الاشتراك بـ (${selectedPkg.toUpperCase()}) لمتجري: ${storeName}`);
+            document.getElementById('wa-support-link').href = `https://wa.me/962791234567?text=${msg}`;
+        }
+
+        function processCardPayment() {
+            const num = document.getElementById('card-num').value;
+            if (!num || num.length < 12) return alert('يرجى إدخال رقم بطاقة صحيح');
+
+            const btnText = document.getElementById('card-btn-text');
+            btnText.innerText = 'جاري التأكد من الدفع... ⏳';
+
+            setTimeout(() => {
+                activateStoreSuccess();
+            }, 1200);
+        }
+
+        function verifyCodePayment() {
+            const code = document.getElementById('activation-code').value.trim();
+            if (!code) return alert('يرجى إدخال كود التفعيل');
+            activateStoreSuccess();
+        }
+
+        function activateStoreSuccess() {
+            storeData.active = true;
+            localStorage.setItem('matjarakjo_user', JSON.stringify(userAccount));
+            localStorage.setItem('matjarakjo_store', JSON.stringify(storeData));
+            localStorage.setItem('matjarakjo_products', JSON.stringify(draftProducts));
+            showSuccessScreen();
+        }
+
+        function showSuccessScreen() {
+            for(let i=1; i<=5; i++) {
+                document.getElementById(`step-${i}`).classList.add('hidden');
+            }
+            document.getElementById('progress-container').classList.add('hidden');
+            document.getElementById('step-success').classList.remove('hidden');
+            
+            const slug = storeData.slug || 'mystore';
+            document.getElementById('final-store-url').innerText = `matjarakjo.com/${slug}`;
+        }
+    </script>
+</body>
+</html>

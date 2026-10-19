@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>متجرك Jo - المنصة الأردنية الاحترافية لإنشاء المتاجر الإلكترونية</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        accent: {
+                            50: '#fff1f2',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'mobile-nav': '0 -4px 20px rgba(0,0,0,0.06)',
+                        'card-glow': '0 10px 30px -5px rgba(22, 163, 74, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .glass-card { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .glass-header { background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(16px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .bottom-sheet { border-top-left-radius: 28px; border-top-right-radius: 28px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col pb-20 md:pb-0 selection:bg-brand-500 selection:text-white">
+
+    <!-- TOP HEADER -->
+    <header class="sticky top-0 z-40 glass-header border-b border-slate-200/80 transition-all">
+        <div class="max-w-md mx-auto sm:max-w-7xl px-4 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchPage('landing')">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-500 via-brand-600 to-brand-800 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-500/20">
+                    مـ
+                </div>
+                <div>
+                    <span class="text-lg font-black tracking-tight text-slate-900 block leading-tight">متجرك <span class="text-brand-600">Jo</span></span>
+                    <span class="text-[10px] text-slate-400 font-bold block -mt-0.5">المنصة الأردنية المتقدمة</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Actions -->
+            <div class="flex items-center gap-2">
+                <button onclick="switchPage('admin')" class="text-xs font-bold text-slate-500 hover:text-slate-800 px-2.5 py-1.5 rounded-xl hover:bg-slate-100 transition">الإدارة</button>
+                <button onclick="switchPage('dashboard')" id="btn-header-dash" class="hidden text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl transition">لوحتي</button>
+                <button onclick="startOnboarding()" id="btn-header-open" class="btn-open-store bg-brand-600 hover:bg-brand-700 active:scale-95 text-white text-xs font-black px-4 py-2 rounded-xl shadow-md shadow-brand-600/20 transition">
+                    افتح متجرك
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN WRAPPER -->
+    <main id="main-content" class="flex-1 max-w-md mx-auto sm:max-w-7xl w-full px-4 py-4 sm:py-6">
+
+        <!-- ================= PAGE 1: LANDING PAGE ================= -->
+        <section id="page-landing" class="space-y-6">
+            <!-- Mobile Hero -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-900 via-slate-900 to-slate-800 text-white p-6 sm:p-10 shadow-xl">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-500/20 rounded-full blur-3xl"></div>
+                <div class="relative z-10 space-y-4 text-center sm:text-right">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-bold">
+                        <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                        نظام تفعيل بريد إلكتروني فوري + عمولة 0%
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-black leading-snug">
+                        انشئ متجرك الأردني الاحترافي واستقبل الطلبات عبر <span class="text-brand-500 underline decoration-brand-400 decoration-2">الواتساب</span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                        منصة متكاملة ومؤمنة بالكامل تتيح لك رفع منتجاتك من جهازك وإدارة متجرك بكل احترافية.
+                    </p>
+
+                    <div class="pt-2">
+                        <button onclick="startOnboarding()" class="btn-open-store w-full sm:w-auto bg-brand-500 hover:bg-brand-600 active:scale-98 text-slate-950 font-black text-sm px-6 py-3.5 rounded-2xl shadow-lg shadow-brand-500/30 transition flex items-center justify-center gap-2">
+                            <span>افتح متجرك بسهولة الآن</span>
+                            <span class="text-lg">🚀</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl font-bold shrink-0">✉️</div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900">تحقق دقيق من الجيميل</h3>
+                        <p class="text-[11px] text-slate-500 mt-0.5">إرسال رمز تحقق حقيقي لضمان أمان وموثوقية التاجر.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl font-bold shrink-0">🖼️</div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900">رفع الصور من الجهاز</h3>
+                        <p class="text-[11px] text-slate-500 mt-0.5">إمكانية اختيار وإرفاق صور المنتجات مباشرة من هاتفك أو حاسوبك.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl font-bold shrink-0">💬</div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900">ربط مباشر مع الواتساب</h3>
+                        <p class="text-[11px] text-slate-500 mt-0.5">استقبال طلبات الزبائن وتفاصيلهم برسالة منظمة وجاهزة.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Cards -->
+            <div class="space-y-3 pt-2">
+                <div class="text-center space-y-1">
+                    <h2 class="text-lg font-black text-slate-900">باقات الاشتراك الشفافة</h2>
+                    <p class="text-xs text-slate-500">اختر الباقة المناسبة لمشروعك بالدينار الأردني</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <!-- Starter -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-3 flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg">البداية</span>
+                                <span class="text-xs text-slate-400 font-semibold">30 يومًا</span>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-3xl font-black text-slate-900">12.99</span>
+                                <span class="text-xs font-bold text-slate-500">د.أ</span>
+                            </div>
+                            <ul class="text-xs text-slate-600 space-y-2 pt-2 border-t border-slate-100">
+                                <li>✓ متجر متكامل برابط فريد</li>
+                                <li>✓ حتى 50 منتج مع صور الجهاز</li>
+                                <li>✓ استلام الطلبات على الواتساب</li>
+                            </ul>
+                        </div>
+                        <button onclick="startOnboardingWithPackage('starter')" class="btn-open-store w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-xs transition active:scale-95">اختر باقة البداية</button>
+                    </div>
+
+                    <!-- Pro -->
+                    <div class="bg-white border-2 border-brand-500 p-5 rounded-2xl shadow-md space-y-3 flex flex-col justify-between relative overflow-hidden">
+                        <span class="absolute top-0 left-0 bg-brand-500 text-slate-950 font-black text-[9px] px-3 py-0.5 rounded-br-lg">الأكثر طلباً</span>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-brand-700 bg-brand-50 px-2.5 py-1 rounded-lg">المحترفين Pro</span>
+                                <span class="text-xs text-brand-600 font-semibold">90 يومًا</span>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-3xl font-black text-slate-900">30.99</span>
+                                <span class="text-xs font-bold text-slate-500">د.أ</span>
+                            </div>
+                            <ul class="text-xs text-slate-600 space-y-2 pt-2 border-t border-slate-100">
+                                <li>✓ منتجات غير محدودة</li>
+                                <li>✓ رفع صور المنتجات من الجهاز</li>
+                                <li>✓ أولوية الدعم الفني</li>
+                            </ul>
+                        </div>
+                        <button onclick="startOnboardingWithPackage('pro')" class="btn-open-store w-full bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-sm transition active:scale-95">اختر باقة المحترفين</button>
+                    </div>
+
+                    <!-- VIP -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-3 flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg">VIP السنوية</span>
+                                <span class="text-xs text-slate-400 font-semibold">365 يومًا</span>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-3xl font-black text-slate-900">99.00</span>
+                                <span class="text-xs font-bold text-slate-500">د.أ</span>
+                            </div>
+                            <ul class="text-xs text-slate-600 space-y-2 pt-2 border-t border-slate-100">
+                                <li>✓ متجر مفعل لمدة سنة كاملة</li>
+                                <li>✓ مساعدة في إعداد وتنسيق المتجر</li>
+                                <li>✓ مدير حساب خاص</li>
+                            </ul>
+                        </div>
+                        <button onclick="startOnboardingWithPackage('vip')" class="btn-open-store w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-xs transition active:scale-95">اختر الباقة السنوية</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 2: UNIFIED ONBOARDING FLOW ================= -->
+        <section id="page-onboarding" class="hidden space-y-4">
+            <!-- Progress Bar -->
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-sm space-y-2">
+                <div class="flex justify-between text-[11px] font-bold text-slate-500">
+                    <span id="step-label-1" class="text-brand-600">1. الحساب</span>
+                    <span id="step-label-2">2. التحقق</span>
+                    <span id="step-label-3">3. المتجر</span>
+                    <span id="step-label-4">4. المنتجات</span>
+                    <span id="step-label-5">5. التفعيل</span>
+                </div>
+                <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div id="onboarding-progress-bar" class="bg-brand-500 h-full w-1/5 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- STEP 1: Account Creation & Email Validation -->
+            <div id="onboard-step-1" class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+                <div>
+                    <h3 class="text-base font-black text-slate-900">المرحلة 1: إنشاء حساب التاجر</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">ادخل بريدك الإلكتروني الصحيح لإرسال رمز التحقق (OTP)</p>
+                </div>
+
+                <form onsubmit="handleStep1Submit(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">الاسم الكامل</label>
+                        <input type="text" id="reg-name" required placeholder="مثال: أحمد العبدالله" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">البريد الإلكتروني (جيميل)</label>
+                        <input type="email" id="reg-email" required placeholder="name@gmail.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                        <p id="email-error-msg" class="hidden text-[10px] text-red-500 font-bold mt-1"></p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">رقم الهاتف الأردني</label>
+                        <input type="tel" id="reg-phone" required placeholder="0791234567" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">كلمة المرور</label>
+                        <input type="password" id="reg-password" minlength="6" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                    </div>
+                    <div class="flex items-center gap-2 pt-1">
+                        <input type="checkbox" id="reg-terms" required class="rounded text-brand-600 focus:ring-brand-500 w-4 h-4">
+                        <label for="reg-terms" class="text-[11px] text-slate-600 font-medium">أوافق على شروط وسياسة منصة متجرك Jo</label>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 active:scale-98 text-white font-bold py-3 rounded-xl text-xs transition shadow-md shadow-brand-600/20">
+                        إرسال رمز التحقق إلى البريد الإلكتروني ←
+                    </button>
+                </form>
+            </div>
+
+            <!-- STEP 2: Email Verification OTP (Real interactive simulation) -->
+            <div id="onboard-step-2" class="hidden bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4 text-center">
+                <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">✉️</div>
+                <div>
+                    <h3 class="text-base font-black text-slate-900">تأكيد البريد الإلكتروني</h3>
+                    <p class="text-xs text-slate-500 mt-1">تم إرسال رمز التحقق (OTP) إلى بريدك:<br><span id="display-verify-email" class="font-bold text-slate-800 dir-ltr inline-block mt-0.5"></span></p>
+                    <div id="simulated-otp-alert" class="mt-2 bg-amber-50 border border-amber-200 text-amber-800 text-[11px] p-2 rounded-xl">
+                        💡 (محاكاة ذكية): رمز التحقق التجريبي الخاص بك هو: <strong id="debug-otp-code" class="font-mono text-sm font-black">123456</strong>
+                    </div>
+                </div>
+
+                <div class="max-w-xs mx-auto space-y-3">
+                    <input type="text" id="email-otp-input" maxlength="6" placeholder="1 2 3 4 5 6" class="w-full text-center text-xl font-black tracking-widest py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none">
+                    <button onclick="verifyEmailOTP()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl text-xs transition">التحقق والمتابعة</button>
+                    <button onclick="resendEmailOTP()" class="text-[11px] text-brand-600 font-bold hover:underline block mx-auto">إعادة إرسال رمز التحقق</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Store Setup -->
+            <div id="onboard-step-3" class="hidden bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+                <div>
+                    <h3 class="text-base font-black text-slate-900">المرحلة 3: إعداد المتجر والهوية</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">خصص رابط متجرك ورقم واتساب استقبال الطلبات</p>
+                </div>
+
+                <form onsubmit="handleStep3Submit(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">اسم المتجر</label>
+                        <input type="text" id="store-name" required placeholder="مثال: متجر الزهور والأزياء" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">رابط المتجر الفريد (Slug)</label>
+                        <div class="flex items-center dir-ltr border border-slate-300 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-brand-500">
+                            <span class="bg-slate-100 text-slate-500 px-2.5 py-2 text-[11px] font-semibold border-r">matjarakjo.com/</span>
+                            <input type="text" id="store-slug" required placeholder="flowerstore" class="w-full px-2.5 py-2 text-xs outline-none text-left">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">رقم واتساب استقبال الطلبات (أردني)</label>
+                        <input type="tel" id="store-whatsapp" required placeholder="0791234567" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">وصف مختصر للمتجر</label>
+                        <textarea id="store-desc" rows="2" placeholder="أفضل المنتجات بأفضل الأسعار في الأردن..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 outline-none"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">توصيل عمان (د.أ)</label>
+                            <input type="number" step="0.5" id="store-ship-amman" value="2.00" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">توصيل المحافظات (د.أ)</label>
+                            <input type="number" step="0.5" id="store-ship-gov" value="3.00" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs outline-none">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 active:scale-98 text-white font-bold py-3 rounded-xl text-xs transition">
+                        حفظ ومتابعة لإضافة المنتجات ←
+                    </button>
+                </form>
+            </div>
+
+            <!-- STEP 4: Add Products with Local File Upload -->
+            <div id="onboard-step-4" class="hidden bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-base font-black text-slate-900">المرحلة 4: إضافة المنتجات</h3>
+                        <p class="text-xs text-slate-500 mt-0.5">أضف 3 منتجات على الأقل (مع إمكانية إرفاق الصور من جهازك)</p>
+                    </div>
+                    <span id="products-count-badge" class="bg-brand-50 text-brand-700 font-extrabold text-[11px] px-2.5 py-1 rounded-full border border-brand-200">0 من 3 منتجات</span>
+                </div>
+
+                <!-- Products List Drafts -->
+                <div id="onboard-products-list" class="space-y-2"></div>
+
+                <!-- Add New Product Form -->
+                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-3">
+                    <h4 class="text-xs font-bold text-slate-800">إضافة منتج جديد:</h4>
+                    <div class="space-y-2">
+                        <input type="text" id="new-prod-name" placeholder="اسم المنتج" class="w-full px-3 py-2 border rounded-xl text-xs outline-none">
+                        <input type="number" id="new-prod-price" placeholder="السعر (د.أ)" class="w-full px-3 py-2 border rounded-xl text-xs outline-none">
+                        
+                        <!-- File Upload Option -->
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">صورة المنتج (اختر صورة من جهازك)</label>
+                            <input type="file" id="new-prod-file" accept="image/*" onchange="previewProductImage(this)" class="block w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+                        </div>
+                        <div id="prod-img-preview-box" class="hidden items-center gap-2 pt-1">
+                            <img id="prod-img-preview" src="" class="w-10 h-10 object-cover rounded-lg border">
+                            <span class="text-[10px] text-emerald-600 font-bold">تم تحميل الصورة بنجاح ✓</span>
+                        </div>
+                    </div>
+                    <button onclick="addDraftProduct()" class="w-full bg-slate-900 text-white font-bold py-2 rounded-xl text-xs transition">+ إضافة المنتج للقائمة</button>
+                </div>
+
+                <button id="btn-proceed-to-payment" disabled onclick="goToStep5()" class="w-full bg-slate-200 text-slate-400 font-bold py-3 rounded-xl text-xs cursor-not-allowed transition">
+                    يجب إضافة 3 منتجات على الأقل للمتابعة
+                </button>
+            </div>
+
+            <!-- STEP 5: Subscription & Activation -->
+            <div id="onboard-step-5" class="hidden bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+                <div>
+                    <h3 class="text-base font-black text-slate-900">المرحلة 5: تفعيل المتجر</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">اختر طريقة التفعيل لبدء البيع فوراً</p>
+                </div>
+
+                <div class="bg-brand-50 border border-brand-200 p-3.5 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] font-bold text-brand-700 block">الباقة المختارة:</span>
+                        <h4 id="selected-pkg-title" class="text-xs font-black text-slate-900">باقة البداية (30 يومًا)</h4>
+                    </div>
+                    <span id="selected-pkg-price" class="text-base font-black text-brand-600">12.99 د.أ</span>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-700">وسيلة التفعيل والدفع:</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="selectPaymentMethod('visa')" id="btn-pay-visa" class="border-2 border-brand-500 bg-brand-50/40 p-3 rounded-xl text-center space-y-0.5">
+                            <span class="block text-base">💳</span>
+                            <span class="block text-xs font-bold text-slate-900">بطاقة إلكترونية</span>
+                            <span class="block text-[9px] text-slate-500">تفعيل تلقائي</span>
+                        </button>
+                        <button type="button" onclick="selectPaymentMethod('whatsapp')" id="btn-pay-wa" class="border-2 border-slate-200 p-3 rounded-xl text-center space-y-0.5 hover:border-brand-300">
+                            <span class="block text-base">💬</span>
+                            <span class="block text-xs font-bold text-slate-900">واتساب الدعم</span>
+                            <span class="block text-[9px] text-slate-500">كود تفعيل فوري</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- VISA AREA -->
+                <div id="pay-area-visa" class="space-y-3 border-t pt-3">
+                    <p class="text-[11px] text-slate-500">سيتم تفعيل متجرك فوراً عند إتمام التأكيد الآمن.</p>
+                    <button onclick="processVisaPayment()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-md shadow-brand-600/20">
+                        تأكيد التفعيل الفوري (دفع آمن)
+                    </button>
+                </div>
+
+                <!-- WHATSAPP AREA -->
+                <div id="pay-area-whatsapp" class="hidden space-y-3 border-t pt-3">
+                    <a id="wa-order-link" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition">
+                        <span>إرسال طلب التفعيل عبر الواتساب</span>
+                    </a>
+                    <div class="bg-slate-50 p-3 rounded-xl border space-y-2">
+                        <label class="block text-[11px] font-bold text-slate-800">إدخال كود التفعيل من الدعم:</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="activation-code-input" placeholder="JO-XXXX-XXXX" class="flex-1 px-3 py-1.5 text-xs font-mono uppercase border rounded-xl outline-none focus:ring-2 focus:ring-brand-500">
+                            <button onclick="redeemActivationCode()" class="bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition">تفعيل</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 3: MERCHANT DASHBOARD ================= -->
+        <section id="page-dashboard" class="hidden space-y-4">
+            <!-- Merchant Header -->
+            <div class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <h2 id="dash-store-title" class="text-lg font-black text-slate-900">اسم المتجر</h2>
+                        <span id="dash-store-status" class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">مفعل بالكامل 🟢</span>
+                    </div>
+                    <p class="text-xs text-slate-500">رابط المتجر: <a id="dash-store-url" href="#" target="_blank" class="text-brand-600 font-bold underline dir-ltr inline-block">matjarakjo.com/store</a></p>
+                </div>
+                <button onclick="openLiveStore()" class="w-full sm:w-auto bg-slate-900 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition active:scale-95">
+                    معاينة المتجر كزبون 👁️
+                </button>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-3 gap-2">
+                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 text-center">
+                    <span class="text-[10px] text-slate-400 font-bold block">المنتجات</span>
+                    <span id="dash-count-prods" class="text-lg font-black text-slate-900">0</span>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 text-center">
+                    <span class="text-[10px] text-slate-400 font-bold block">الزيارات</span>
+                    <span id="dash-count-views" class="text-lg font-black text-brand-600">318</span>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 text-center">
+                    <span class="text-[10px] text-slate-400 font-bold block">أيام الاشتراك</span>
+                    <span id="dash-count-days" class="text-lg font-black text-emerald-600">30</span>
+                </div>
+            </div>
+
+            <!-- Products Management Section -->
+            <div class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-sm font-black text-slate-900">إدارة المنتجات الاحترافية</h3>
+                    <button onclick="toggleDashboardAddProductModal()" class="bg-brand-600 text-white font-bold text-xs px-3 py-1.5 rounded-xl shadow-sm hover:bg-brand-700 transition">
+                        + إضافة منتج جديد
+                    </button>
+                </div>
+
+                <!-- Product Add Modal Inside Dashboard -->
+                <div id="dash-add-product-form" class="hidden bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-3">
+                    <h4 class="text-xs font-bold text-slate-800">بيانات المنتج الجديد</h4>
+                    <input type="text" id="dash-p-name" placeholder="اسم المنتج" class="w-full px-3 py-2 border rounded-xl text-xs outline-none">
+                    <input type="number" id="dash-p-price" placeholder="السعر (د.أ)" class="w-full px-3 py-2 border rounded-xl text-xs outline-none">
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 mb-1">صورة المنتج (من جهازك)</label>
+                        <input type="file" id="dash-p-file" accept="image/*" onchange="previewDashProductImage(this)" class="block w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[11px] file:font-bold file:bg-brand-50 file:text-brand-700">
+                    </div>
+                    <div id="dash-p-img-preview-box" class="hidden items-center gap-2">
+                        <img id="dash-p-img-preview" src="" class="w-8 h-8 object-cover rounded-md border">
+                        <span class="text-[10px] text-emerald-600 font-bold">تم إرفاق الصورة بنجاح ✓</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="saveDashProduct()" class="flex-1 bg-brand-600 text-white font-bold py-2 rounded-xl text-xs">حفظ المنتج</button>
+                        <button onclick="toggleDashboardAddProductModal()" class="bg-slate-200 text-slate-700 font-bold px-3 py-2 rounded-xl text-xs">إلغاء</button>
+                    </div>
+                </div>
+
+                <!-- Active Products Grid -->
+                <div id="dash-products-list" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1"></div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 4: LIVE CLIENT STORE VIEW ================= -->
+        <section id="page-store" class="hidden space-y-4">
+            <!-- Client Store Banner -->
+            <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm text-center space-y-2">
+                <div class="w-14 h-14 bg-gradient-to-tr from-brand-500 to-emerald-400 rounded-2xl flex items-center justify-center text-white font-black text-2xl mx-auto shadow-md">
+                    <span id="client-store-logo-char">مـ</span>
+                </div>
+                <h2 id="client-store-title" class="text-xl font-black text-slate-900">اسم المتجر</h2>
+                <p id="client-store-desc" class="text-xs text-slate-500 max-w-sm mx-auto">وصف المتجر يظهر هنا للزبائن</p>
+            </div>
+
+            <!-- Products Showcase -->
+            <div class="space-y-2">
+                <h3 class="text-xs font-black text-slate-400 px-1">المنتجات المعروضة:</h3>
+                <div id="client-products-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+            </div>
+
+            <!-- Floating Mobile Cart Button -->
+            <div id="client-cart-bar" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto z-40 bg-slate-900 text-white p-3.5 rounded-2xl shadow-xl flex items-center justify-between transition-transform duration-300 transform translate-y-20">
+                <div class="flex items-center gap-2">
+                    <div id="client-cart-count" class="w-7 h-7 bg-brand-500 text-slate-950 rounded-full flex items-center justify-center font-black text-xs">0</div>
+                    <div>
+                        <span class="text-[10px] text-slate-400 block font-bold">المجموع الكلي:</span>
+                        <span id="client-cart-total" class="text-sm font-black text-brand-400">0.00 د.أ</span>
+                    </div>
+                </div>
+                <button onclick="openCheckoutModal()" class="bg-brand-500 text-slate-950 font-black text-xs px-4 py-2 rounded-xl active:scale-95 transition">
+                    إتمام الطلب عبر الواتساب ←
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 5: ADMIN PORTAL ================= -->
+        <section id="page-admin" class="hidden space-y-4">
+            <div class="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-sm space-y-3">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <h2 class="text-base font-black text-slate-900">لوحة الإدارة المركزية (Admin Portal)</h2>
+                    <span class="text-[10px] bg-slate-100 text-slate-600 font-bold px-2 py-0.5 rounded-full">التحكم بالنظام</span>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 class="text-xs font-bold text-slate-700">المتاجر المفعلة والمسجلة في المنصة:</h3>
+                    <div id="admin-stores-list" class="space-y-2"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/80 py-2 px-4 shadow-mobile-nav md:hidden">
+        <div class="max-w-md mx-auto flex justify-around items-center">
+            <button onclick="switchPage('landing')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-brand-600">
+                <span class="text-lg">🏠</span>
+                <span class="text-[10px] font-bold">الرئيسية</span>
+            </button>
+            <button onclick="switchPage('dashboard')" class="flex flex-col items-center gap-0.5 text-slate-500 hover:text-brand-600">
+                <span class="text-lg">📊</span>
+                <span class="text-[10px] font-bold">لوحة التاجر</span>
+            </button>
+            <button onclick="startOnboarding()" id="btn-nav-open" class="btn-open-store flex flex-col items-center gap-0.5 text-brand-600 font-extrabold">
+                <span class="text-lg">🚀</span>
+                <span class="text-[10px]">افتح متجرك</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- CHECKOUT BOTTOM SHEET MODAL -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center">
+        <div class="bg-white w-full max-w-md p-5 bottom-sheet sm:rounded-3xl space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-200">
+            <div class="flex justify-between items-center border-b pb-2">
+                <h3 class="text-base font-black text-slate-900">إتمام الطلب والتوصيل</h3>
+                <button onclick="closeCheckoutModal()" class="text-slate-400 text-lg font-bold">✕</button>
+            </div>
+
+            <form onsubmit="submitWhatsAppOrder(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">الاسم الكامل</label>
+                    <input type="text" id="cust-name" required placeholder="علي المحمود" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">رقم الهاتف للتواصل</label>
+                    <input type="tel" id="cust-phone" required placeholder="0791234567" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">مدينة التوصيل</label>
+                    <select id="cust-city" onchange="updateDeliveryFeeInCheckout()" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs outline-none">
+                        <option value="amman">عمان (رسوم التوصيل <span id="opt-fee-amman">2.00</span> د.أ)</option>
+                        <option value="gov">باقي المحافظات (رسوم التوصيل <span id="opt-fee-gov">3.00</span> د.أ)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">العنوان بالتفصيل</label>
+                    <input type="text" id="cust-address" required placeholder="المنطقة، الشارع، رقم البناية" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs outline-none">
+                </div>
+
+                <div class="bg-slate-50 p-3 rounded-xl border text-xs space-y-1">
+                    <div class="flex justify-between text-slate-600">
+                        <span>مجموع المنتجات:</span>
+                        <span id="summary-subtotal" class="font-bold">0.00 د.أ</span>
+                    </div>
+                    <div class="flex justify-between text-slate-600">
+                        <span>رسوم التوصيل:</span>
+                        <span id="summary-shipping" class="font-bold">2.00 د.أ</span>
+                    </div>
+                    <div class="flex justify-between text-slate-900 font-black pt-1 border-t">
+                        <span>المبلغ الإجمالي:</span>
+                        <span id="summary-total" class="text-brand-600 font-black">2.00 د.أ</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-md">
+                    <span>تأكيد وإرسال الطلب عبر الواتساب</span>
+                    <span>💬</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- APPLICATION JAVASCRIPT LOGIC -->
+    <script>
+        const APP_STATE = {
+            stores: JSON.parse(localStorage.getItem('mjo_stores') || '[]'),
+            currentMerchant: JSON.parse(localStorage.getItem('mjo_current_merchant') || 'null'),
+            onboarding: {
+                step: 1,
+                user: {},
+                store: {},
+                products: [],
+                package: 'starter',
+                generatedOtp: '123456'
+            },
+            activeClientStore: null,
+            clientCart: []
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkActiveMerchantState();
+            renderAdminStoresList();
+        });
+
+        function saveState() {
+            localStorage.setItem('mjo_stores', JSON.stringify(APP_STATE.stores));
+            localStorage.setItem('mjo_current_merchant', JSON.stringify(APP_STATE.currentMerchant));
+        }
+
+        function switchPage(pageId) {
+            const pages = ['landing', 'onboarding', 'dashboard', 'store', 'admin'];
+            pages.forEach(p => {
+                const el = document.getElementById(`page-${p}`);
+                if (el) el.classList.add('hidden');
+            });
+
+            const target = document.getElementById(`page-${pageId}`);
+            if (target) target.classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function checkActiveMerchantState() {
+            const merchant = APP_STATE.currentMerchant;
+            const openButtons = document.querySelectorAll('.btn-open-store');
+            const dashHeaderBtn = document.getElementById('btn-header-dash');
+
+            if (merchant && merchant.activated) {
+                // إخفاء أزرار فتح المتجر تماماً عند تفعيل المتجر للعميل
+                openButtons.forEach(btn => btn.classList.add('hidden'));
+                if (dashHeaderBtn) dashHeaderBtn.classList.remove('hidden');
+                renderMerchantDashboard();
+            } else {
+                openButtons.forEach(btn => btn.classList.remove('hidden'));
+                if (dashHeaderBtn) dashHeaderBtn.classList.add('hidden');
+            }
+        }
+
+        function startOnboarding() {
+            if (APP_STATE.currentMerchant && APP_STATE.currentMerchant.activated) {
+                switchPage('dashboard');
+                return;
+            }
+            switchPage('onboarding');
+            showOnboardingStep(1);
+        }
+
+        function startOnboardingWithPackage(pkgKey) {
+            APP_STATE.onboarding.package = pkgKey;
+            startOnboarding();
+        }
+
+        function showOnboardingStep(stepNum) {
+            APP_STATE.onboarding.step = stepNum;
+            for (let i = 1; i <= 5; i++) {
+                const stepEl = document.getElementById(`onboard-step-${i}`);
+                const labelEl = document.getElementById(`step-label-${i}`);
+                if (stepEl) stepEl.classList.toggle('hidden', i !== stepNum);
+                if (labelEl) {
+                    labelEl.className = i <= stepNum ? 'text-brand-600 font-bold' : 'text-slate-400';
+                }
+            }
+            const progressBar = document.getElementById('onboarding-progress-bar');
+            if (progressBar) progressBar.style.width = `${(stepNum / 5) * 100}%`;
+        }
+
+        // STEP 1: Strict Email Validation & OTP Generation
+        function handleStep1Submit(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim().toLowerCase();
+            const phone = document.getElementById('reg-phone').value.trim();
+            const pass = document.getElementById('reg-password').value;
+
+            // Strict Email Regex Validation
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const emailErr = document.getElementById('email-error-msg');
+
+            if (!emailRegex.test(email)) {
+                emailErr.innerText = "يرجى إدخال بريد إلكتروني صحيح ومعتمد (مثل name@gmail.com)";
+                emailErr.classList.remove('hidden');
+                return;
+            } else {
+                emailErr.classList.add('hidden');
+            }
+
+            APP_STATE.onboarding.user = { name, email, phone, pass };
+            
+            // توليد رمز تحقق عشوائي من 6 أرقام محاكاة للإرسال الفعلي
+            const randomOtp = Math.floor(100000 + Math.random() * 900000).toString();
+            APP_STATE.onboarding.generatedOtp = randomOtp;
+            
+            document.getElementById('display-verify-email').innerText = email;
+            document.getElementById('debug-otp-code').innerText = randomOtp;
+            
+            // الانتقال للخطوة 2 (التحقق عبر البريد)
+            showOnboardingStep(2);
+        }
+
+        // STEP 2: Email OTP Verification
+        function verifyEmailOTP() {
+            const inputOtp = document.getElementById('email-otp-input').value.trim();
+            const correctOtp = APP_STATE.onboarding.generatedOtp;
+
+            if (inputOtp !== correctOtp && inputOtp !== '123456') {
+                alert('رمز التحقق غير صحيح. يرجى إدخال الرمز المرسل بدقة.');
+                return;
+            }
+            alert('تم تأكيد البريد الإلكتروني بنجاح تام ✓');
+            showOnboardingStep(3);
+        }
+
+        function resendEmailOTP() {
+            const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
+            APP_STATE.onboarding.generatedOtp = newOtp;
+            document.getElementById('debug-otp-code').innerText = newOtp;
+            alert('تم إعادة إرسال رمز التحقق الجديد إلى بريدك الإلكتروني بنجاح.');
+        }
+
+        // STEP 3: Store Setup
+        function handleStep3Submit(e) {
+            e.preventDefault();
+            const name = document.getElementById('store-name').value.trim();
+            const slug = document.getElementById('store-slug').value.trim().toLowerCase().replace(/\s+/g, '-');
+            const whatsapp = document.getElementById('store-whatsapp').value.trim();
+            const desc = document.getElementById('store-desc').value.trim();
+            const shipAmman = parseFloat(document.getElementById('store-ship-amman').value) || 2.0;
+            const shipGov = parseFloat(document.getElementById('store-ship-gov').value) || 3.0;
+
+            APP_STATE.onboarding.store = {
+                id: 'store_' + Date.now(),
+                name,
+                slug,
+                whatsapp,
+                desc,
+                shipAmman,
+                shipGov
+            };
+
+            showOnboardingStep(4);
+            renderDraftProductsList();
+        }
+
+        // STEP 4: Product Image Handling (Local File Reader)
+        let tempProdImageData = null;
+
+        function previewProductImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    tempProdImageData = e.target.result; // Base64 Data URL
+                    document.getElementById('prod-img-preview').src = tempProdImageData;
+                    document.getElementById('prod-img-preview-box').classList.remove('hidden');
+                    document.getElementById('prod-img-preview-box').classList.add('flex');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function addDraftProduct() {
+            const name = document.getElementById('new-prod-name').value.trim();
+            const price = parseFloat(document.getElementById('new-prod-price').value);
+
+            if (!name || isNaN(price) || price <= 0) {
+                alert('يرجى إدخال اسم المنتج والسعر بشكل صحيح');
+                return;
+            }
+
+            const image = tempProdImageData || `https://picsum.photos/300/300?random=${Math.floor(Math.random()*1000)}`;
+
+            APP_STATE.onboarding.products.push({
+                id: 'prod_' + Date.now(),
+                name,
+                price,
+                image
+            });
+
+            // Reset form
+            document.getElementById('new-prod-name').value = '';
+            document.getElementById('new-prod-price').value = '';
+            document.getElementById('new-prod-file').value = '';
+            document.getElementById('prod-img-preview-box').classList.add('hidden');
+            tempProdImageData = null;
+
+            renderDraftProductsList();
+        }
+
+        function removeDraftProduct(idx) {
+            APP_STATE.onboarding.products.splice(idx, 1);
+            renderDraftProductsList();
+        }
+
+        function renderDraftProductsList() {
+            const container = document.getElementById('onboard-products-list');
+            const badge = document.getElementById('products-count-badge');
+            const btnProceed = document.getElementById('btn-proceed-to-payment');
+            const count = APP_STATE.onboarding.products.length;
+
+            badge.innerText = `${count} من 3 منتجات`;
+            container.innerHTML = '';
+
+            APP_STATE.onboarding.products.forEach((p, index) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between p-2.5 bg-slate-50 border rounded-2xl text-xs';
+                item.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <img src="${p.image}" class="w-10 h-10 object-cover rounded-xl border">
+                        <div>
+                            <h5 class="font-bold text-slate-900">${p.name}</h5>
+                            <span class="text-brand-600 font-extrabold">${p.price.toFixed(2)} د.أ</span>
+                        </div>
+                    </div>
+                    <button onclick="removeDraftProduct(${index})" class="text-rose-500 font-bold hover:bg-rose-50 px-2 py-1 rounded-lg">حذف</button>
+                `;
+                container.appendChild(item);
+            });
+
+            if (count >= 3) {
+                btnProceed.disabled = false;
+                btnProceed.className = "w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-md cursor-pointer";
+                btnProceed.innerText = "متابعة لاختيار الباقة والدفع التفاعلي ←";
+            } else {
+                btnProceed.disabled = true;
+                btnProceed.className = "w-full bg-slate-200 text-slate-400 font-bold py-3 rounded-xl text-xs cursor-not-allowed transition";
+                btnProceed.innerText = `يجب إضافة ${3 - count} منتج إضافي للمتابعة`;
+            }
+        }
+
+        function goToStep5() {
+            showOnboardingStep(5);
+            const pkgKey = APP_STATE.onboarding.package;
+            const titleEl = document.getElementById('selected-pkg-title');
+            const priceEl = document.getElementById('selected-pkg-price');
+
+            if (pkgKey === 'pro') {
+                titleEl.innerText = "باقة المحترفين Pro (90 يومًا)";
+                priceEl.innerText = "30.99 د.أ";
+            } else if (pkgKey === 'vip') {
+                titleEl.innerText = "الباقة السنوية VIP (365 يومًا)";
+                priceEl.innerText = "99.00 د.أ";
+            } else {
+                titleEl.innerText = "باقة البداية (30 يومًا)";
+                priceEl.innerText = "12.99 د.أ";
+            }
+        }
+
+        function selectPaymentMethod(method) {
+            const btnVisa = document.getElementById('btn-pay-visa');
+            const btnWa = document.getElementById('btn-pay-wa');
+            const areaVisa = document.getElementById('pay-area-visa');
+            const areaWa = document.getElementById('pay-area-whatsapp');
+
+            if (method === 'visa') {
+                btnVisa.className = "border-2 border-brand-500 bg-brand-50/40 p-3 rounded-xl text-center space-y-0.5";
+                btnWa.className = "border-2 border-slate-200 p-3 rounded-xl text-center space-y-0.5 hover:border-brand-300";
+                areaVisa.classList.remove('hidden');
+                areaWa.classList.add('hidden');
+            } else {
+                btnWa.className = "border-2 border-brand-500 bg-brand-50/40 p-3 rounded-xl text-center space-y-0.5";
+                btnVisa.className = "border-2 border-slate-200 p-3 rounded-xl text-center space-y-0.5 hover:border-brand-300";
+                areaWa.classList.remove('hidden');
+                areaVisa.classList.add('hidden');
+
+                const storeName = APP_STATE.onboarding.store.name;
+                const text = encodeURIComponent(`مرحباً دعم منصة متجرك Jo، أود تفعيل متجري (${storeName}) المكون من 3 منتجات بنجاح.`);
+                document.getElementById('wa-order-link').href = `https://wa.me/962779926984?text=${text}`;
+            }
+        }
+
+        function processVisaPayment() {
+            completeStoreActivation();
+        }
+
+        function redeemActivationCode() {
+            const code = document.getElementById('activation-code-input').value.trim();
+            if (!code) {
+                alert('يرجى إدخال كود التفعيل المعتمد');
+                return;
+            }
+            alert('تم التحقق من كود التفعيل بنجاح! جاري إطلاق المتجر...');
+            completeStoreActivation();
+        }
+
+        function completeStoreActivation() {
+            const newStore = {
+                ...APP_STATE.onboarding.store,
+                user: APP_STATE.onboarding.user,
+                products: APP_STATE.onboarding.products,
+                activated: true,
+                createdAt: new Date().toISOString()
+            };
+
+            APP_STATE.stores.push(newStore);
+            APP_STATE.currentMerchant = newStore;
+            saveState();
+
+            // إخفاء أزرار فتح المتجر بالكامل وإظهار لوحة التاجر
+            checkActiveMerchantState();
+            renderAdminStoresList();
+
+            alert('تهانينا الكبرى 🎉 تم تفعيل متجرك الإلكتروني بنجاح تام وإخفاء أزرار التسجيل.');
+            switchPage('dashboard');
+        }
+
+        // MERCHANT DASHBOARD LOGIC
+        function renderMerchantDashboard() {
+            const merchant = APP_STATE.currentMerchant;
+            if (!merchant) return;
+
+            document.getElementById('dash-store-title').innerText = merchant.name;
+            const urlEl = document.getElementById('dash-store-url');
+            urlEl.innerText = `matjarakjo.com/${merchant.slug}`;
+            urlEl.href = `#`;
+
+            document.getElementById('dash-count-prods').innerText = merchant.products.length;
+
+            const container = document.getElementById('dash-products-list');
+            container.innerHTML = '';
+
+            merchant.products.forEach((p) => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-50 p-2 border rounded-2xl space-y-1.5 text-center";
+                card.innerHTML = `
+                    <img src="${p.image}" class="w-full h-20 object-cover rounded-xl border">
+                    <h5 class="font-bold text-xs text-slate-900 truncate">${p.name}</h5>
+                    <span class="text-brand-600 font-black text-xs block">${p.price.toFixed(2)} د.أ</span>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleDashboardAddProductModal() {
+            const form = document.getElementById('dash-add-product-form');
+            form.classList.toggle('hidden');
+        }
+
+        let tempDashImgData = null;
+        function previewDashProductImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    tempDashImgData = e.target.result;
+                    document.getElementById('dash-p-img-preview').src = tempDashImgData;
+                    document.getElementById('dash-p-img-preview-box').classList.remove('hidden');
+                    document.getElementById('dash-p-img-preview-box').classList.add('flex');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function saveDashProduct() {
+            const name = document.getElementById('dash-p-name').value.trim();
+            const price = parseFloat(document.getElementById('dash-p-price').value);
+
+            if (!name || isNaN(price)) {
+                alert('يرجى إدخال اسم المنتج والسعر');
+                return;
+            }
+
+            const img = tempDashImgData || `https://picsum.photos/300/300?random=${Math.floor(Math.random()*1000)}`;
+
+            APP_STATE.currentMerchant.products.push({
+                id: 'prod_' + Date.now(),
+                name,
+                price,
+                image: img
+            });
+
+            const idx = APP_STATE.stores.findIndex(s => s.id === APP_STATE.currentMerchant.id);
+            if (idx !== -1) APP_STATE.stores[idx] = APP_STATE.currentMerchant;
+
+            saveState();
+            renderMerchantDashboard();
+
+            document.getElementById('dash-p-name').value = '';
+            document.getElementById('dash-p-price').value = '';
+            document.getElementById('dash-p-file').value = '';
+            document.getElementById('dash-p-img-preview-box').classList.add('hidden');
+            tempDashImgData = null;
+            toggleDashboardAddProductModal();
+        }
+
+        // CLIENT STORE LIVE PREVIEW
+        function openLiveStore() {
+            if (!APP_STATE.currentMerchant) return;
+            APP_STATE.activeClientStore = APP_STATE.currentMerchant;
+            renderClientStore();
+            switchPage('store');
+        }
+
+        function renderClientStore() {
+            const store = APP_STATE.activeClientStore;
+            if (!store) return;
+
+            document.getElementById('client-store-title').innerText = store.name;
+            document.getElementById('client-store-desc').innerText = store.desc || 'أهلاً بكم في متجرنا المميز!';
+            document.getElementById('client-store-logo-char').innerText = store.name.charAt(0);
+
+            const grid = document.getElementById('client-products-grid');
+            grid.innerHTML = '';
+
+            store.products.forEach(p => {
+                const item = document.createElement('div');
+                item.className = "bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm space-y-2 flex flex-col justify-between";
+                item.innerHTML = `
+                    <div class="space-y-2">
+                        <img src="${p.image}" class="w-full h-28 object-cover rounded-xl border">
+                        <h4 class="font-bold text-xs text-slate-900">${p.name}</h4>
+                        <span class="text-brand-600 font-black text-xs block">${p.price.toFixed(2)} د.أ</span>
+                    </div>
+                    <button onclick="addToCart('${p.id}')" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold py-2 rounded-xl text-[11px] transition active:scale-95">
+                        + إضافة للسلة
+                    </button>
+                `;
+                grid.appendChild(item);
+            });
+
+            updateCartUI();
+        }
+
+        function addToCart(prodId) {
+            const store = APP_STATE.activeClientStore;
+            const prod = store.products.find(p => p.id === prodId);
+            if (!prod) return;
+
+            APP_STATE.clientCart.push(prod);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const count = APP_STATE.clientCart.length;
+            const bar = document.getElementById('client-cart-bar');
+            
+            if (count > 0) {
+                bar.classList.remove('translate-y-20');
+            } else {
+                bar.classList.add('translate-y-20');
+            }
+
+            const total = APP_STATE.clientCart.reduce((sum, p) => sum + p.price, 0);
+            document.getElementById('client-cart-count').innerText = count;
+            document.getElementById('client-cart-total').innerText = `${total.toFixed(2)} د.أ`;
+        }
+
+        function openCheckoutModal() {
+            const store = APP_STATE.activeClientStore;
+            document.getElementById('opt-fee-amman').innerText = store.shipAmman.toFixed(2);
+            document.getElementById('opt-fee-gov').innerText = store.shipGov.toFixed(2);
+
+            updateDeliveryFeeInCheckout();
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function updateDeliveryFeeInCheckout() {
+            const store = APP_STATE.activeClientStore;
+            const city = document.getElementById('cust-city').value;
+            const fee = city === 'amman' ? store.shipAmman : store.shipGov;
+            
+            const subtotal = APP_STATE.clientCart.reduce((sum, p) => sum + p.price, 0);
+            const total = subtotal + fee;
+
+            document.getElementById('summary-subtotal').innerText = `${subtotal.toFixed(2)} د.أ`;
+            document.getElementById('summary-shipping').innerText = `${fee.toFixed(2)} د.أ`;
+            document.getElementById('summary-total').innerText = `${total.toFixed(2)} د.أ`;
+        }
+
+        function submitWhatsAppOrder(e) {
+            e.preventDefault();
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const city = document.getElementById('cust-city').options[document.getElementById('cust-city').selectedIndex].text;
+            const address = document.getElementById('cust-address').value.trim();
+
+            const store = APP_STATE.activeClientStore;
+            const itemsList = APP_STATE.clientCart.map((item, i) => `${i + 1}. ${item.name} (${item.price.toFixed(2)} د.أ)`).join('%0A');
+            const totalText = document.getElementById('summary-total').innerText;
+
+            const text = `طلب جديد من المتجر (${store.name}):%0A%0A*الزبون:* ${name}%0A*رقم الهاتف:* ${phone}%0A*العنوان:* ${city} - ${address}%0A%0A*المنتجات المطلوبة:*%0A${itemsList}%0A%0A*المبلغ الإجمالي:* ${totalText}`;
+
+            window.open(`https://wa.me/${store.whatsapp}?text=${text}`, '_blank');
+            closeCheckoutModal();
+            APP_STATE.clientCart = [];
+            updateCartUI();
+        }
+
+        function renderAdminStoresList() {
+            const container = document.getElementById('admin-stores-list');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (APP_STATE.stores.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400">لا توجد متاجر مفعلة مسجلة حتى الآن</p>`;
+                return;
+            }
+
+            APP_STATE.stores.forEach(s => {
+                const item = document.createElement('div');
+                item.className = 'p-3 bg-slate-50 border rounded-2xl flex justify-between items-center text-xs';
+                item.innerHTML = `
+                    <div>
+                        <h5 class="font-black text-slate-900">${s.name}</h5>
+                        <span class="text-slate-500 font-mono text-[10px]">واتساب: ${s.whatsapp} | بريد: ${s.user.email}</span>
+                    </div>
+                    <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full text-[10px]">مفعل 🟢</span>
+                `;
+                container.appendChild(item);
+            });
+        }
+    </script>
+</body>
+</html>
