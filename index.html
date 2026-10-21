@@ -1,1036 +1,1130 @@
+
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="scroll-smooth">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجرك Jo - حوّل مشروعك إلى متجر إلكتروني خاص</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Tajawal & Cairo -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            200: '#bbf7d0',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                            dark: '#01291e',
-                        }
-                    },
-                    fontFamily: {
-                        cairo: ['Cairo', 'sans-serif'],
-                        tajawal: ['Tajawal', 'sans-serif'],
-                    },
-                    animation: {
-                        'float-slow': 'float 6s ease-in-out infinite',
-                        'float-medium': 'float 4s ease-in-out infinite',
-                        'float-fast': 'float 2.5s ease-in-out infinite',
-                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 20s linear infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-                            '50%': { transform: 'translateY(-15px) rotate(3deg)' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { opacity: '1', transform: 'scale(1)' },
-                            '50%': { opacity: '.85', transform: 'scale(1.03)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Cairo', 'Tajawal', sans-serif;
-            background-color: #f8fafc;
-            overflow-x: hidden;
-        }
-        
-        /* Smooth Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #10b981;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #059669;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#064e3b">
+<meta name="description" content="متجرك Jo - متجر إلكتروني خاص بمشروعك في الأردن. اعرض منتجاتك وأسعارك واستقبل الطلبات عبر واتساب.">
+<title>متجرك Jo | متجرك الإلكتروني الخاص</title>
 
-        /* Glassmorphism utility */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 
-        .glass-dark {
-            background: rgba(1, 41, 30, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
+<style>
+:root {
+  --green: #047857;
+  --dark: #063c32;
+  --deep: #032e27;
+  --mint: #d1fae5;
+  --ink: #102e32;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+body {
+  margin: 0;
+  font-family: 'Tajawal', sans-serif;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+a,button { -webkit-tap-highlight-color: transparent; }
+a { text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
 
-        /* Phone Screen Frame Shadow */
-        .phone-shadow {
-            box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
-        }
+.container-main { width: min(1180px, 100% - 36px); margin-inline: auto; }
+.section { padding-block: 76px; }
+.section-title { font-size: clamp(27px,4vw,40px); line-height: 1.4; font-weight: 900; }
+.section-subtitle { color: #64748b; line-height: 1.9; max-width: 650px; margin: 12px auto 0; }
 
-        /* Leaf Pattern BG Elements */
-        .leaf-bg-1 {
-            background-image: radial-gradient(#10b981 0.75px, transparent 0.75px);
-            background-size: 16px 16px;
-        }
-    </style>
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 15% 20%, #bbf7d0 0, transparent 37%),
+    radial-gradient(ellipse at 85% 70%, #d1fae5 0, transparent 37%),
+    linear-gradient(120deg,#f0fdf4,#fff 60%,#ecfdf5);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  background: #6ee7b750;
+  filter: blur(75px);
+  border-radius: 50%;
+  top: 10%;
+  right: -100px;
+  animation: glow 8s ease-in-out infinite alternate;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: #34d39930;
+  filter: blur(70px);
+  border-radius: 50%;
+  bottom: -100px;
+  left: 5%;
+  animation: glow 10s ease-in-out infinite alternate-reverse;
+}
+@keyframes glow {
+  from { transform: translate(0,0) scale(.9); }
+  to { transform: translate(25px,-15px) scale(1.15); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0% { background-position: 150% 0; }
+  100% { background-position: -150% 0; }
+}
+@keyframes pulseSoft {
+  0%,100% { box-shadow: 0 0 0 0 #10b98125; }
+  50% { box-shadow: 0 0 0 8px #10b98100; }
+}
+.animate-in { animation: fadeUp .7s ease both; }
+.delay-1 { animation-delay: .12s; }
+.delay-2 { animation-delay: .24s; }
+.delay-3 { animation-delay: .36s; }
+
+.btn-primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 22px;
+  color: #fff;
+  font-weight: 800;
+  border-radius: 15px;
+  background: linear-gradient(110deg,#047857,#059669,#047857);
+  background-size: 200% 100%;
+  box-shadow: 0 8px 24px #04785726;
+  transition: transform .25s,box-shadow .25s;
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px #04785730;
+  animation: shimmer 2s linear infinite;
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border: 1px solid #a7c8bc;
+  border-radius: 15px;
+  background: #ffffffd9;
+  color: #174b40;
+  font-weight: 800;
+  transition: .25s;
+}
+.btn-secondary:hover { border-color: var(--green); background: #ecfdf5; }
+
+.logo-mark {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(145deg,#059669,#064e3b);
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+  box-shadow: 0 6px 15px #064e3b20;
+}
+.nav-link { transition: color .2s; }
+.nav-link:hover { color: #059669; }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.02fr .98fr;
+  align-items: center;
+  gap: 44px;
+  position: relative;
+  z-index: 1;
+}
+.hero-copy h1 {
+  font-size: clamp(35px,4.4vw,59px);
+  line-height: 1.3;
+  font-weight: 900;
+  letter-spacing: -.035em;
+}
+.text-gradient {
+  background: linear-gradient(100deg,#047857,#10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #bbf7d0;
+  border-radius: 30px;
+  background: #ffffffb8;
+  color: #065f46;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.hero-preview { position: relative; min-width: 0; padding: 10px 0 20px; }
+.device-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 390px;
+}
+.admin-preview {
+  width: 43%;
+  background: white;
+  border: 1px solid #dbe7e1;
+  border-radius: 19px;
+  padding: 13px;
+  box-shadow: 0 18px 45px #064e3b16;
+  transform: rotate(-4deg);
+  animation: float 6s ease-in-out infinite;
+}
+.admin-line { height: 7px; background: #edf2ef; border-radius: 20px; margin-top: 11px; }
+.admin-stat { background: #ecfdf5; border-radius: 12px; padding: 10px; margin-top: 12px; }
+.phone {
+  width: min(235px,55%);
+  border: 7px solid #132c28;
+  background: #fff;
+  border-radius: 35px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px #064e3b28;
+  position: relative;
+  z-index: 2;
+  animation: float 5s ease-in-out infinite;
+}
+.phone-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px;
+  font-size: 11px;
+  font-weight: 900;
+}
+.cookie-banner {
+  background: linear-gradient(135deg,#f8d9ae,#fff0d9);
+  text-align: center;
+  padding: 18px 8px;
+}
+.cookie-banner .cookie-emoji { font-size: 57px; }
+.product-mini {
+  border: 1px solid #eef2ef;
+  border-radius: 12px;
+  padding: 7px;
+  min-width: 0;
+}
+.product-image {
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #fff0df;
+  min-height: 70px;
+  font-size: 31px;
+}
+.mini-add {
+  background: #047857;
+  color: white;
+  border-radius: 7px;
+  padding: 6px 2px;
+  font-size: 10px;
+  text-align: center;
+  font-weight: 800;
+}
+.floating-card {
+  position: absolute;
+  z-index: 4;
+  left: -10px;
+  bottom: 20px;
+  padding: 13px;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid #dceee5;
+  box-shadow: 0 12px 32px #064e3b14;
+  animation: float 5s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 30px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.problem-card {
+  padding: 25px;
+  border-radius: 23px;
+  min-width: 0;
+}
+.why-card {
+  background: linear-gradient(145deg,#f0fdf7,#fff);
+  border: 1px solid #e0eee7;
+  border-radius: 21px;
+  padding: 21px;
+  transition: transform .3s,box-shadow .3s,border-color .3s;
+}
+.why-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px #064e3b0e;
+  border-color: #a7f3d0;
+}
+.why-icon {
+  width: 49px;
+  height: 49px;
+  border-radius: 16px;
+  background: #d1fae5;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  flex-shrink: 0;
+  transition: transform .3s;
+}
+.why-card:hover .why-icon { transform: rotate(-7deg) scale(1.08); }
+
+.showcase-dark {
+  background:
+    radial-gradient(ellipse at 10% 10%,#0f766e40,transparent 38%),
+    radial-gradient(ellipse at 90% 90%,#05966925,transparent 35%),
+    #032e27;
+  color: white;
+}
+.showcase-track {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 20px;
+}
+.showcase-phone {
+  max-width: 190px;
+  width: 100%;
+  margin: auto;
+  border: 6px solid #1e3932;
+  border-radius: 24px;
+  background: white;
+  color: #102e32;
+  overflow: hidden;
+  box-shadow: 0 15px 35px #0002;
+  transition: transform .3s;
+}
+.showcase-phone:hover { transform: translateY(-7px); }
+.showcase-phone img { display: block; width: 100%; height: auto; }
+.mock-screen { padding: 11px; min-height: 210px; }
+.mock-product {
+  border: 1px solid #e5eee9;
+  border-radius: 9px;
+  padding: 6px;
+  margin-top: 8px;
+}
+.mock-product-emoji {
+  display: grid;
+  place-items: center;
+  background: #fff0df;
+  min-height: 58px;
+  border-radius: 6px;
+  font-size: 26px;
+}
+.mock-label {
+  display: inline-block;
+  padding: 7px 13px;
+  border-radius: 20px;
+  background: #064e3b;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  margin-top: 12px;
+}
+
+.feature-card {
+  border: 1px solid #e5eee9;
+  border-radius: 20px;
+  padding: 21px;
+  background: white;
+  transition: transform .25s,box-shadow .25s;
+}
+.feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px #064e3b0d; }
+.feature-icon {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  background: #d1fae5;
+  display: grid;
+  place-items: center;
+  color: #047857;
+  font-size: 23px;
+  margin-bottom: 15px;
+}
+.price-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 25px;
+  padding: 26px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+.price-card.featured {
+  background: linear-gradient(145deg,#064e3b,#022c22);
+  border-color: #065f46;
+  color: white;
+  box-shadow: 0 20px 45px #064e3b20;
+}
+.price-list { display: grid; gap: 12px; }
+.price-list li { display: flex; gap: 8px; align-items: flex-start; line-height: 1.7; font-size: 14px; }
+.price-list li::before { content: "✓"; color: #059669; font-weight: 900; }
+.featured .price-list li::before { color: #6ee7b7; }
+
+.testimonial {
+  border: 1px solid #e3eee8;
+  background: white;
+  border-radius: 19px;
+  padding: 20px;
+  box-shadow: 0 7px 20px #064e3b06;
+}
+.avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #d1fae5;
+  color: #065f46;
+  font-weight: 900;
+}
+.faq-item {
+  border: 1px solid #e1ebe5;
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.faq-question {
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: right;
+  align-items: center;
+  font-weight: 800;
+}
+.faq-answer { padding: 0 16px 17px; line-height: 1.9; color: #64748b; font-size: 14px; }
+.faq-question:focus-visible,a:focus-visible,button:focus-visible { outline: 3px solid #34d399; outline-offset: 3px; }
+
+.final-banner {
+  background:
+    radial-gradient(circle at 10% 20%,#10b98135,transparent 35%),
+    linear-gradient(110deg,#032e27,#064e3b);
+  border-radius: 27px;
+}
+.whatsapp-float {
+  position: fixed;
+  z-index: 60;
+  bottom: 20px;
+  left: 20px;
+  width: 55px;
+  height: 55px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #16a34a;
+  color: white;
+  box-shadow: 0 7px 25px #0002;
+  font-size: 25px;
+  transition: transform .2s;
+}
+.whatsapp-float:hover { transform: scale(1.07); }
+.mobile-cta { display: none; }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .65s ease,transform .65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media(max-width:900px) {
+  .hero-grid { gap: 24px; }
+  .showcase-track { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .showcase-phone { max-width: 175px; }
+}
+@media(max-width:767px) {
+  html { scroll-padding-top: 72px; }
+  .container-main { width: calc(100% - 28px); }
+  .section { padding-block: 54px; }
+  .desktop-nav { display: none !important; }
+  .header-inner { height: 65px !important; }
+  .header-cta { padding: 10px 12px !important; font-size: 12px !important; }
+  .logo-mark { width: 38px; height: 38px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 20px; }
+  .hero-copy { text-align: center; }
+  .hero-copy h1 { font-size: clamp(34px,9vw,47px); }
+  .hero-copy .hero-description { font-size: 16px; line-height: 1.95; }
+  .hero-buttons { display: grid; grid-template-columns: 1fr; }
+  .hero-buttons a { width: 100%; }
+  .hero-preview { max-width: 440px; width: 100%; margin: 0 auto; }
+  .device-stage { min-height: 340px; }
+  .admin-preview { width: 40%; padding: 10px; }
+  .phone { width: 52%; }
+  .floating-card { left: 0; bottom: 0; }
+  .problem-grid { grid-template-columns: 1fr !important; }
+  .why-grid { grid-template-columns: 1fr !important; }
+  .why-card { padding: 19px; }
+  .showcase-track { gap: 14px; }
+  .showcase-phone { max-width: 155px; border-width: 5px; }
+  .mock-screen { min-height: 175px; padding: 8px; }
+  .mock-product-emoji { min-height: 45px; }
+  .features-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 11px; }
+  .feature-card { padding: 16px; }
+  .feature-icon { width: 42px; height: 42px; font-size: 20px; }
+  .pricing-grid { grid-template-columns: 1fr !important; }
+  .price-card { padding: 23px; }
+  .testimonials-grid { grid-template-columns: 1fr !important; }
+  .faq-grid { grid-template-columns: 1fr !important; }
+  .final-banner { padding: 28px 21px !important; text-align: center; }
+  .final-banner a { width: 100%; }
+  .whatsapp-float { display: none; }
+  .mobile-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 55;
+    padding: 9px 13px calc(9px + env(safe-area-inset-bottom));
+    background: #ffffffed;
+    backdrop-filter: blur(12px);
+    border-top: 1px solid #e2e8f0;
+  }
+  .mobile-cta a { width: 100%; }
+  body { padding-bottom: 76px; }
+}
+@media(min-width:768px) and (max-width:1024px) {
+  .hero-copy h1 { font-size: 43px; }
+  .why-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
 </head>
-<body class="text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
 
-    <!-- Floating Background Decorative Elements (Animated Leaves & Light Dots) -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="absolute -top-20 -right-20 w-96 h-96 bg-brand-200/40 rounded-full blur-3xl animate-pulse-glow"></div>
-        <div class="absolute top-1/3 -left-32 w-80 h-80 bg-brand-100/50 rounded-full blur-3xl animate-float-slow"></div>
-        <div class="absolute bottom-1/4 right-10 w-72 h-72 bg-emerald-100/40 rounded-full blur-3xl animate-float-medium"></div>
+<body class="bg-white">
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 border-b border-slate-100 bg-white/95 backdrop-blur">
+  <div class="container-main">
+    <div class="header-inner flex items-center justify-between gap-3 h-[73px]">
+      <a href="#home" class="flex items-center gap-2 shrink-0" aria-label="متجرك Jo">
+        <span class="logo-mark">Jo</span>
+        <span class="text-xl font-black text-slate-900">متجرك <span class="text-emerald-700">Jo</span></span>
+      </a>
+      <nav class="desktop-nav flex items-center gap-5 text-sm font-bold text-slate-600">
+        <a class="nav-link" href="#home">الرئيسية</a>
+        <a class="nav-link" href="#why-store">لماذا متجر؟</a>
+        <a class="nav-link" href="#showcase">معاينة المتجر</a>
+        <a class="nav-link" href="#features">المميزات</a>
+        <a class="nav-link" href="#pricing">الباقات</a>
+        <a class="nav-link" href="#faq">الأسئلة الشائعة</a>
+      </nav>
+      <a data-wa="general" href="#" class="btn-primary header-cta !py-3 !px-4 text-sm shrink-0">
+        اطلب متجرك الآن
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section id="home" class="hero py-12 md:py-20">
+  <div class="container-main hero-grid">
+    <div class="hero-copy animate-in">
+      <span class="hero-badge">🇯🇴 منصة متاجر للمشاريع الصغيرة</span>
+      <h1 class="mt-5 text-slate-950">
+        حوّل مشروعك إلى
+        <span class="text-gradient">متجر إلكتروني خاص</span>
+      </h1>
+      <p class="hero-description mt-5 text-slate-600 text-lg leading-9">
+        اعرض منتجاتك وأسعارك، وخلّي عملاءك يختارون طلباتهم من سلة منظمة ويرسلوها لك عبر واتساب.
+      </p>
+      <div class="hero-buttons mt-7 flex flex-wrap gap-3">
+        <a data-wa="general" href="#" class="btn-primary">
+          اطلب متجرك الآن عبر واتساب <span>↗</span>
+        </a>
+        <a href="store.html" class="btn-secondary">شاهد مثال متجر حقيقي</a>
+      </div>
+      <div class="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold text-slate-600 justify-center md:justify-start">
+        <span>✓ إدارة أسهل</span>
+        <span>✓ سلة مشتريات</span>
+        <span>✓ رابط خاص</span>
+        <span>✓ دعم عبر واتساب</span>
+      </div>
     </div>
 
-    <!-- Sticky Header Navbar -->
-    <header id="navbar" class="sticky top-0 z-50 transition-all duration-300 py-3 px-4 lg:px-8">
-        <div class="max-w-7xl mx-auto glass-card rounded-2xl shadow-sm px-4 lg:px-6 py-2.5 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-md group-hover:scale-105 transition-transform">
-                    Jo
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-extrabold text-xl leading-none text-brand-900 tracking-tight">متجرك <span class="text-brand-600">Jo</span></span>
-                    <span class="text-[10px] text-slate-500 font-semibold mt-0.5">منصة متاجر المشاريع الصغيرة</span>
-                </div>
-            </a>
-
-            <!-- Nav Links -->
-            <nav class="hidden md:flex items-center gap-6 font-semibold text-slate-700 text-sm">
-                <a href="#hero" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">الرئيسية</a>
-                <a href="#features" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">المميزات</a>
-                <a href="#preview" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">كيف تبدأ؟</a>
-                <a href="#pricing" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">الباقات</a>
-                <a href="#faq" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">الأسئلة الشائعة</a>
-            </nav>
-
-            <!-- CTA Button -->
-            <div class="flex items-center gap-3">
-                <a href="https://wa.me/962779926984" target="_blank" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 transition-all flex items-center gap-2 text-sm active:scale-95">
-                    <span>اطلب متجرك الآن</span>
-                    <i class="fa-brands fa-whatsapp text-lg"></i>
-                </a>
+    <div class="hero-preview animate-in delay-2">
+      <div class="device-stage">
+        <div class="admin-preview">
+          <div class="flex justify-between items-center gap-1">
+            <span class="font-black text-xs">لوحة المتجر</span>
+            <span class="text-emerald-600 text-[10px]">● الإدارة</span>
+          </div>
+          <div class="admin-stat">
+            <p class="text-[10px] text-slate-500">منتجاتك</p>
+            <p class="text-2xl font-black text-emerald-800">20</p>
+          </div>
+          <div class="admin-line"></div>
+          <div class="admin-line w-3/4"></div>
+          <div class="admin-line w-1/2"></div>
+          <div class="mt-4 rounded-lg bg-emerald-700 p-2 text-center text-[10px] text-white font-bold">إدارة المنتجات</div>
+          <div class="mt-3 rounded-lg bg-slate-50 p-2">
+            <div class="flex gap-2 items-center">
+              <span>🍪</span><span class="text-[10px] font-bold">منتج جديد</span>
             </div>
+            <div class="admin-line"></div>
+          </div>
         </div>
-    </header>
 
-    <!-- SECTION 1: HERO SECTION -->
-    <section id="hero" class="relative pt-8 pb-16 lg:py-20 overflow-hidden z-10">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            <!-- Left Text Column (RTL Right side text) -->
-            <div class="lg:col-span-6 text-center lg:text-right space-y-6">
-                <!-- Tag Badge -->
-                <div class="inline-flex items-center gap-2 bg-brand-100 text-brand-800 border border-brand-200 px-4 py-1.5 rounded-full text-xs font-bold animate-bounce">
-                    <i class="fa-solid fa-flag text-brand-600"></i>
-                    <span>منصة متاجر المشاريع الصغيرة</span>
-                </div>
-
-                <!-- Main Title -->
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.25] tracking-tight">
-                    حوّل مشروعك إلى <br>
-                    <span class="text-brand-600 relative inline-block">
-                        متجر إلكتروني خاص
-                        <svg class="absolute -bottom-2 right-0 w-full h-3 text-brand-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
-                            <path d="M0,5 Q50,10 100,5" stroke="currentColor" stroke-width="6" fill="none"/>
-                        </svg>
-                    </span>
-                </h1>
-
-                <!-- Subtitle -->
-                <p class="text-slate-600 text-base sm:text-lg font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                    اعرض منتجاتك، وأسعارك. وخلي عملائك يختارون طلباتهم من سلة منظمة ويرسلوها لك عبر واتساب بكل سهولة ومهنية.
-                </p>
-
-                <!-- CTA Big Button -->
-                <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                    <a href="https://wa.me/962779926984" target="_blank" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-lg px-8 py-4 rounded-2xl shadow-xl shadow-brand-600/30 hover:shadow-brand-600/50 hover:-translate-y-1 transition-all flex items-center justify-center gap-3 group">
-                        <i class="fa-brands fa-whatsapp text-2xl group-hover:rotate-12 transition-transform"></i>
-                        <span>اطلب متجرك الآن عبر واتساب</span>
-                    </a>
-                </div>
-
-                <!-- Feature Icons Badges (Matches bottom of image hero) -->
-                <div class="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-slate-700 text-xs font-bold">
-                    <div class="bg-white/80 backdrop-blur p-3 rounded-xl border border-slate-100 shadow-sm flex items-center justify-center gap-2 hover:border-brand-300 transition-colors">
-                        <i class="fa-solid fa-headset text-brand-600 text-base"></i>
-                        <span>دعم مباشر</span>
-                    </div>
-                    <div class="bg-white/80 backdrop-blur p-3 rounded-xl border border-slate-100 shadow-sm flex items-center justify-center gap-2 hover:border-brand-300 transition-colors">
-                        <i class="fa-solid fa-sliders text-brand-600 text-base"></i>
-                        <span>إدارة مجهزة</span>
-                    </div>
-                    <div class="bg-white/80 backdrop-blur p-3 rounded-xl border border-slate-100 shadow-sm flex items-center justify-center gap-2 hover:border-brand-300 transition-colors">
-                        <i class="fa-solid fa-mobile-screen-button text-brand-600 text-base"></i>
-                        <span>متوافق مع الجوال</span>
-                    </div>
-                    <div class="bg-white/80 backdrop-blur p-3 rounded-xl border border-slate-100 shadow-sm flex items-center justify-center gap-2 hover:border-brand-300 transition-colors">
-                        <i class="fa-solid fa-tags text-brand-600 text-base"></i>
-                        <span>بأسعار مناسبة</span>
-                    </div>
-                </div>
+        <div class="phone">
+          <div class="phone-top">
+            <span>🍪 كوكيز لذيذة</span><span>🛒</span>
+          </div>
+          <div class="cookie-banner">
+            <div class="cookie-emoji">🍪</div>
+            <h2 class="font-black text-lg text-slate-900">حلاوة كل يوم</h2>
+            <p class="text-xs text-slate-600 mt-1">اختَر نكهتك المفضلة</p>
+          </div>
+          <div class="grid grid-cols-2 gap-2 p-2">
+            <div class="product-mini">
+              <div class="product-image">🍪</div>
+              <p class="font-bold text-[10px] mt-2">كوكيز شوكولاتة</p>
+              <p class="text-emerald-800 font-black text-xs mt-1">3 د.أ</p>
+              <div class="mini-add mt-2">أضف للسلة</div>
             </div>
-
-            <!-- Right Hero Graphics (Dynamic Parallax Interactive Mobile Screen Showcase) -->
-            <div class="lg:col-span-6 relative flex justify-center items-center py-6" id="hero-parallax-container">
-                
-                <!-- Background Floating Decorative Elements -->
-                <div class="absolute w-72 h-72 bg-brand-500/10 rounded-full filter blur-2xl animate-pulse"></div>
-
-                <!-- Floating Badge 1 (Top Left) -->
-                <div class="absolute top-2 left-2 sm:left-6 z-20 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 animate-float-medium">
-                    <div class="w-10 h-10 rounded-xl bg-green-100 text-green-600 flex items-center justify-center font-bold text-lg">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs font-bold text-slate-800">120+ متجر</div>
-                        <div class="text-[10px] text-slate-500">يعمل بحرفية الآن</div>
-                    </div>
-                </div>
-
-                <!-- Floating Badge 2 (Bottom Right) -->
-                <div class="absolute bottom-6 right-2 sm:right-6 z-20 bg-white/90 backdrop-blur-md py-2.5 px-4 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2 animate-float-slow">
-                    <i class="fa-solid fa-circle-check text-brand-500 text-lg"></i>
-                    <span class="text-xs font-bold text-slate-800">مثال على متجر حقيقي</span>
-                </div>
-
-                <!-- Floating Leaf Graphic Left -->
-                <div class="absolute -left-6 top-1/2 text-brand-500/30 text-5xl animate-float-fast pointer-events-none">
-                    <i class="fa-solid fa-leaf"></i>
-                </div>
-
-                <!-- Mobile Mockup Screen Case -->
-                <div class="relative w-full max-w-[310px] sm:max-w-[330px] bg-slate-900 rounded-[45px] p-3 border-4 border-slate-800 shadow-2xl phone-shadow transition-transform duration-500 hover:scale-[1.02]">
-                    <!-- Notch -->
-                    <div class="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-4 bg-slate-800 rounded-full z-30"></div>
-
-                    <!-- Screen Inner Container -->
-                    <div class="bg-slate-50 rounded-[38px] overflow-hidden pt-7 pb-4 px-3 border border-slate-200 text-slate-800 min-h-[540px] flex flex-col justify-between relative">
-                        
-                        <!-- Mini Store Header inside phone -->
-                        <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between mb-3">
-                            <div class="flex items-center gap-2">
-                                <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">حلويات</div>
-                                <div>
-                                    <div class="text-xs font-bold">حلويات الأناقة</div>
-                                    <div class="text-[9px] text-slate-400">متجر معتمد</div>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-bag-shopping text-brand-600 text-sm"></i>
-                        </div>
-
-                        <!-- Mini Store Cards inside phone mockup -->
-                        <div class="space-y-2.5 flex-1 overflow-hidden">
-                            <!-- Product 1 -->
-                            <div class="bg-white p-2.5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-brand-300 transition-all">
-                                <img src="https://placehold.co/100x100/fecdd3/881337?text=كعك" alt="كعك" class="w-14 h-14 rounded-xl object-cover">
-                                <div class="flex-1">
-                                    <h4 class="text-xs font-bold text-slate-800">كعك التمر الملكي</h4>
-                                    <p class="text-[10px] text-slate-400 mt-0.5">علبة 1 كيلو صافي</p>
-                                    <div class="flex items-center justify-between mt-1.5">
-                                        <span class="text-xs font-extrabold text-brand-600">6.50 د.أ</span>
-                                        <button class="bg-brand-50 text-brand-700 px-2.5 py-1 rounded-lg text-[10px] font-bold hover:bg-brand-600 hover:text-white transition-colors">+ أضف</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Product 2 -->
-                            <div class="bg-white p-2.5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-brand-300 transition-all">
-                                <img src="https://placehold.co/100x100/fde68a/78350f?text=معمول" alt="معمول" class="w-14 h-14 rounded-xl object-cover">
-                                <div class="flex-1">
-                                    <h4 class="text-xs font-bold text-slate-800">معمول فستق حلبي</h4>
-                                    <p class="text-[10px] text-slate-400 mt-0.5">طبق 500 غرام</p>
-                                    <div class="flex items-center justify-between mt-1.5">
-                                        <span class="text-xs font-extrabold text-brand-600">8.00 د.أ</span>
-                                        <button class="bg-brand-50 text-brand-700 px-2.5 py-1 rounded-lg text-[10px] font-bold hover:bg-brand-600 hover:text-white transition-colors">+ أضف</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Cart Bar inside Mockup -->
-                            <div class="bg-brand-600 text-white p-3 rounded-2xl shadow-md flex items-center justify-between mt-4">
-                                <div class="flex items-center gap-2">
-                                    <span class="bg-white/20 px-2 py-0.5 rounded-lg text-xs font-bold">2 عناصر</span>
-                                    <span class="text-xs font-bold">14.50 د.أ</span>
-                                </div>
-                                <span class="text-[11px] font-bold flex items-center gap-1">
-                                    أطلب عبر واتساب <i class="fa-solid fa-arrow-left text-[10px]"></i>
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- Home Bar -->
-                        <div class="w-24 h-1 bg-slate-300 rounded-full mx-auto mt-2"></div>
-                    </div>
-                </div>
-
+            <div class="product-mini">
+              <div class="product-image" style="background:#fce7f3">🧁</div>
+              <p class="font-bold text-[10px] mt-2">كب كيك</p>
+              <p class="text-emerald-800 font-black text-xs mt-1">2 د.أ</p>
+              <div class="mini-add mt-2">أضف للسلة</div>
             </div>
-
+            <div class="product-mini">
+              <div class="product-image" style="background:#fef3c7">🍰</div>
+              <p class="font-bold text-[10px] mt-2">قطعة كيك</p>
+              <p class="text-emerald-800 font-black text-xs mt-1">2.5 د.أ</p>
+              <div class="mini-add mt-2">أضف للسلة</div>
+            </div>
+            <div class="product-mini">
+              <div class="product-image" style="background:#dbeafe">🍩</div>
+              <p class="font-bold text-[10px] mt-2">دونات</p>
+              <p class="text-emerald-800 font-black text-xs mt-1">1.5 د.أ</p>
+              <div class="mini-add mt-2">أضف للسلة</div>
+            </div>
+          </div>
+          <div class="m-2 p-2 rounded-lg bg-emerald-50 text-center text-[10px] font-bold text-emerald-900">معاينة توضيحية للمتجر</div>
         </div>
-    </section>
-
-    <!-- SECTION 2: WHY E-STORE COMPARISON SECTION (لماذا متجر إلكتروني؟) -->
-    <section class="py-16 bg-white relative z-10">
-        <div class="max-w-6xl mx-auto px-4 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight">لماذا متجر إلكتروني؟</h2>
-                <div class="w-16 h-1 bg-brand-500 mx-auto mt-3 rounded-full"></div>
-            </div>
-
-            <!-- Comparison Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-                
-                <!-- BAD WAY CARD (البيع عبر الرسائل فقط) -->
-                <div class="bg-rose-50/70 border-2 border-rose-100 rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all hover:shadow-lg">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center text-xl shadow-md">
-                            <i class="fa-solid fa-xmark"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-rose-900">البيع عبر الرسائل فقط</h3>
-                            <p class="text-xs text-rose-600">الطريقة التقليدية المتبعة سابقاً</p>
-                        </div>
-                    </div>
-
-                    <ul class="space-y-4">
-                        <li class="flex items-center gap-3 text-rose-800 font-semibold text-sm">
-                            <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-xs">✕</span>
-                            <span>تكرار شرح الأسعار لكل عميل</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-rose-800 font-semibold text-sm">
-                            <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-xs">✕</span>
-                            <span>نسيان تفاصيل الطلبات وإرباك العمل</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-rose-800 font-semibold text-sm">
-                            <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-xs">✕</span>
-                            <span>مظهر غير احترافي يقلل من ثقة الزبون</span>
-                        </li>
-                    </ul>
-
-                    <!-- Mock chat background effect -->
-                    <div class="mt-8 bg-white/80 p-3 rounded-2xl border border-rose-100 shadow-sm text-xs text-slate-500 space-y-2 opacity-80">
-                        <div class="bg-slate-100 p-2 rounded-xl w-3/4">كم السعر؟</div>
-                        <div class="bg-rose-100 text-rose-900 p-2 rounded-xl w-3/4 mr-auto text-left">هل متوفر؟</div>
-                    </div>
-                </div>
-
-                <!-- GOOD WAY CARD (مع متجرك Jo) -->
-                <div class="bg-emerald-50/80 border-2 border-brand-200 rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-brand-600 text-white flex items-center justify-center text-xl shadow-md">
-                            <i class="fa-solid fa-check"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-brand-900">مع متجرك Jo</h3>
-                            <p class="text-xs text-brand-600">الحل الحديث والتنفيذي السريع</p>
-                        </div>
-                    </div>
-
-                    <ul class="space-y-4">
-                        <li class="flex items-center gap-3 text-brand-900 font-bold text-sm">
-                            <span class="w-6 h-6 rounded-full bg-brand-200 text-brand-800 flex items-center justify-center text-xs">✓</span>
-                            <span>رابط واحد لعرض منتجاتك وأسعارك مرتبة</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-brand-900 font-bold text-sm">
-                            <span class="w-6 h-6 rounded-full bg-brand-200 text-brand-800 flex items-center justify-center text-xs">✓</span>
-                            <span>سلة شراء منظمة يختار منها الزبون</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-brand-900 font-bold text-sm">
-                            <span class="w-6 h-6 rounded-full bg-brand-200 text-brand-800 flex items-center justify-center text-xs">✓</span>
-                            <span>إرسال الطلبات مباشرة ومجهزة عبر واتساب</span>
-                        </li>
-                    </ul>
-
-                    <!-- Mock Store Cart illustration -->
-                    <div class="mt-8 bg-white p-3.5 rounded-2xl border border-brand-200 shadow-sm flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center text-lg">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </div>
-                            <span class="text-xs font-bold text-slate-800">طلب جديد مكتمل جاهز للإرسال!</span>
-                        </div>
-                        <span class="bg-brand-600 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold">100% منظم</span>
-                    </div>
-                </div>
-
-            </div>
+      </div>
+      <div class="floating-card hidden sm:block">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 grid place-items-center text-xl">🛍️</div>
+          <div>
+            <p class="font-black text-sm">طلب منظم</p>
+            <p class="text-xs text-slate-500 mt-1">المنتجات والكميات والمجموع</p>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- SECTION 3: INTERACTIVE STORE DISPLAY CAROUSEL (شاهد كيف يظهر متجرك) -->
-    <section id="preview" class="py-16 lg:py-24 bg-slate-900 text-white relative overflow-hidden">
-        
-        <!-- Decorative Ambient Lights -->
-        <div class="absolute top-0 right-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+<!-- WHY STORE: FIVE POINTS -->
+<section id="why-store" class="section bg-white">
+  <div class="container-main">
+    <div class="text-center mb-10 reveal">
+      <span class="pill bg-emerald-50 text-emerald-800">✨ خلّي البيع أسهل</span>
+      <h2 class="section-title mt-4">لماذا متجر إلكتروني؟</h2>
+      <p class="section-subtitle">كل ما يحتاجه مشروعك ليعرض منتجاته بطريقة واضحة ومنظمة.</p>
+    </div>
 
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">شاهد كيف يظهر متجرك</h2>
-                <p class="text-slate-400 mt-2 text-sm sm:text-base">تصميم عصري، سهل التصفح، ومناسب لكل الأجهزة.</p>
-            </div>
-
-            <!-- Interactive Carousel Container -->
-            <div class="relative max-w-5xl mx-auto">
-                
-                <!-- Controls Arrows -->
-                <button id="prevBtn" class="absolute left-0 sm:-left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 hover:bg-brand-600 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg">
-                    <i class="fa-solid fa-chevron-left text-lg"></i>
-                </button>
-                <button id="nextBtn" class="absolute right-0 sm:-right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 hover:bg-brand-600 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg">
-                    <i class="fa-solid fa-chevron-right text-lg"></i>
-                </button>
-
-                <!-- Phone Screen Showcase Track -->
-                <div class="overflow-hidden py-8">
-                    <div id="carouselTrack" class="flex gap-6 transition-transform duration-500 ease-out justify-center items-center">
-                        
-                        <!-- Screen 1: الصفحة الرئيسية -->
-                        <div class="carousel-item min-w-[260px] max-w-[280px] bg-slate-800 p-2.5 rounded-[36px] border-2 border-slate-700 shadow-2xl transition-all duration-300 hover:scale-105">
-                            <div class="bg-white text-slate-800 rounded-[28px] overflow-hidden p-3 min-h-[440px] flex flex-col justify-between">
-                                <div class="space-y-3">
-                                    <div class="bg-slate-100 p-3 rounded-2xl text-center">
-                                        <div class="w-12 h-12 bg-brand-500 text-white rounded-full mx-auto flex items-center justify-center font-bold text-xl mb-1">متجر</div>
-                                        <div class="text-xs font-bold text-slate-800">الرئيسية</div>
-                                    </div>
-                                    <img src="https://placehold.co/240x140/059669/ffffff?text=بنر+المتجر" class="rounded-xl w-full object-cover shadow-sm" alt="Banner">
-                                    <div class="p-2 bg-slate-50 rounded-xl text-[11px] font-bold text-slate-600 text-center">أهلاً بكم في متجرنا المميز</div>
-                                </div>
-                                <div class="bg-brand-600 text-white text-center py-2 rounded-xl text-xs font-bold">الصفحة الرئيسية</div>
-                            </div>
-                        </div>
-
-                        <!-- Screen 2: المنتجات -->
-                        <div class="carousel-item min-w-[260px] max-w-[280px] bg-slate-800 p-2.5 rounded-[36px] border-2 border-brand-500 shadow-2xl transition-all duration-300 scale-105 z-10">
-                            <div class="bg-white text-slate-800 rounded-[28px] overflow-hidden p-3 min-h-[440px] flex flex-col justify-between">
-                                <div class="space-y-2">
-                                    <div class="text-xs font-extrabold text-slate-900 border-b pb-2">قائمة المنتجات</div>
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <div class="bg-slate-50 p-2 rounded-xl text-center border">
-                                            <img src="https://placehold.co/100x100/fecdd3/881337?text=منتج+1" class="rounded-lg mb-1 w-full">
-                                            <div class="text-[10px] font-bold">منتج فاخر</div>
-                                            <div class="text-[9px] text-brand-600 font-extrabold">5.00 د.أ</div>
-                                        </div>
-                                        <div class="bg-slate-50 p-2 rounded-xl text-center border">
-                                            <img src="https://placehold.co/100x100/fde68a/78350f?text=منتج+2" class="rounded-lg mb-1 w-full">
-                                            <div class="text-[10px] font-bold">منتج مميز</div>
-                                            <div class="text-[9px] text-brand-600 font-extrabold">12.00 د.أ</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-brand-600 text-white text-center py-2 rounded-xl text-xs font-bold">عرض المنتجات</div>
-                            </div>
-                        </div>
-
-                        <!-- Screen 3: سلة المشتريات -->
-                        <div class="carousel-item min-w-[260px] max-w-[280px] bg-slate-800 p-2.5 rounded-[36px] border-2 border-slate-700 shadow-2xl transition-all duration-300 hover:scale-105">
-                            <div class="bg-white text-slate-800 rounded-[28px] overflow-hidden p-3 min-h-[440px] flex flex-col justify-between">
-                                <div class="space-y-3">
-                                    <div class="text-xs font-extrabold text-slate-900 border-b pb-2 flex justify-between">
-                                        <span>سلة المشتريات</span>
-                                        <i class="fa-solid fa-cart-shopping text-brand-600"></i>
-                                    </div>
-                                    <div class="space-y-2 text-[11px]">
-                                        <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
-                                            <span>1x منتج فاخر</span>
-                                            <span class="font-bold">5.00 د.أ</span>
-                                        </div>
-                                        <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
-                                            <span>1x منتج مميز</span>
-                                            <span class="font-bold">12.00 د.أ</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-brand-600 text-white text-center py-2 rounded-xl text-xs font-bold">تأكيد السلة</div>
-                            </div>
-                        </div>
-
-                        <!-- Screen 4: طلب عبر واتساب -->
-                        <div class="carousel-item min-w-[260px] max-w-[280px] bg-slate-800 p-2.5 rounded-[36px] border-2 border-slate-700 shadow-2xl transition-all duration-300 hover:scale-105">
-                            <div class="bg-white text-slate-800 rounded-[28px] overflow-hidden p-3 min-h-[440px] flex flex-col justify-between">
-                                <div class="space-y-3">
-                                    <div class="text-xs font-extrabold text-slate-900 border-b pb-2">طلب عبر واتساب</div>
-                                    <div class="p-3 bg-green-50 text-green-900 rounded-xl text-[10px] space-y-1 border border-green-200">
-                                        <p class="font-bold">مرحباً، أريد إتمام الطلب:</p>
-                                        <p>- منتج فاخر (1)</p>
-                                        <p>- منتج مميز (1)</p>
-                                        <p class="font-bold border-t border-green-200 pt-1">المجموع: 17.00 د.أ</p>
-                                    </div>
-                                </div>
-                                <div class="bg-green-600 text-white text-center py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1">
-                                    <i class="fa-brands fa-whatsapp"></i> إرسال للواتساب
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Carousel Dots Indicator -->
-                <div id="carouselDots" class="flex justify-center gap-2 mt-4">
-                    <button class="w-3 h-3 rounded-full bg-brand-500 transition-all"></button>
-                    <button class="w-3 h-3 rounded-full bg-slate-700 transition-all"></button>
-                    <button class="w-3 h-3 rounded-full bg-slate-700 transition-all"></button>
-                    <button class="w-3 h-3 rounded-full bg-slate-700 transition-all"></button>
-                </div>
-
-            </div>
+    <div class="problem-grid grid md:grid-cols-2 gap-5 reveal">
+      <div class="problem-card border border-rose-100 bg-rose-50/70">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="grid place-items-center w-11 h-11 rounded-2xl bg-rose-100 text-rose-600 text-2xl">✕</span>
+          <h3 class="text-xl font-black text-rose-700">البيع عبر الرسائل فقط</h3>
         </div>
-    </section>
-
-    <!-- SECTION 4: ALL YOU NEED IN ONE PLACE (كل ما تحتاجه في مكان واحد) -->
-    <section id="features" class="py-16 lg:py-24 bg-slate-50 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">كل ما تحتاجه في مكان واحد</h2>
-                <p class="text-slate-500 mt-2 text-sm">ميزات مصممة بذكاء لتسهيل إدارة تجارنك ومضاعفة مبيعاتك.</p>
-            </div>
-
-            <!-- Features Grid (6 Features matching image layout) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-sliders"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">إدارة المتجر</h3>
-                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                        عدّل منتجاتك وأسعارك بسهولة تامة وبضغطة زر مباشرة من لوحة الإدارة.
-                    </p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">طلبات عبر واتساب</h3>
-                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                        صلك الطلب مع التفاصيل كاملة (المنتجات، الكميات، السعر الإجمالي) عبر رسالة واتساب منظمة.
-                    </p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-mobile-screen"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">تجربة موبايل</h3>
-                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                        تصميم سلس وسريع جداً على الجوال، ومناسب لجميع الشاشات والأجهزة.
-                    </p>
-                </div>
-
-                <!-- Feature 4 -->
-                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-images"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">صور وأسعار</h3>
-                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                        إعرض منتجاتك بصور واضحة وأسعار محدودة لتقديم المتجر بأرقى صورة.
-                    </p>
-                </div>
-
-                <!-- Feature 5 -->
-                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">سلة مشتريات</h3>
-                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                        تجمع المنتجات والكميات قبل إرسال الطلب النهائي للواتساب بدون إرباك.
-                    </p>
-                </div>
-
-                <!-- Feature 6 -->
-                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
-                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
-                        <i class="fa-solid fa-link"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">رابط خاص</h3>
-                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                        شارك متجرك بسهولة على إنستغرام وواتساب مع رابط حصري باسم مشروعك.
-                    </p>
-                </div>
-
-            </div>
+        <ul class="space-y-3 text-sm leading-7 text-slate-600">
+          <li>✕ تكرار شرح الأسعار والتفاصيل لكل عميل.</li>
+          <li>✕ احتمال نسيان بعض تفاصيل الطلبات.</li>
+          <li>✕ صعوبة عرض كل المنتجات في مكان واحد.</li>
+        </ul>
+      </div>
+      <div class="problem-card border border-emerald-100 bg-emerald-50/70">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="grid place-items-center w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-700 text-2xl">✓</span>
+          <h3 class="text-xl font-black text-emerald-800">مع متجرك Jo</h3>
         </div>
-    </section>
+        <ul class="space-y-3 text-sm leading-7 text-slate-700">
+          <li>✓ رابط واحد لعرض المنتجات والأسعار.</li>
+          <li>✓ سلة تجمع المنتجات والكميات المختارة.</li>
+          <li>✓ إرسال الطلبات عبر واتساب عند تفعيل الربط.</li>
+        </ul>
+      </div>
+    </div>
 
-    <!-- SECTION 5: PRICING SECTION (باقات بسيطة .. وأسعار واضحة) -->
-    <section id="pricing" class="py-16 lg:py-24 bg-white relative z-10">
-        <div class="max-w-6xl mx-auto px-4 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">باقات بسيطة .. وأسعار واضحة</h2>
-                <p class="text-slate-500 mt-2 text-sm">اختر الباقة المناسبة لمشروعك وابدأ رحلتك معنا بدون تكاليف خفية.</p>
-            </div>
-
-            <!-- Pricing Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
-                
-                <!-- Package 1: باقة البداية -->
-                <div class="bg-slate-50 rounded-3xl p-8 border border-slate-200 flex flex-col justify-between hover:border-brand-300 transition-all">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-extrabold text-slate-900">باقة البداية</h3>
-                            <span class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1 rounded-full">30 يوم</span>
-                        </div>
-                        
-                        <div class="flex items-baseline gap-1 mb-6">
-                            <span class="text-4xl font-black text-slate-900">12</span>
-                            <span class="text-slate-600 font-bold text-sm">دينار أردني</span>
-                            <span class="text-slate-400 text-xs mr-2">حتى 20 منتجاً</span>
-                        </div>
-
-                        <ul class="space-y-3.5 mb-8 text-sm text-slate-700">
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-circle-check text-brand-600"></i>
-                                <span>عرض المنتجات والصور والأسعار</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-circle-check text-brand-600"></i>
-                                <span>رابط مستقل للمتجر (حسب الاستضافة)</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-circle-check text-brand-600"></i>
-                                <span>سلة مشتريات وإرسال الطلبات عبر واتساب</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-circle-check text-brand-600"></i>
-                                <span>إدارة المنتجات ضمن الوظائف المتفق عليها</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <a href="https://wa.me/962779926984" target="_blank" class="w-full bg-white hover:bg-brand-600 hover:text-white border-2 border-slate-300 hover:border-brand-600 text-slate-800 font-bold py-3 rounded-2xl text-center transition-all flex items-center justify-center gap-2">
-                        <i class="fa-brands fa-whatsapp"></i>
-                        <span>اطلب باقة البداية</span>
-                    </a>
-                </div>
-
-                <!-- Package 2: الباقة المتقدمة (Most Popular Highlighted) -->
-                <div class="bg-brand-dark text-white rounded-3xl p-8 border-2 border-brand-500 shadow-2xl relative flex flex-col justify-between transform md:-translate-y-3">
-                    
-                    <!-- Popular Tag Badge -->
-                    <div class="absolute -top-4 right-8 bg-brand-500 text-white text-xs font-black px-4 py-1.5 rounded-full shadow-lg">
-                        الأكثر طلباً 🔥
-                    </div>
-
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-extrabold text-white">الباقة المتقدمة</h3>
-                            <span class="bg-brand-800 text-brand-200 text-xs font-bold px-3 py-1 rounded-full">60 يوم</span>
-                        </div>
-                        
-                        <div class="flex items-baseline gap-1 mb-6">
-                            <span class="text-4xl font-black text-white">20</span>
-                            <span class="text-brand-300 font-bold text-sm">دينار أردني</span>
-                        </div>
-
-                        <ul class="space-y-3.5 mb-8 text-sm text-brand-100">
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-circle-check text-brand-400"></i>
-                                <span>مدة اشتراك 60 يوماً كاملة</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-circle-check text-brand-400"></i>
-                                <span>متجر خاص بمشروعك</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-circle-check text-brand-400"></i>
-                                <span>عرض المنتجات والصور والأسعار</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-circle-check text-brand-400"></i>
-                                <span>سلة مشتريات وإرسال الطلبات عبر واتساب</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-circle-check text-brand-400"></i>
-                                <span>إدارة المنتجات ضمن الوظائف المتفق عليها</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <a href="https://wa.me/962779926984" target="_blank" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-3.5 rounded-2xl text-center shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-[1.02]">
-                        <i class="fa-brands fa-whatsapp text-lg"></i>
-                        <span>اطلب الباقة المتقدمة</span>
-                    </a>
-                </div>
-
-            </div>
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <article class="why-card reveal">
+        <div class="flex items-start gap-4">
+          <div class="why-icon">🔗</div>
+          <div>
+            <h3 class="font-black text-lg">رابط واحد لمنتجاتك</h3>
+            <p class="text-sm text-slate-500 leading-7 mt-2">شارك رابط متجرك عبر إنستغرام وواتساب واجمع منتجاتك في مكان واحد.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- SECTION 6: TESTIMONIALS (ماذا يقول عملاؤنا؟) -->
-    <section class="py-16 lg:py-24 bg-slate-50 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">ماذا يقول عملاؤنا؟</h2>
-                <p class="text-slate-500 mt-2 text-sm">قصص نجاح حقيقية من أصحاب المشاريع الصغيرة.</p>
-            </div>
-
-            <!-- Testimonials Slider Container -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                <!-- Review 1 -->
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all">
-                    <div>
-                        <div class="flex text-amber-400 gap-1 text-xs mb-3">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6 font-medium">
-                            "صار عندي متجر خاص في دقائق، والطلبات توصلني على الواتساب بشكل منظم ودقيق أرتاح بالي من الشرح!"
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-3 border-t pt-4 border-slate-100">
-                        <img src="https://placehold.co/100x100/fecdd3/881337?text=سارة" alt="سارة" class="w-10 h-10 rounded-full object-cover">
-                        <div>
-                            <h4 class="text-xs font-bold text-slate-900">سارة خالد</h4>
-                            <p class="text-[10px] text-slate-400">مشروعي كوكيز</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 2 -->
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all">
-                    <div>
-                        <div class="flex text-amber-400 gap-1 text-xs mb-3">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6 font-medium">
-                            "المتجر ساعدني أزيد مبيعاتي وبدون تعقيد.. أنصح فيه بشدة لكل صاحب مشروع صغير بالأردن."
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-3 border-t pt-4 border-slate-100">
-                        <img src="https://placehold.co/100x100/bbf7d0/065f46?text=محمد" alt="محمد" class="w-10 h-10 rounded-full object-cover">
-                        <div>
-                            <h4 class="text-xs font-bold text-slate-900">محمد علي</h4>
-                            <p class="text-[10px] text-slate-400">مشروع ملابس</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 3 -->
-                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all">
-                    <div>
-                        <div class="flex text-amber-400 gap-1 text-xs mb-3">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6 font-medium">
-                            "من أسهل القرارات اللي أخذتها لمتجري. خدمة العملاء كانت ممتازة جداً والمظهر احترافي."
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-3 border-t pt-4 border-slate-100">
-                        <img src="https://placehold.co/100x100/e0e7ff/3730a3?text=رنا" alt="رنا" class="w-10 h-10 rounded-full object-cover">
-                        <div>
-                            <h4 class="text-xs font-bold text-slate-900">رنا أبوحمد</h4>
-                            <p class="text-[10px] text-slate-400">مشروعي حلويات</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+      </article>
+      <article class="why-card reveal">
+        <div class="flex items-start gap-4">
+          <div class="why-icon">🛒</div>
+          <div>
+            <h3 class="font-black text-lg">سلة مشتريات منظمة</h3>
+            <p class="text-sm text-slate-500 leading-7 mt-2">يختار العميل المنتجات والكميات ويراجع طلبه قبل إرساله.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- SECTION 7: FAQ ACCORDION (أسئلة شائعة) -->
-    <section id="faq" class="py-16 bg-white relative z-10">
-        <div class="max-w-5xl mx-auto px-4 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight">أسئلة شائعة</h2>
-                <p class="text-slate-500 mt-2 text-sm">إجابات مختصرة على أكثر الأسئلة المتكررة.</p>
-            </div>
-
-            <!-- Accordion Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                
-                <!-- FAQ 1 -->
-                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
-                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
-                        <span>هل أحتاج خبرة برمجية؟</span>
-                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
-                    </button>
-                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
-                        لا أبداً، كل شيء مجهز وجاهز للاستخدام مباشرة دون أي حاجة لأي خبرة تقنية.
-                    </div>
-                </div>
-
-                <!-- FAQ 2 -->
-                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
-                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
-                        <span>كيف تصلني طلبات العملاء؟</span>
-                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
-                    </button>
-                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
-                        تصلك الطلبات مباشرة برسالة واتساب مرتبة تحتوي على الأسماء، الكميات، والتوتال النهائي.
-                    </div>
-                </div>
-
-                <!-- FAQ 3 -->
-                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
-                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
-                        <span>ماذا يحدث عند انتهاء الاشتراك؟</span>
-                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
-                    </button>
-                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
-                        يمكنك التجديد في أي وقت بسهولة وبدون فقدان بيانات متجرك أو منتجاتك.
-                    </div>
-                </div>
-
-                <!-- FAQ 4 -->
-                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
-                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
-                        <span>هل أستطيع إضافة منتجات وصور جديدة؟</span>
-                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
-                    </button>
-                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
-                        نعم بالتأكيد، من خلال لوحة الإدارة المبسطة يمكنك تعديل وإضافة أي منتج بسهولة.
-                    </div>
-                </div>
-
-                <!-- FAQ 5 -->
-                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
-                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
-                        <span>كيف أطلب متجري؟</span>
-                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
-                    </button>
-                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
-                        اضغط على زر "اطلب متجرك الآن" وسيتواصل معك فريقنا على الواتساب فوراً.
-                    </div>
-                </div>
-
-                <!-- FAQ 6 -->
-                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
-                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
-                        <span>هل أستطيع تغيير رقم الواتساب؟</span>
-                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
-                    </button>
-                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
-                        نعم، يمكنك تحديث رقم الواتساب المربوط بالمتجر في أي وقت دون مشاكل.
-                    </div>
-                </div>
-
-            </div>
+      </article>
+      <article class="why-card reveal">
+        <div class="flex items-start gap-4">
+          <div class="why-icon">📸</div>
+          <div>
+            <h3 class="font-black text-lg">صور وأسعار واضحة</h3>
+            <p class="text-sm text-slate-500 leading-7 mt-2">اعرض المنتجات بتفاصيلها وأسعارها ليسهل على العميل الاختيار.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- SECTION 8: PRE-FOOTER CALL TO ACTION BANNER -->
-    <section class="py-12 bg-slate-50 relative z-10 px-4">
-        <div class="max-w-6xl mx-auto bg-slate-900 text-white rounded-3xl p-8 sm:p-12 relative overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
-            
-            <!-- Glowing Background Circles -->
-            <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
-
-            <div class="space-y-3 text-center md:text-right relative z-10">
-                <div class="inline-flex items-center gap-2 bg-brand-500/20 text-brand-300 text-xs font-bold px-3 py-1 rounded-full border border-brand-500/30">
-                    <i class="fa-solid fa-gem"></i>
-                    <span>متجر حقيقي .. شركاء لنجاحك</span>
-                </div>
-                <h3 class="text-2xl sm:text-3xl font-black">مشروعك يستحق أن يكون بين أيدي عملائك</h3>
-                <p class="text-slate-400 text-sm max-w-xl">تواصل معنا الآن وابدأ رحلتك نحو متجر إلكتروني خاص بك.</p>
-            </div>
-
-            <div class="relative z-10 w-full md:w-auto">
-                <a href="https://wa.me/962779926984" target="_blank" class="w-full md:w-auto bg-brand-500 hover:bg-brand-600 text-white font-extrabold px-8 py-4 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 text-base hover:scale-105 active:scale-95">
-                    <i class="fa-brands fa-whatsapp text-2xl"></i>
-                    <span>اطلب متجرك عبر واتساب</span>
-                </a>
-            </div>
+      </article>
+      <article class="why-card reveal">
+        <div class="flex items-start gap-4">
+          <div class="why-icon">💬</div>
+          <div>
+            <h3 class="font-black text-lg">طلبات عبر واتساب</h3>
+            <p class="text-sm text-slate-500 leading-7 mt-2">إرسال تفاصيل السلة إلى رقم مشروعك عند تفعيل هذه الوظيفة.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 py-10 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-100">
-                
-                <!-- Logo Footer -->
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-lg">Jo</div>
-                    <div>
-                        <div class="font-extrabold text-lg text-slate-900">متجرك <span class="text-brand-600">Jo</span></div>
-                        <div class="text-[10px] text-slate-400">منصة متاجر المشاريع الصغيرة</div>
-                    </div>
-                </div>
-
-                <!-- Navigation Links Footer -->
-                <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-bold text-slate-600">
-                    <a href="#hero" class="hover:text-brand-600">الرئيسية</a>
-                    <a href="#features" class="hover:text-brand-600">المميزات</a>
-                    <a href="#preview" class="hover:text-brand-600">كيف تبدأ؟</a>
-                    <a href="#pricing" class="hover:text-brand-600">الباقات</a>
-                    <a href="#faq" class="hover:text-brand-600">الأسئلة الشائعة</a>
-                </div>
-
-                <!-- Contact Info & Socials -->
-                <div class="flex items-center gap-4">
-                    <a href="https://wa.me/962779926984" target="_blank" class="text-xs font-bold text-slate-700 hover:text-brand-600 flex items-center gap-1.5 dir-ltr">
-                        <i class="fa-brands fa-whatsapp text-brand-600 text-base"></i>
-                        <span>962779926984</span>
-                    </a>
-                    <div class="flex items-center gap-2 text-slate-400">
-                        <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-500 hover:text-white transition-colors text-xs"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-500 hover:text-white transition-colors text-xs"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-500 hover:text-white transition-colors text-xs"><i class="fa-brands fa-tiktok"></i></a>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Copyright -->
-            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-slate-400 text-xs gap-2">
-                <p>© متجرك Jo - جميع الحقوق محفوظة.</p>
-                <p class="flex items-center gap-1">
-                    <span>متجرك يبدأ بأفكار... وننمو بفرصة حقيقية</span>
-                    <i class="fa-solid fa-heart text-rose-500"></i>
-                </p>
-            </div>
+      </article>
+      <article class="why-card reveal">
+        <div class="flex items-start gap-4">
+          <div class="why-icon">⚙️</div>
+          <div>
+            <h3 class="font-black text-lg">إدارة أسهل لمشروعك</h3>
+            <p class="text-sm text-slate-500 leading-7 mt-2">عدّل منتجاتك وأسعارك من لوحة الإدارة بحسب الإمكانيات المتوفرة.</p>
+          </div>
         </div>
-    </footer>
+      </article>
+    </div>
+  </div>
+</section>
 
-    <!-- FLOATING WHATSAPP BUTTON (ALWAYS VISIBLE) -->
-    <a href="https://wa.me/962779926984" target="_blank" class="fixed bottom-6 left-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center text-3xl shadow-2xl transition-all hover:scale-110 active:scale-95 animate-pulse-glow" title="تواصل معنا عبر واتساب">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+<!-- SHOWCASE -->
+<section id="showcase" class="section showcase-dark overflow-hidden">
+  <div class="container-main">
+    <div class="text-center mb-10 reveal">
+      <span class="pill bg-white/10 text-emerald-200">شاهد التجربة</span>
+      <h2 class="section-title mt-4 text-white">شاهد كيف يظهر متجرك</h2>
+      <p class="mt-3 text-emerald-100/80 leading-8">تصميم مريح وواضح، من عرض المنتجات إلى مراجعة الطلب.</p>
+    </div>
 
-    <!-- JAVASCRIPT FOR INTERACTIVE LOGIC & ANIMATIONS -->
-    <script>
-        // --- 1. CAROUSEL SLIDER LOGIC ---
-        const track = document.getElementById('carouselTrack');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const dots = document.querySelectorAll('#carouselDots button');
-        let currentIndex = 1; // start middle
+    <div class="showcase-track reveal">
+      <div class="text-center">
+        <div class="showcase-phone">
+          <div class="mock-screen">
+            <div class="text-right font-black text-xs">كوكيز لذيذة</div>
+            <div class="cookie-banner rounded-xl mt-2"><div class="text-4xl">🍪</div><p class="font-black text-sm mt-2">أهلاً بك!</p></div>
+            <p class="text-right text-xs font-black mt-3">منتجاتنا</p>
+            <div class="mock-product"><div class="mock-product-emoji">🍰</div><p class="text-xs font-bold mt-2">كيك مميز</p><p class="text-xs text-emerald-700 mt-1">3 د.أ</p></div>
+          </div>
+        </div>
+        <span class="mock-label">الصفحة الرئيسية</span>
+      </div>
+      <div class="text-center">
+        <div class="showcase-phone">
+          <div class="mock-screen">
+            <p class="text-right text-sm font-black">منتجاتنا</p>
+            <div class="grid grid-cols-2 gap-2 mt-3">
+              <div class="mock-product"><div class="mock-product-emoji">🍪</div><p class="text-[10px] font-bold mt-2">كوكيز</p><p class="text-[10px] text-emerald-700 mt-1">3 د.أ</p></div>
+              <div class="mock-product"><div class="mock-product-emoji">🧁</div><p class="text-[10px] font-bold mt-2">كب كيك</p><p class="text-[10px] text-emerald-700 mt-1">2 د.أ</p></div>
+              <div class="mock-product"><div class="mock-product-emoji">🍩</div><p class="text-[10px] font-bold mt-2">دونات</p><p class="text-[10px] text-emerald-700 mt-1">1.5 د.أ</p></div>
+              <div class="mock-product"><div class="mock-product-emoji">🍰</div><p class="text-[10px] font-bold mt-2">كيك</p><p class="text-[10px] text-emerald-700 mt-1">3 د.أ</p></div>
+            </div>
+          </div>
+        </div>
+        <span class="mock-label">المنتجات</span>
+      </div>
+      <div class="text-center">
+        <div class="showcase-phone">
+          <div class="mock-screen">
+            <p class="text-right text-sm font-black">سلة المشتريات</p>
+            <div class="mock-product flex items-center gap-2"><span class="text-2xl">🍪</span><div><p class="text-[10px] font-bold">كوكيز</p><p class="text-[10px] text-emerald-700 mt-1">3 د.أ × 2</p></div></div>
+            <div class="mock-product flex items-center gap-2"><span class="text-2xl">🧁</span><div><p class="text-[10px] font-bold">كب كيك</p><p class="text-[10px] text-emerald-700 mt-1">2 د.أ × 1</p></div></div>
+            <div class="mt-4 rounded-lg bg-emerald-50 p-3 text-xs font-black">المجموع: 8 د.أ</div>
+            <div class="mt-3 rounded-lg bg-emerald-700 p-2 text-center text-xs text-white font-bold">متابعة الطلب</div>
+          </div>
+        </div>
+        <span class="mock-label">سلة المشتريات</span>
+      </div>
+      <div class="text-center">
+        <div class="showcase-phone">
+          <div class="mock-screen">
+            <p class="text-right text-sm font-black">إرسال الطلب</p>
+            <p class="text-right text-[10px] text-slate-500 mt-3">الاسم</p>
+            <div class="mt-1 p-2 border rounded-lg text-xs text-slate-400">اسم العميل</div>
+            <p class="text-right text-[10px] text-slate-500 mt-3">رقم الهاتف</p>
+            <div class="mt-1 p-2 border rounded-lg text-xs text-slate-400">07XXXXXXXX</div>
+            <p class="text-right text-[10px] text-slate-500 mt-3">العنوان</p>
+            <div class="mt-1 p-2 border rounded-lg text-xs text-slate-400">مكان التوصيل</div>
+            <div class="mt-4 rounded-lg bg-emerald-700 p-2 text-center text-xs text-white font-bold">إرسال عبر واتساب</div>
+          </div>
+        </div>
+        <span class="mock-label">طلب عبر واتساب</span>
+      </div>
+    </div>
+    <p class="text-center text-xs text-emerald-100/60 mt-8">هذه معاينة توضيحية للتصميم، وليست نظام طلبات متصلًا بقاعدة بيانات.</p>
+  </div>
+</section>
 
-        function updateCarousel(index) {
-            currentIndex = index;
-            const items = document.querySelectorAll('.carousel-item');
-            
-            // Adjust index wrap
-            if (currentIndex < 0) currentIndex = items.length - 1;
-            if (currentIndex >= items.length) currentIndex = 0;
+<!-- FEATURES -->
+<section id="features" class="section bg-slate-50">
+  <div class="container-main">
+    <div class="text-center mb-10 reveal">
+      <span class="pill bg-emerald-100 text-emerald-800">مميزات متجرك</span>
+      <h2 class="section-title mt-4">كل ما تحتاجه في مكان واحد</h2>
+      <p class="section-subtitle">واجهة واضحة تساعدك على تقديم منتجاتك بشكل مرتب لعملائك.</p>
+    </div>
 
-            items.forEach((item, idx) => {
-                if (idx === currentIndex) {
-                    item.classList.add('scale-105', 'border-brand-500', 'z-10');
-                    item.classList.remove('border-slate-700');
-                } else {
-                    item.classList.remove('scale-105', 'border-brand-500', 'z-10');
-                    item.classList.add('border-slate-700');
-                }
-            });
+    <div class="features-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <article class="feature-card reveal">
+        <div class="feature-icon">⚙️</div>
+        <h3 class="font-black">إدارة المتجر</h3>
+        <p class="text-sm text-slate-500 leading-7 mt-2">إدارة منتجاتك من لوحة مخصصة.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon">💬</div>
+        <h3 class="font-black">طلبات واتساب</h3>
+        <p class="text-sm text-slate-500 leading-7 mt-2">إرسال تفاصيل الطلب عبر واتساب.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon">📱</div>
+        <h3 class="font-black">تصميم للهاتف</h3>
+        <p class="text-sm text-slate-500 leading-7 mt-2">تصفح مريح على الشاشات الصغيرة.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon">🖼️</div>
+        <h3 class="font-black">صور وأسعار</h3>
+        <p class="text-sm text-slate-500 leading-7 mt-2">عرض المنتجات بصورة واضحة.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon">🛒</div>
+        <h3 class="font-black">سلة مشتريات</h3>
+        <p class="text-sm text-slate-500 leading-7 mt-2">تجميع المنتجات والكميات.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-icon">🔗</div>
+        <h3 class="font-black">رابط خاص</h3>
+        <p class="text-sm text-slate-500 leading-7 mt-2">رابط قابل للمشاركة حسب الاستضافة.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-            // Update dots
-            dots.forEach((dot, idx) => {
-                if (idx === currentIndex) {
-                    dot.classList.add('bg-brand-500', 'w-6');
-                    dot.classList.remove('bg-slate-700', 'w-3');
-                } else {
-                    dot.classList.remove('bg-brand-500', 'w-6');
-                    dot.classList.add('bg-slate-700', 'w-3');
-                }
-            });
-        }
+<!-- HOW -->
+<section id="how" class="section bg-white">
+  <div class="container-main">
+    <div class="text-center mb-10 reveal">
+      <span class="pill bg-emerald-50 text-emerald-800">ثلاث خطوات</span>
+      <h2 class="section-title mt-4">كيف تبدأ مع متجرك Jo؟</h2>
+      <p class="section-subtitle">من اختيار الباقة إلى مشاركة رابط متجرك مع العملاء.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5">
+      <article class="feature-card reveal text-center">
+        <div class="mx-auto w-14 h-14 rounded-2xl bg-emerald-700 text-white grid place-items-center text-2xl font-black">1</div>
+        <h3 class="font-black text-xl mt-5">اختر الباقة</h3>
+        <p class="text-slate-500 leading-8 mt-3">تعرّف على المدة والسعر وتواصل معنا لتأكيد التفاصيل.</p>
+      </article>
+      <article class="feature-card reveal text-center">
+        <div class="mx-auto w-14 h-14 rounded-2xl bg-emerald-700 text-white grid place-items-center text-2xl font-black">2</div>
+        <h3 class="font-black text-xl mt-5">جهّز بياناتك</h3>
+        <p class="text-slate-500 leading-8 mt-3">أرسل اسم المشروع وصور المنتجات والأسعار وبيانات التواصل.</p>
+      </article>
+      <article class="feature-card reveal text-center">
+        <div class="mx-auto w-14 h-14 rounded-2xl bg-emerald-700 text-white grid place-items-center text-2xl font-black">3</div>
+        <h3 class="font-black text-xl mt-5">استلم وشارك</h3>
+        <p class="text-slate-500 leading-8 mt-3">اختبر المتجر بعد تجهيزه ثم شارك رابطه مع عملائك.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-        prevBtn.addEventListener('click', () => updateCarousel(currentIndex - 1));
-        nextBtn.addEventListener('click', () => updateCarousel(currentIndex + 1));
-        dots.forEach((dot, idx) => dot.addEventListener('click', () => updateCarousel(idx)));
+<!-- PRICING -->
+<section id="pricing" class="section bg-emerald-50/50">
+  <div class="container-main">
+    <div class="text-center mb-11 reveal">
+      <span class="pill bg-white text-emerald-800">باقات بسيطة وواضحة</span>
+      <h2 class="section-title mt-4">اختر الباقة المناسبة لمشروعك</h2>
+      <p class="section-subtitle">أسعار واضحة ومدة معروفة، مع تأكيد تفاصيل الخدمة قبل الاشتراك.</p>
+    </div>
 
-        // Auto slide every 4 seconds
-        setInterval(() => {
-            updateCarousel(currentIndex + 1);
-        }, 4000);
+    <div class="pricing-grid grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <article class="price-card reveal">
+        <div class="flex items-center justify-between gap-2">
+          <h3 class="text-2xl font-black">باقة البداية</h3>
+          <span class="pill bg-emerald-50 text-emerald-800">30 يومًا</span>
+        </div>
+        <p class="text-slate-500 text-sm mt-3">لبداية مرتبة لمشروعك.</p>
+        <div class="flex items-baseline gap-2 mt-6">
+          <span class="text-5xl font-black text-slate-950">12</span>
+          <span class="font-bold text-slate-500">دينار أردني</span>
+        </div>
+        <div class="h-px bg-slate-100 my-6"></div>
+        <ul class="price-list text-slate-700 flex-1">
+          <li>حتى 20 منتجًا</li>
+          <li>عرض المنتجات والصور والأسعار</li>
+          <li>رابط مستقل حسب إعداد الاستضافة</li>
+          <li>سلة وطلبات عبر واتساب عند تفعيلهما</li>
+          <li>إدارة المنتجات حسب الوظائف المتفق عليها</li>
+        </ul>
+        <a data-wa="starter" href="#" class="btn-secondary w-full mt-8">اطلب باقة البداية عبر واتساب</a>
+      </article>
 
-        // --- 2. FAQ ACCORDION LOGIC ---
-        const faqBtns = document.querySelectorAll('.faq-btn');
-        faqBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const content = btn.nextElementSibling;
-                const icon = btn.querySelector('i');
-                
-                // Toggle current FAQ
-                const isHidden = content.classList.contains('hidden');
-                
-                // Close all others
-                document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
-                document.querySelectorAll('.faq-btn i').forEach(i => i.className = 'fa-solid fa-plus text-xs transition-transform');
+      <article class="price-card featured reveal">
+        <div class="flex items-center justify-between gap-2">
+          <h3 class="text-2xl font-black">الباقة المتقدمة</h3>
+          <span class="pill bg-emerald-300 text-emerald-950">60 يومًا</span>
+        </div>
+        <p class="text-emerald-100 text-sm mt-3">مدة أطول بتكلفة أقل لكل 30 يومًا.</p>
+        <div class="flex items-baseline gap-2 mt-6">
+          <span class="text-5xl font-black">20</span>
+          <span class="font-bold text-emerald-100">دينار أردني</span>
+        </div>
+        <p class="text-sm text-emerald-200 mt-2">ما يعادل 10 دنانير لكل 30 يومًا.</p>
+        <div class="h-px bg-white/15 my-6"></div>
+        <ul class="price-list text-emerald-50 flex-1">
+          <li>مدة اشتراك 60 يومًا</li>
+          <li>متجر خاص بمشروعك</li>
+          <li>عرض المنتجات والصور والأسعار</li>
+          <li>سلة وطلبات عبر واتساب عند تفعيلهما</li>
+          <li>إدارة المنتجات حسب الوظائف المتفق عليها</li>
+        </ul>
+        <a data-wa="advanced" href="#" class="btn-primary w-full mt-8 !bg-emerald-400 !text-emerald-950">اطلب الباقة المتقدمة عبر واتساب</a>
+      </article>
+    </div>
 
-                if (isHidden) {
-                    content.classList.remove('hidden');
-                    icon.className = 'fa-solid fa-minus text-xs transition-transform text-brand-600';
-                }
-            });
-        });
+    <p class="text-center text-xs text-slate-500 mt-6 leading-7">تُؤكَّد تفاصيل التجهيز وحد المنتجات وسياسة التجديد قبل الدفع.</p>
+  </div>
+</section>
 
-        // --- 3. PARALLAX MOUSE EFFECT ON HERO SECTION ---
-        const heroSection = document.getElementById('hero');
-        const parallaxContainer = document.getElementById('hero-parallax-container');
+<!-- TESTIMONIALS -->
+<section class="section bg-white">
+  <div class="container-main">
+    <div class="text-center mb-10 reveal">
+      <h2 class="section-title">ماذا يقول عملاؤنا؟</h2>
+      <p class="section-subtitle">الثقة تُبنى من تجربة حقيقية وخدمة واضحة.</p>
+    </div>
+    <div class="testimonials-grid grid md:grid-cols-3 gap-4">
+      <article class="testimonial reveal">
+        <div class="flex gap-3 items-center">
+          <div class="avatar">م</div>
+          <div><p class="font-black">تجربة صاحب مشروع</p><p class="text-xs text-slate-400 mt-1">مثال توضيحي</p></div>
+        </div>
+        <p class="text-sm text-slate-600 leading-7 mt-4">يمكن عرض رأي عميل حقيقي هنا بعد الحصول على موافقته على نشره.</p>
+      </article>
+      <article class="testimonial reveal">
+        <div class="flex gap-3 items-center">
+          <div class="avatar">س</div>
+          <div><p class="font-black">صاحب مشروع صغير</p><p class="text-xs text-slate-400 mt-1">مكان مخصص للتقييم</p></div>
+        </div>
+        <p class="text-sm text-slate-600 leading-7 mt-4">أضف هنا تجربة حقيقية تشرح كيف ساعد المتجر صاحب المشروع في تنظيم منتجاته وطلباته.</p>
+      </article>
+      <article class="testimonial reveal">
+        <div class="flex gap-3 items-center">
+          <div class="avatar">ع</div>
+          <div><p class="font-black">عميل متجرك Jo</p><p class="text-xs text-slate-400 mt-1">يُستبدل برأي حقيقي</p></div>
+        </div>
+        <p class="text-sm text-slate-600 leading-7 mt-4">يمكنك إظهار تقييمات العملاء الحقيقية هنا لتعزيز ثقة الزوار بالخدمة.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-        if (heroSection && parallaxContainer) {
-            heroSection.addEventListener('mousemove', (e) => {
-                const { clientX, clientY } = e;
-                const moveX = (clientX - window.innerWidth / 2) * 0.015;
-                const moveY = (clientY - window.innerHeight / 2) * 0.015;
-                
-                parallaxContainer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
-            });
-        }
+<!-- FAQ -->
+<section id="faq" class="section bg-slate-50">
+  <div class="container-main">
+    <div class="text-center mb-10 reveal">
+      <span class="pill bg-emerald-100 text-emerald-800">إجابات سريعة</span>
+      <h2 class="section-title mt-4">الأسئلة الشائعة</h2>
+      <p class="section-subtitle">معلومات تساعدك على معرفة تفاصيل الخدمة قبل الاشتراك.</p>
+    </div>
 
-        // --- 4. STICKY NAVBAR SHADOW ON SCROLL ---
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                navbar.classList.add('py-2');
-                navbar.classList.remove('py-3');
-            } else {
-                navbar.classList.add('py-3');
-                navbar.classList.remove('py-2');
-            }
-        });
-    </script>
+    <div class="faq-grid grid md:grid-cols-2 gap-3">
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false" type="button"><span>هل أحتاج خبرة برمجية؟</span><span class="faq-icon text-emerald-700 text-xl">+</span></button>
+        <div class="faq-answer" hidden>الهدف هو أن تحصل على متجر سهل الاستخدام. اسألنا عن لوحة الإدارة وطريقة تعديل المنتجات ضمن الخدمة التي ستتسلمها.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false" type="button"><span>كيف تصلني طلبات العملاء؟</span><span class="faq-icon text-emerald-700 text-xl">+</span></button>
+        <div class="faq-answer" hidden>عند تفعيل السلة وربطها برقم واتساب الصحيح، يمكن للعميل إرسال تفاصيل الطلب من المتجر إلى محادثتك.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false" type="button"><span>هل أستطيع إضافة صور ومنتجات؟</span><span class="faq-icon text-emerald-700 text-xl">+</span></button>
+        <div class="faq-answer" hidden>تعتمد طريقة إضافة الصور والمنتجات على لوحة الإدارة المتوفرة. أكّد هذه الإمكانية وحد المنتجات قبل الاشتراك.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false" type="button"><span>هل أستطيع تغيير الأسعار؟</span><span class="faq-icon text-emerald-700 text-xl">+</span></button>
+        <div class="faq-answer" hidden>إذا كانت لوحة إدارة المنتجات مفعّلة، يمكن تعديل الأسعار وفق الصلاحيات التي يوفرها النظام.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false" type="button"><span>ماذا يحدث عند انتهاء الاشتراك؟</span><span class="faq-icon text-emerald-700 text-xl">+</span></button>
+        <div class="faq-answer" hidden>يجب توضيح سياسة انتهاء الاشتراك والتجديد قبل الدفع، بما في ذلك حالة المتجر ومدة التجديد.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false" type="button"><span>كيف أطلب متجري؟</span><span class="faq-icon text-emerald-700 text-xl">+</span></button>
+        <div class="faq-answer" hidden>اختر الباقة واضغط زر واتساب، ثم أكمل مع الدعم تفاصيل المشروع والتجهيز والدفع.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="px-4 py-8 md:py-12">
+  <div class="container-main final-banner p-7 md:p-12 text-white reveal">
+    <div class="grid md:grid-cols-[1fr_auto] gap-7 items-center">
+      <div>
+        <span class="pill bg-white/10 text-emerald-200">خطوتك الأولى تبدأ هنا</span>
+        <h2 class="text-3xl md:text-4xl font-black leading-relaxed mt-4">مشروعك يستحق أن يظهر بأفضل صورة</h2>
+        <p class="text-emerald-100 leading-8 mt-3 max-w-2xl">رتّب منتجاتك، وضّح أسعارك، وتعرّف على طريقة إنشاء متجرك الخاص.</p>
+      </div>
+      <a data-wa="general" href="#" class="btn-primary !bg-emerald-400 !text-emerald-950">اطلب متجرك عبر واتساب ↗</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-[#032a25] text-slate-300 px-4 pt-12 pb-8">
+  <div class="container-main">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 pb-9">
+      <div>
+        <a href="#home" class="flex items-center gap-3 text-white">
+          <span class="logo-mark">Jo</span><span class="text-xl font-black">متجرك Jo</span>
+        </a>
+        <p class="text-sm text-slate-400 leading-7 mt-4 max-w-sm">حل لعرض منتجات المشاريع الصغيرة وتسهيل تجربة الطلب والتواصل مع العملاء.</p>
+      </div>
+      <div>
+        <h3 class="font-black text-white mb-4">روابط سريعة</h3>
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <a class="hover:text-emerald-300" href="#why-store">لماذا متجر؟</a>
+          <a class="hover:text-emerald-300" href="#showcase">معاينة المتجر</a>
+          <a class="hover:text-emerald-300" href="#features">المميزات</a>
+          <a class="hover:text-emerald-300" href="#how">كيف تبدأ؟</a>
+          <a class="hover:text-emerald-300" href="#pricing">الباقات</a>
+          <a class="hover:text-emerald-300" href="#faq">الأسئلة الشائعة</a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-black text-white mb-4">تواصل معنا</h3>
+        <p class="text-sm text-slate-400 leading-7">للاستفسار عن الأسعار والتجهيز، تواصل مع الدعم الفني.</p>
+        <a data-wa="general" href="#" class="inline-flex mt-4 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-5 py-3">واتساب الدعم</a>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-slate-500">
+      <p>© <span id="year"></span> متجرك Jo. جميع الحقوق محفوظة.</p>
+      <a href="#home" class="hover:text-emerald-300">العودة إلى الأعلى ↑</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp floating button -->
+<a data-wa="general" href="#" class="whatsapp-float" aria-label="تواصل معنا عبر واتساب">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M20.52 3.48A11.8 11.8 0 0 0 12.12 0C5.58 0 .26 5.32.26 11.86c0 2.09.55 4.13 1.59 5.93L.16 24l6.37-1.67a11.85 11.85 0 0 0 5.58 1.42h.01c6.54 0 11.86-5.32 11.86-11.86a11.8 11.8 0 0 0-3.46-8.41ZM12.12 21.7a9.83 9.83 0 0 1-5.01-1.37l-.36-.21-3.78.99 1.01-3.69-.23-.38a9.8 9.8 0 0 1-1.51-5.18c0-5.45 4.43-9.88 9.88-9.88a9.8 9.8 0 0 1 6.99 2.9 9.8 9.8 0 0 1 2.89 6.99c0 5.45-4.43 9.88-9.88 9.88Zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.08 4.5.71.3 1.26.49 1.69.63.71.22 1.35.19 1.86.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/>
+  </svg>
+</a>
+
+<!-- Sticky CTA for mobile -->
+<div class="mobile-cta">
+  <a data-wa="general" href="#" class="btn-primary">اطلب متجرك الآن عبر واتساب ↗</a>
+</div>
+
+<script>
+/* إعداد رقم واتساب: رقم دولي دون + أو مسافات */
+const STORE_CONFIG = {
+  whatsapp: "962779926984"
+};
+
+const messages = {
+  general: "مرحباً، أريد الاستفسار عن إنشاء متجر إلكتروني عبر منصة متجرك Jo.",
+  starter: "مرحباً، أريد طلب باقة البداية بسعر 12 ديناراً لمدة 30 يوماً. أرجو توضيح تفاصيل الخدمة وطريقة الدفع.",
+  advanced: "مرحباً، أريد طلب الباقة المتقدمة بسعر 20 ديناراً لمدة 60 يوماً. أرجو توضيح تفاصيل الخدمة وطريقة الدفع."
+};
+
+document.querySelectorAll("[data-wa]").forEach(link => {
+  const type = link.dataset.wa;
+  link.href = "https://wa.me/" + STORE_CONFIG.whatsapp +
+    "?text=" + encodeURIComponent(messages[type] || messages.general);
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* إظهار العناصر تدريجياً أثناء التمرير */
+const revealItems = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealItems.forEach(item => observer.observe(item));
+} else {
+  revealItems.forEach(item => item.classList.add("visible"));
+}
+
+/* الأسئلة الشائعة */
+document.querySelectorAll(".faq-question").forEach(button => {
+  button.addEventListener("click", () => {
+    const wasOpen = button.getAttribute("aria-expanded") === "true";
+    const answer = button.nextElementSibling;
+
+    document.querySelectorAll(".faq-question").forEach(other => {
+      other.setAttribute("aria-expanded", "false");
+      other.nextElementSibling.hidden = true;
+      other.querySelector(".faq-icon").textContent = "+";
+    });
+
+    if (!wasOpen) {
+      button.setAttribute("aria-expanded", "true");
+      answer.hidden = false;
+      button.querySelector(".faq-icon").textContent = "−";
+    }
+  });
+});
+</script>
 </body>
 </html>
