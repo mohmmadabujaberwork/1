@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجرك Jo - المنصة الأردنية الأولى للمتاجر الإلكترونية</title>
-    <!-- Tailwind CSS CDN -->
+    <title>متجرك Jo - حوّل مشروعك إلى متجر إلكتروني خاص</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Tajawal & Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -15,498 +22,1013 @@
                             50: '#f0fdf4',
                             100: '#dcfce7',
                             200: '#bbf7d0',
-                            400: '#4ade80',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                            800: '#166534',
-                            900: '#14532d',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            dark: '#01291e',
                         }
                     },
                     fontFamily: {
-                        sans: ['Tajawal', 'sans-serif'],
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif'],
+                    },
+                    animation: {
+                        'float-slow': 'float 6s ease-in-out infinite',
+                        'float-medium': 'float 4s ease-in-out infinite',
+                        'float-fast': 'float 2.5s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-15px) rotate(3deg)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+                            '50%': { opacity: '.85', transform: 'scale(1.03)' },
+                        }
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: #f8fafc; overflow-x: hidden; }
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
         
-        .site-bg {
-            background-color: #0f172a;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(34, 197, 94, 0.12) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
-                radial-gradient(rgba(34, 197, 94, 0.08) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 24px 24px;
+        /* Smooth Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #059669;
         }
 
+        /* Glassmorphism utility */
         .glass-card {
-            background: rgba(30, 41, 59, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        .glass-card-interactive {
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        @media (hover: hover) {
-            .glass-card-interactive:hover {
-                transform: translateY(-4px);
-                border-color: rgba(34, 197, 94, 0.4);
-                box-shadow: 0 20px 30px -10px rgba(34, 197, 94, 0.15);
-            }
-        }
-
-        .glass-header {
-            background: rgba(15, 23, 42, 0.85);
+        .glass-dark {
+            background: rgba(1, 41, 30, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #4ade80 0%, #22c55e 50%, #16a34a 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Phone Screen Frame Shadow */
+        .phone-shadow {
+            box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
         }
 
-        /* Fast Scroll Reveal Animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Subtle Animations */
-        @keyframes subtlePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-        .animate-subtle { animation: subtlePulse 3s ease-in-out infinite; }
-
-        /* Reduced Motion Accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            .reveal, .animate-subtle {
-                animation: none !important;
-                transition: none !important;
-                transform: none !important;
-                opacity: 1 !important;
-            }
+        /* Leaf Pattern BG Elements */
+        .leaf-bg-1 {
+            background-image: radial-gradient(#10b981 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
         }
     </style>
 </head>
-<body class="site-bg min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-slate-950">
+<body class="text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
 
-    <!-- TOP HEADER -->
-    <header class="sticky top-0 z-50 glass-header border-b border-slate-800/80 transition-all px-4 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
-        <!-- Brand Image Logo (الدائرة الحمراء) -->
-        <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group">
-            <img src="لوجو.png" alt="لوجو متجرك Jo" class="w-10 h-10 sm:w-12 sm:h-12 object-contain rounded-xl shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-300">
-            <div class="leading-tight">
-                <span class="text-base sm:text-xl font-black text-white block">متجرك <span class="gradient-text">Jo</span></span>
-                <span class="text-[9px] sm:text-[11px] text-brand-400/90 font-bold block -mt-1 sm:-mt-0.5">منصة المتاجر الأردنية</span>
+    <!-- Floating Background Decorative Elements (Animated Leaves & Light Dots) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-96 h-96 bg-brand-200/40 rounded-full blur-3xl animate-pulse-glow"></div>
+        <div class="absolute top-1/3 -left-32 w-80 h-80 bg-brand-100/50 rounded-full blur-3xl animate-float-slow"></div>
+        <div class="absolute bottom-1/4 right-10 w-72 h-72 bg-emerald-100/40 rounded-full blur-3xl animate-float-medium"></div>
+    </div>
+
+    <!-- Sticky Header Navbar -->
+    <header id="navbar" class="sticky top-0 z-50 transition-all duration-300 py-3 px-4 lg:px-8">
+        <div class="max-w-7xl mx-auto glass-card rounded-2xl shadow-sm px-4 lg:px-6 py-2.5 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-md group-hover:scale-105 transition-transform">
+                    Jo
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-xl leading-none text-brand-900 tracking-tight">متجرك <span class="text-brand-600">Jo</span></span>
+                    <span class="text-[10px] text-slate-500 font-semibold mt-0.5">منصة متاجر المشاريع الصغيرة</span>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center gap-6 font-semibold text-slate-700 text-sm">
+                <a href="#hero" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">الرئيسية</a>
+                <a href="#features" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">المميزات</a>
+                <a href="#preview" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">كيف تبدأ؟</a>
+                <a href="#pricing" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">الباقات</a>
+                <a href="#faq" class="hover:text-brand-600 transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-600 hover:after:w-full after:transition-all">الأسئلة الشائعة</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="flex items-center gap-3">
+                <a href="https://wa.me/962779926984" target="_blank" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 transition-all flex items-center gap-2 text-sm active:scale-95">
+                    <span>اطلب متجرك الآن</span>
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                </a>
             </div>
-        </a>
-
-        <!-- Header Actions: Exactly 2 Action Buttons -->
-        <div class="flex items-center gap-2 sm:gap-3">
-            <a href="admin.html" class="text-xs sm:text-sm font-bold text-slate-400 hover:text-white px-3 py-2 rounded-xl hover:bg-slate-800/80 transition">الإدارة</a>
-            
-            <a href="store.html" id="btn-header-dash" class="hidden text-xs sm:text-sm font-black text-slate-950 bg-brand-400 hover:bg-brand-500 px-4 py-2 sm:py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
-                <span>لوحة التحكم 📊</span>
-                <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
-            </a>
-
-            <a href="create-store.html" id="btn-header-open" class="btn-open-store bg-brand-500 hover:bg-brand-600 active:scale-95 text-slate-950 text-xs sm:text-sm font-black px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl shadow-md shadow-brand-500/20 transition">
-                افتح متجرك 🚀
-            </a>
         </div>
     </header>
 
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-8 lg:px-12 py-8 sm:py-12 md:py-16 space-y-16 sm:space-y-24 lg:space-y-32">
-
-        <!-- HERO SECTION (تم حذف الصورة المحددة بالدائرة البيضاء) -->
-        <section class="max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
-            <!-- Badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card border-brand-500/30 text-brand-400 text-xs font-bold animate-subtle">
-                <span class="w-2.5 h-2.5 rounded-full bg-brand-500 animate-pulse"></span>
-                <span>المنصة الأردنية الذكية للمتاجر الإلكترونية 🇯🇴</span>
-            </div>
-
-            <!-- Main Dynamic Title -->
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-snug lg:leading-tight min-h-[4rem] sm:min-h-[5rem]">
-                انقل تجارتك لمستوى آخر و
-                <span id="rotating-text" class="gradient-text block sm:inline-block transition-all duration-300">
-                    أنشئ متجرك الإلكتروني بسهولة
-                </span>
-            </h1>
-
-            <p class="text-sm sm:text-base lg:text-lg text-slate-300 leading-relaxed font-normal max-w-2xl mx-auto">
-                صمِّم متجرك الأردني المستقل خلال دقائق، واعرض منتجاتك باحترافية، واستقبل الطلبات المباشرة من عملائك عبر الواتساب بدون أي تعقيد.
-            </p>
-
-            <!-- CTA Actions -->
-            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-                <a href="create-store.html" class="btn-open-store w-full sm:w-auto bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 active:scale-95 text-slate-950 font-black text-sm sm:text-base px-8 py-3.5 sm:py-4 rounded-2xl shadow-xl shadow-brand-500/25 transition flex items-center justify-center gap-2">
-                    <span>افتح متجرك الآن</span>
-                    <span class="text-base">🚀</span>
-                </a>
-                <a href="#features" class="w-full sm:w-auto glass-card hover:bg-slate-800/80 text-white font-bold text-sm sm:text-base px-6 py-3.5 sm:py-4 rounded-2xl transition flex items-center justify-center gap-2">
-                    <span>استكشف المميزات</span>
-                    <span>↓</span>
-                </a>
-            </div>
-
-            <!-- Verified Features Banner -->
-            <div class="grid grid-cols-3 gap-3 sm:gap-4 pt-8 border-t border-slate-800/80 max-w-3xl mx-auto">
-                <div class="glass-card p-3 sm:p-4 rounded-2xl text-center">
-                    <span class="block text-xl sm:text-3xl font-black text-brand-400">0%</span>
-                    <span class="text-[10px] sm:text-xs text-slate-400 font-bold">عمولة على المبيعات</span>
+    <!-- SECTION 1: HERO SECTION -->
+    <section id="hero" class="relative pt-8 pb-16 lg:py-20 overflow-hidden z-10">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Text Column (RTL Right side text) -->
+            <div class="lg:col-span-6 text-center lg:text-right space-y-6">
+                <!-- Tag Badge -->
+                <div class="inline-flex items-center gap-2 bg-brand-100 text-brand-800 border border-brand-200 px-4 py-1.5 rounded-full text-xs font-bold animate-bounce">
+                    <i class="fa-solid fa-flag text-brand-600"></i>
+                    <span>منصة متاجر المشاريع الصغيرة</span>
                 </div>
-                <div class="glass-card p-3 sm:p-4 rounded-2xl text-center">
-                    <span class="block text-xl sm:text-3xl font-black text-white">رابط خاص</span>
-                    <span class="text-[10px] sm:text-xs text-slate-400 font-bold">مستقل لمتجرك</span>
+
+                <!-- Main Title -->
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.25] tracking-tight">
+                    حوّل مشروعك إلى <br>
+                    <span class="text-brand-600 relative inline-block">
+                        متجر إلكتروني خاص
+                        <svg class="absolute -bottom-2 right-0 w-full h-3 text-brand-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M0,5 Q50,10 100,5" stroke="currentColor" stroke-width="6" fill="none"/>
+                        </svg>
+                    </span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-slate-600 text-base sm:text-lg font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                    اعرض منتجاتك، وأسعارك. وخلي عملائك يختارون طلباتهم من سلة منظمة ويرسلوها لك عبر واتساب بكل سهولة ومهنية.
+                </p>
+
+                <!-- CTA Big Button -->
+                <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="https://wa.me/962779926984" target="_blank" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-lg px-8 py-4 rounded-2xl shadow-xl shadow-brand-600/30 hover:shadow-brand-600/50 hover:-translate-y-1 transition-all flex items-center justify-center gap-3 group">
+                        <i class="fa-brands fa-whatsapp text-2xl group-hover:rotate-12 transition-transform"></i>
+                        <span>اطلب متجرك الآن عبر واتساب</span>
+                    </a>
                 </div>
-                <div class="glass-card p-3 sm:p-4 rounded-2xl text-center">
-                    <span class="block text-xl sm:text-3xl font-black text-white">واتساب</span>
-                    <span class="text-[10px] sm:text-xs text-slate-400 font-bold">استقبال طلبات مباشر</span>
+
+                <!-- Feature Icons Badges (Matches bottom of image hero) -->
+                <div class="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-slate-700 text-xs font-bold">
+                    <div class="bg-white/80 backdrop-blur p-3 rounded-xl border border-slate-100 shadow-sm flex items-center justify-center gap-2 hover:border-brand-300 transition-colors">
+                        <i class="fa-solid fa-headset text-brand-600 text-base"></i>
+                        <span>دعم مباشر</span>
+                    </div>
+                    <div class="bg-white/80 backdrop-blur p-3 rounded-xl border border-slate-100 shadow-sm flex items-center justify-center gap-2 hover:border-brand-300 transition-colors">
+                        <i class="fa-solid fa-sliders text-brand-600 text-base"></i>
+                        <span>إدارة مجهزة</span>
+                    </div>
+                    <div class="bg-white/80 backdrop-blur p-3 rounded-xl border border-slate-100 shadow-sm flex items-center justify-center gap-2 hover:border-brand-300 transition-colors">
+                        <i class="fa-solid fa-mobile-screen-button text-brand-600 text-base"></i>
+                        <span>متوافق مع الجوال</span>
+                    </div>
+                    <div class="bg-white/80 backdrop-blur p-3 rounded-xl border border-slate-100 shadow-sm flex items-center justify-center gap-2 hover:border-brand-300 transition-colors">
+                        <i class="fa-solid fa-tags text-brand-600 text-base"></i>
+                        <span>بأسعار مناسبة</span>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- VERTICAL FEATURES SECTION -->
-        <section id="features" class="space-y-10 sm:space-y-16">
-            <div class="text-center space-y-2 max-w-2xl mx-auto">
-                <span class="text-brand-400 text-xs font-black uppercase tracking-widest">حلول عمليّة ومباشرة</span>
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white">ثلاث مميزات أساسية تبني نجاح متجرك</h2>
-                <p class="text-xs sm:text-sm text-slate-400">صُممت المنصة لتوفير تجربة سهلة وسريعة تجعل إشهار منتجاتك وإدارتها أمراً بغاية البساطة.</p>
+            <!-- Right Hero Graphics (Dynamic Parallax Interactive Mobile Screen Showcase) -->
+            <div class="lg:col-span-6 relative flex justify-center items-center py-6" id="hero-parallax-container">
+                
+                <!-- Background Floating Decorative Elements -->
+                <div class="absolute w-72 h-72 bg-brand-500/10 rounded-full filter blur-2xl animate-pulse"></div>
+
+                <!-- Floating Badge 1 (Top Left) -->
+                <div class="absolute top-2 left-2 sm:left-6 z-20 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 animate-float-medium">
+                    <div class="w-10 h-10 rounded-xl bg-green-100 text-green-600 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-slate-800">120+ متجر</div>
+                        <div class="text-[10px] text-slate-500">يعمل بحرفية الآن</div>
+                    </div>
+                </div>
+
+                <!-- Floating Badge 2 (Bottom Right) -->
+                <div class="absolute bottom-6 right-2 sm:right-6 z-20 bg-white/90 backdrop-blur-md py-2.5 px-4 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2 animate-float-slow">
+                    <i class="fa-solid fa-circle-check text-brand-500 text-lg"></i>
+                    <span class="text-xs font-bold text-slate-800">مثال على متجر حقيقي</span>
+                </div>
+
+                <!-- Floating Leaf Graphic Left -->
+                <div class="absolute -left-6 top-1/2 text-brand-500/30 text-5xl animate-float-fast pointer-events-none">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+
+                <!-- Mobile Mockup Screen Case -->
+                <div class="relative w-full max-w-[310px] sm:max-w-[330px] bg-slate-900 rounded-[45px] p-3 border-4 border-slate-800 shadow-2xl phone-shadow transition-transform duration-500 hover:scale-[1.02]">
+                    <!-- Notch -->
+                    <div class="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-4 bg-slate-800 rounded-full z-30"></div>
+
+                    <!-- Screen Inner Container -->
+                    <div class="bg-slate-50 rounded-[38px] overflow-hidden pt-7 pb-4 px-3 border border-slate-200 text-slate-800 min-h-[540px] flex flex-col justify-between relative">
+                        
+                        <!-- Mini Store Header inside phone -->
+                        <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">حلويات</div>
+                                <div>
+                                    <div class="text-xs font-bold">حلويات الأناقة</div>
+                                    <div class="text-[9px] text-slate-400">متجر معتمد</div>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-bag-shopping text-brand-600 text-sm"></i>
+                        </div>
+
+                        <!-- Mini Store Cards inside phone mockup -->
+                        <div class="space-y-2.5 flex-1 overflow-hidden">
+                            <!-- Product 1 -->
+                            <div class="bg-white p-2.5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-brand-300 transition-all">
+                                <img src="https://placehold.co/100x100/fecdd3/881337?text=كعك" alt="كعك" class="w-14 h-14 rounded-xl object-cover">
+                                <div class="flex-1">
+                                    <h4 class="text-xs font-bold text-slate-800">كعك التمر الملكي</h4>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">علبة 1 كيلو صافي</p>
+                                    <div class="flex items-center justify-between mt-1.5">
+                                        <span class="text-xs font-extrabold text-brand-600">6.50 د.أ</span>
+                                        <button class="bg-brand-50 text-brand-700 px-2.5 py-1 rounded-lg text-[10px] font-bold hover:bg-brand-600 hover:text-white transition-colors">+ أضف</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 2 -->
+                            <div class="bg-white p-2.5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3 hover:border-brand-300 transition-all">
+                                <img src="https://placehold.co/100x100/fde68a/78350f?text=معمول" alt="معمول" class="w-14 h-14 rounded-xl object-cover">
+                                <div class="flex-1">
+                                    <h4 class="text-xs font-bold text-slate-800">معمول فستق حلبي</h4>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">طبق 500 غرام</p>
+                                    <div class="flex items-center justify-between mt-1.5">
+                                        <span class="text-xs font-extrabold text-brand-600">8.00 د.أ</span>
+                                        <button class="bg-brand-50 text-brand-700 px-2.5 py-1 rounded-lg text-[10px] font-bold hover:bg-brand-600 hover:text-white transition-colors">+ أضف</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cart Bar inside Mockup -->
+                            <div class="bg-brand-600 text-white p-3 rounded-2xl shadow-md flex items-center justify-between mt-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-white/20 px-2 py-0.5 rounded-lg text-xs font-bold">2 عناصر</span>
+                                    <span class="text-xs font-bold">14.50 د.أ</span>
+                                </div>
+                                <span class="text-[11px] font-bold flex items-center gap-1">
+                                    أطلب عبر واتساب <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Home Bar -->
+                        <div class="w-24 h-1 bg-slate-300 rounded-full mx-auto mt-2"></div>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Vertical Timeline / Stacked Layout -->
-            <div class="space-y-6 sm:space-y-8 max-w-4xl mx-auto">
-                <!-- Feature 1 -->
-                <div class="reveal glass-card glass-card-interactive p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <div class="md:col-span-2 flex items-center justify-center">
-                        <div class="w-16 h-16 rounded-2xl bg-brand-500/10 border border-brand-500/30 text-brand-400 flex items-center justify-center text-2xl font-black shadow-inner">
-                            01
+        </div>
+    </section>
+
+    <!-- SECTION 2: WHY E-STORE COMPARISON SECTION (لماذا متجر إلكتروني؟) -->
+    <section class="py-16 bg-white relative z-10">
+        <div class="max-w-6xl mx-auto px-4 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight">لماذا متجر إلكتروني؟</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <!-- Comparison Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                
+                <!-- BAD WAY CARD (البيع عبر الرسائل فقط) -->
+                <div class="bg-rose-50/70 border-2 border-rose-100 rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all hover:shadow-lg">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center text-xl shadow-md">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-rose-900">البيع عبر الرسائل فقط</h3>
+                            <p class="text-xs text-rose-600">الطريقة التقليدية المتبعة سابقاً</p>
                         </div>
                     </div>
-                    <div class="md:col-span-10 space-y-2 text-center md:text-right">
-                        <h3 class="text-lg sm:text-xl font-black text-white flex items-center justify-center md:justify-start gap-2">
-                            <span>واجهة متجر مستقلة ورابط مخصص</span>
-                            <span class="text-base">🔗</span>
-                        </h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                            احصل على واجهة مخصصة تعرض اسم متجرك وهويتك بصورة احترافية. يمكنك مشاركة رابط متجرك المباشر بسهولة على منصات التواصل الاجتماعي ليتصفح العملاء المنتجات بسلاسة.
-                        </p>
+
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-rose-800 font-semibold text-sm">
+                            <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-xs">✕</span>
+                            <span>تكرار شرح الأسعار لكل عميل</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-rose-800 font-semibold text-sm">
+                            <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-xs">✕</span>
+                            <span>نسيان تفاصيل الطلبات وإرباك العمل</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-rose-800 font-semibold text-sm">
+                            <span class="w-6 h-6 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-xs">✕</span>
+                            <span>مظهر غير احترافي يقلل من ثقة الزبون</span>
+                        </li>
+                    </ul>
+
+                    <!-- Mock chat background effect -->
+                    <div class="mt-8 bg-white/80 p-3 rounded-2xl border border-rose-100 shadow-sm text-xs text-slate-500 space-y-2 opacity-80">
+                        <div class="bg-slate-100 p-2 rounded-xl w-3/4">كم السعر؟</div>
+                        <div class="bg-rose-100 text-rose-900 p-2 rounded-xl w-3/4 mr-auto text-left">هل متوفر؟</div>
                     </div>
+                </div>
+
+                <!-- GOOD WAY CARD (مع متجرك Jo) -->
+                <div class="bg-emerald-50/80 border-2 border-brand-200 rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-600 text-white flex items-center justify-center text-xl shadow-md">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-brand-900">مع متجرك Jo</h3>
+                            <p class="text-xs text-brand-600">الحل الحديث والتنفيذي السريع</p>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-brand-900 font-bold text-sm">
+                            <span class="w-6 h-6 rounded-full bg-brand-200 text-brand-800 flex items-center justify-center text-xs">✓</span>
+                            <span>رابط واحد لعرض منتجاتك وأسعارك مرتبة</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-brand-900 font-bold text-sm">
+                            <span class="w-6 h-6 rounded-full bg-brand-200 text-brand-800 flex items-center justify-center text-xs">✓</span>
+                            <span>سلة شراء منظمة يختار منها الزبون</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-brand-900 font-bold text-sm">
+                            <span class="w-6 h-6 rounded-full bg-brand-200 text-brand-800 flex items-center justify-center text-xs">✓</span>
+                            <span>إرسال الطلبات مباشرة ومجهزة عبر واتساب</span>
+                        </li>
+                    </ul>
+
+                    <!-- Mock Store Cart illustration -->
+                    <div class="mt-8 bg-white p-3.5 rounded-2xl border border-brand-200 shadow-sm flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-800">طلب جديد مكتمل جاهز للإرسال!</span>
+                        </div>
+                        <span class="bg-brand-600 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold">100% منظم</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: INTERACTIVE STORE DISPLAY CAROUSEL (شاهد كيف يظهر متجرك) -->
+    <section id="preview" class="py-16 lg:py-24 bg-slate-900 text-white relative overflow-hidden">
+        
+        <!-- Decorative Ambient Lights -->
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">شاهد كيف يظهر متجرك</h2>
+                <p class="text-slate-400 mt-2 text-sm sm:text-base">تصميم عصري، سهل التصفح، ومناسب لكل الأجهزة.</p>
+            </div>
+
+            <!-- Interactive Carousel Container -->
+            <div class="relative max-w-5xl mx-auto">
+                
+                <!-- Controls Arrows -->
+                <button id="prevBtn" class="absolute left-0 sm:-left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 hover:bg-brand-600 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg">
+                    <i class="fa-solid fa-chevron-left text-lg"></i>
+                </button>
+                <button id="nextBtn" class="absolute right-0 sm:-right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 hover:bg-brand-600 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg">
+                    <i class="fa-solid fa-chevron-right text-lg"></i>
+                </button>
+
+                <!-- Phone Screen Showcase Track -->
+                <div class="overflow-hidden py-8">
+                    <div id="carouselTrack" class="flex gap-6 transition-transform duration-500 ease-out justify-center items-center">
+                        
+                        <!-- Screen 1: الصفحة الرئيسية -->
+                        <div class="carousel-item min-w-[260px] max-w-[280px] bg-slate-800 p-2.5 rounded-[36px] border-2 border-slate-700 shadow-2xl transition-all duration-300 hover:scale-105">
+                            <div class="bg-white text-slate-800 rounded-[28px] overflow-hidden p-3 min-h-[440px] flex flex-col justify-between">
+                                <div class="space-y-3">
+                                    <div class="bg-slate-100 p-3 rounded-2xl text-center">
+                                        <div class="w-12 h-12 bg-brand-500 text-white rounded-full mx-auto flex items-center justify-center font-bold text-xl mb-1">متجر</div>
+                                        <div class="text-xs font-bold text-slate-800">الرئيسية</div>
+                                    </div>
+                                    <img src="https://placehold.co/240x140/059669/ffffff?text=بنر+المتجر" class="rounded-xl w-full object-cover shadow-sm" alt="Banner">
+                                    <div class="p-2 bg-slate-50 rounded-xl text-[11px] font-bold text-slate-600 text-center">أهلاً بكم في متجرنا المميز</div>
+                                </div>
+                                <div class="bg-brand-600 text-white text-center py-2 rounded-xl text-xs font-bold">الصفحة الرئيسية</div>
+                            </div>
+                        </div>
+
+                        <!-- Screen 2: المنتجات -->
+                        <div class="carousel-item min-w-[260px] max-w-[280px] bg-slate-800 p-2.5 rounded-[36px] border-2 border-brand-500 shadow-2xl transition-all duration-300 scale-105 z-10">
+                            <div class="bg-white text-slate-800 rounded-[28px] overflow-hidden p-3 min-h-[440px] flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <div class="text-xs font-extrabold text-slate-900 border-b pb-2">قائمة المنتجات</div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div class="bg-slate-50 p-2 rounded-xl text-center border">
+                                            <img src="https://placehold.co/100x100/fecdd3/881337?text=منتج+1" class="rounded-lg mb-1 w-full">
+                                            <div class="text-[10px] font-bold">منتج فاخر</div>
+                                            <div class="text-[9px] text-brand-600 font-extrabold">5.00 د.أ</div>
+                                        </div>
+                                        <div class="bg-slate-50 p-2 rounded-xl text-center border">
+                                            <img src="https://placehold.co/100x100/fde68a/78350f?text=منتج+2" class="rounded-lg mb-1 w-full">
+                                            <div class="text-[10px] font-bold">منتج مميز</div>
+                                            <div class="text-[9px] text-brand-600 font-extrabold">12.00 د.أ</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-brand-600 text-white text-center py-2 rounded-xl text-xs font-bold">عرض المنتجات</div>
+                            </div>
+                        </div>
+
+                        <!-- Screen 3: سلة المشتريات -->
+                        <div class="carousel-item min-w-[260px] max-w-[280px] bg-slate-800 p-2.5 rounded-[36px] border-2 border-slate-700 shadow-2xl transition-all duration-300 hover:scale-105">
+                            <div class="bg-white text-slate-800 rounded-[28px] overflow-hidden p-3 min-h-[440px] flex flex-col justify-between">
+                                <div class="space-y-3">
+                                    <div class="text-xs font-extrabold text-slate-900 border-b pb-2 flex justify-between">
+                                        <span>سلة المشتريات</span>
+                                        <i class="fa-solid fa-cart-shopping text-brand-600"></i>
+                                    </div>
+                                    <div class="space-y-2 text-[11px]">
+                                        <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
+                                            <span>1x منتج فاخر</span>
+                                            <span class="font-bold">5.00 د.أ</span>
+                                        </div>
+                                        <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
+                                            <span>1x منتج مميز</span>
+                                            <span class="font-bold">12.00 د.أ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-brand-600 text-white text-center py-2 rounded-xl text-xs font-bold">تأكيد السلة</div>
+                            </div>
+                        </div>
+
+                        <!-- Screen 4: طلب عبر واتساب -->
+                        <div class="carousel-item min-w-[260px] max-w-[280px] bg-slate-800 p-2.5 rounded-[36px] border-2 border-slate-700 shadow-2xl transition-all duration-300 hover:scale-105">
+                            <div class="bg-white text-slate-800 rounded-[28px] overflow-hidden p-3 min-h-[440px] flex flex-col justify-between">
+                                <div class="space-y-3">
+                                    <div class="text-xs font-extrabold text-slate-900 border-b pb-2">طلب عبر واتساب</div>
+                                    <div class="p-3 bg-green-50 text-green-900 rounded-xl text-[10px] space-y-1 border border-green-200">
+                                        <p class="font-bold">مرحباً، أريد إتمام الطلب:</p>
+                                        <p>- منتج فاخر (1)</p>
+                                        <p>- منتج مميز (1)</p>
+                                        <p class="font-bold border-t border-green-200 pt-1">المجموع: 17.00 د.أ</p>
+                                    </div>
+                                </div>
+                                <div class="bg-green-600 text-white text-center py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1">
+                                    <i class="fa-brands fa-whatsapp"></i> إرسال للواتساب
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Carousel Dots Indicator -->
+                <div id="carouselDots" class="flex justify-center gap-2 mt-4">
+                    <button class="w-3 h-3 rounded-full bg-brand-500 transition-all"></button>
+                    <button class="w-3 h-3 rounded-full bg-slate-700 transition-all"></button>
+                    <button class="w-3 h-3 rounded-full bg-slate-700 transition-all"></button>
+                    <button class="w-3 h-3 rounded-full bg-slate-700 transition-all"></button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: ALL YOU NEED IN ONE PLACE (كل ما تحتاجه في مكان واحد) -->
+    <section id="features" class="py-16 lg:py-24 bg-slate-50 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">كل ما تحتاجه في مكان واحد</h2>
+                <p class="text-slate-500 mt-2 text-sm">ميزات مصممة بذكاء لتسهيل إدارة تجارنك ومضاعفة مبيعاتك.</p>
+            </div>
+
+            <!-- Features Grid (6 Features matching image layout) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Feature 1 -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">إدارة المتجر</h3>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                        عدّل منتجاتك وأسعارك بسهولة تامة وبضغطة زر مباشرة من لوحة الإدارة.
+                    </p>
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="reveal glass-card glass-card-interactive p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <div class="md:col-span-2 flex items-center justify-center">
-                        <div class="w-16 h-16 rounded-2xl bg-brand-500/10 border border-brand-500/30 text-brand-400 flex items-center justify-center text-2xl font-black shadow-inner">
-                            02
-                        </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                        <i class="fa-brands fa-whatsapp"></i>
                     </div>
-                    <div class="md:col-span-10 space-y-2 text-center md:text-right">
-                        <h3 class="text-lg sm:text-xl font-black text-white flex items-center justify-center md:justify-start gap-2">
-                            <span>إدارة وإضافة المنتجات برفع الصور</span>
-                            <span class="text-base">📸</span>
-                        </h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                            أضف منتجاتك وعدِّل أسعارها وأوصافها في أي وقت. يمكنك اختيار صور المنتجات مباشرة من جهازك المحمول أو الكمبيوتر بسرعة وسهولة دون خطوات معقدة.
-                        </p>
-                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">طلبات عبر واتساب</h3>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                        صلك الطلب مع التفاصيل كاملة (المنتجات، الكميات، السعر الإجمالي) عبر رسالة واتساب منظمة.
+                    </p>
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="reveal glass-card glass-card-interactive p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <div class="md:col-span-2 flex items-center justify-center">
-                        <div class="w-16 h-16 rounded-2xl bg-brand-500/10 border border-brand-500/30 text-brand-400 flex items-center justify-center text-2xl font-black shadow-inner">
-                            03
-                        </div>
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-mobile-screen"></i>
                     </div>
-                    <div class="md:col-span-10 space-y-2 text-center md:text-right">
-                        <h3 class="text-lg sm:text-xl font-black text-white flex items-center justify-center md:justify-start gap-2">
-                            <span>تجهيز الطلبات وإرسالها المباشر عبر الواتساب</span>
-                            <span class="text-base">💬</span>
-                        </h3>
-                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                            يتصفح الزبون متجرك ويختار المنتجات وخيارات التوصيل، ثم تتجمع كافة التفاصيل بأسلوب منظم لتصلك مباشرة كرسالة جاهزة عبر تطبيق الواتساب الخاص بك.
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">تجربة موبايل</h3>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                        تصميم سلس وسريع جداً على الجوال، ومناسب لجميع الشاشات والأجهزة.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">صور وأسعار</h3>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                        إعرض منتجاتك بصور واضحة وأسعار محدودة لتقديم المتجر بأرقى صورة.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">سلة مشتريات</h3>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                        تجمع المنتجات والكميات قبل إرسال الطلب النهائي للواتساب بدون إرباك.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-link"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">رابط خاص</h3>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                        شارك متجرك بسهولة على إنستغرام وواتساب مع رابط حصري باسم مشروعك.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: PRICING SECTION (باقات بسيطة .. وأسعار واضحة) -->
+    <section id="pricing" class="py-16 lg:py-24 bg-white relative z-10">
+        <div class="max-w-6xl mx-auto px-4 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">باقات بسيطة .. وأسعار واضحة</h2>
+                <p class="text-slate-500 mt-2 text-sm">اختر الباقة المناسبة لمشروعك وابدأ رحلتك معنا بدون تكاليف خفية.</p>
+            </div>
+
+            <!-- Pricing Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
+                
+                <!-- Package 1: باقة البداية -->
+                <div class="bg-slate-50 rounded-3xl p-8 border border-slate-200 flex flex-col justify-between hover:border-brand-300 transition-all">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-extrabold text-slate-900">باقة البداية</h3>
+                            <span class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1 rounded-full">30 يوم</span>
+                        </div>
+                        
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-4xl font-black text-slate-900">12</span>
+                            <span class="text-slate-600 font-bold text-sm">دينار أردني</span>
+                            <span class="text-slate-400 text-xs mr-2">حتى 20 منتجاً</span>
+                        </div>
+
+                        <ul class="space-y-3.5 mb-8 text-sm text-slate-700">
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-brand-600"></i>
+                                <span>عرض المنتجات والصور والأسعار</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-brand-600"></i>
+                                <span>رابط مستقل للمتجر (حسب الاستضافة)</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-brand-600"></i>
+                                <span>سلة مشتريات وإرسال الطلبات عبر واتساب</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-brand-600"></i>
+                                <span>إدارة المنتجات ضمن الوظائف المتفق عليها</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="https://wa.me/962779926984" target="_blank" class="w-full bg-white hover:bg-brand-600 hover:text-white border-2 border-slate-300 hover:border-brand-600 text-slate-800 font-bold py-3 rounded-2xl text-center transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>اطلب باقة البداية</span>
+                    </a>
+                </div>
+
+                <!-- Package 2: الباقة المتقدمة (Most Popular Highlighted) -->
+                <div class="bg-brand-dark text-white rounded-3xl p-8 border-2 border-brand-500 shadow-2xl relative flex flex-col justify-between transform md:-translate-y-3">
+                    
+                    <!-- Popular Tag Badge -->
+                    <div class="absolute -top-4 right-8 bg-brand-500 text-white text-xs font-black px-4 py-1.5 rounded-full shadow-lg">
+                        الأكثر طلباً 🔥
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-extrabold text-white">الباقة المتقدمة</h3>
+                            <span class="bg-brand-800 text-brand-200 text-xs font-bold px-3 py-1 rounded-full">60 يوم</span>
+                        </div>
+                        
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-4xl font-black text-white">20</span>
+                            <span class="text-brand-300 font-bold text-sm">دينار أردني</span>
+                        </div>
+
+                        <ul class="space-y-3.5 mb-8 text-sm text-brand-100">
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-brand-400"></i>
+                                <span>مدة اشتراك 60 يوماً كاملة</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-brand-400"></i>
+                                <span>متجر خاص بمشروعك</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-brand-400"></i>
+                                <span>عرض المنتجات والصور والأسعار</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-brand-400"></i>
+                                <span>سلة مشتريات وإرسال الطلبات عبر واتساب</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-brand-400"></i>
+                                <span>إدارة المنتجات ضمن الوظائف المتفق عليها</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="https://wa.me/962779926984" target="_blank" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-black py-3.5 rounded-2xl text-center shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-[1.02]">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>اطلب الباقة المتقدمة</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: TESTIMONIALS (ماذا يقول عملاؤنا؟) -->
+    <section class="py-16 lg:py-24 bg-slate-50 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">ماذا يقول عملاؤنا؟</h2>
+                <p class="text-slate-500 mt-2 text-sm">قصص نجاح حقيقية من أصحاب المشاريع الصغيرة.</p>
+            </div>
+
+            <!-- Testimonials Slider Container -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Review 1 -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all">
+                    <div>
+                        <div class="flex text-amber-400 gap-1 text-xs mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6 font-medium">
+                            "صار عندي متجر خاص في دقائق، والطلبات توصلني على الواتساب بشكل منظم ودقيق أرتاح بالي من الشرح!"
                         </p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PRICING CARDS SECTION -->
-        <section class="space-y-10 sm:space-y-14">
-            <div class="text-center space-y-2 max-w-xl mx-auto">
-                <span class="text-brand-400 text-xs font-black uppercase tracking-widest">الباقات والأسعار</span>
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white">اشتراكات واضحة ومحددة بالدينار الأردني</h2>
-                <p class="text-xs sm:text-sm text-slate-400">اختر الباقة المناسبة لحجم تجارتك دون أي عمولات خفية على المبيعات.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-                <!-- Starter Package -->
-                <div class="reveal glass-card p-6 sm:p-7 rounded-3xl space-y-5 flex flex-col justify-between border-slate-800">
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs font-bold text-slate-300 bg-slate-800/80 px-3 py-1 rounded-xl">باقة البداية</span>
-                            <span class="text-xs text-slate-400 font-semibold">30 يومًا</span>
+                    <div class="flex items-center gap-3 border-t pt-4 border-slate-100">
+                        <img src="https://placehold.co/100x100/fecdd3/881337?text=سارة" alt="سارة" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900">سارة خالد</h4>
+                            <p class="text-[10px] text-slate-400">مشروعي كوكيز</p>
                         </div>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-3xl sm:text-4xl font-black text-white">12.99</span>
-                            <span class="text-xs font-bold text-slate-400">د.أ</span>
-                        </div>
-                        <p class="text-xs text-slate-400 leading-relaxed">خيار ممتاز لتجربة المنصة وإطلاق متجرك الإلكتروني الفوري.</p>
-                        <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800 pt-4">
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>متجر إلكتروني مستقل برابط خاص</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>إضافة المنتجات ورفع الصور من الجهاز</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>استقبال الطلبات عبر الواتساب مباشرة</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>عمولة 0% على جميع المبيعات</span>
-                            </li>
-                        </ul>
                     </div>
-                    <a href="create-store.html?pkg=starter" class="btn-open-store w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-2xl text-xs text-center transition block">
-                        اختر باقة البداية
-                    </a>
                 </div>
 
-                <!-- Pro Package (Highlighted) -->
-                <div class="reveal glass-card p-6 sm:p-7 rounded-3xl space-y-5 flex flex-col justify-between border-brand-500/50 shadow-xl shadow-brand-500/10 relative">
-                    <span class="absolute -top-3 right-6 bg-brand-500 text-slate-950 text-[10px] font-black px-3 py-1 rounded-full shadow-md">
-                        الأكثر طلبًا 🔥
-                    </span>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs font-bold text-brand-400 bg-brand-500/10 px-3 py-1 rounded-xl">باقة المحترفين Pro</span>
-                            <span class="text-xs text-slate-400 font-semibold">90 يومًا</span>
+                <!-- Review 2 -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all">
+                    <div>
+                        <div class="flex text-amber-400 gap-1 text-xs mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
                         </div>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-3xl sm:text-4xl font-black text-white">30.99</span>
-                            <span class="text-xs font-bold text-slate-400">د.أ</span>
-                        </div>
-                        <p class="text-xs text-slate-400 leading-relaxed">الباقة المثالية للتجّار الراغبين بالاستمرار والاستقرار لمدة 3 أشهر.</p>
-                        <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800 pt-4">
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>جميع مزايا باقة البداية</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>فترة تشغيل أطول واستقرار للمتجر</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>ربط مباشر للطلبات مع حساب الواتساب</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>عمولة 0% على كافة الأرباح</span>
-                            </li>
-                        </ul>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6 font-medium">
+                            "المتجر ساعدني أزيد مبيعاتي وبدون تعقيد.. أنصح فيه بشدة لكل صاحب مشروع صغير بالأردن."
+                        </p>
                     </div>
-                    <a href="create-store.html?pkg=pro" class="btn-open-store w-full bg-brand-500 hover:bg-brand-600 text-slate-950 font-black py-3 rounded-2xl text-xs text-center shadow-lg shadow-brand-500/20 transition block">
-                        اختر باقة المحترفين
-                    </a>
-                </div>
-
-                <!-- Annual Package -->
-                <div class="reveal glass-card p-6 sm:p-7 rounded-3xl space-y-5 flex flex-col justify-between border-slate-800">
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs font-bold text-slate-300 bg-slate-800/80 px-3 py-1 rounded-xl">الباقة السنوية VIP</span>
-                            <span class="text-xs text-slate-400 font-semibold">365 يومًا</span>
+                    <div class="flex items-center gap-3 border-t pt-4 border-slate-100">
+                        <img src="https://placehold.co/100x100/bbf7d0/065f46?text=محمد" alt="محمد" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900">محمد علي</h4>
+                            <p class="text-[10px] text-slate-400">مشروع ملابس</p>
                         </div>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-3xl sm:text-4xl font-black text-white">99.00</span>
-                            <span class="text-xs font-bold text-slate-400">د.أ</span>
-                        </div>
-                        <p class="text-xs text-slate-400 leading-relaxed">خيار الاستثمار الأفضل لعام كامل من العمل التجاري المستمر.</p>
-                        <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800 pt-4">
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>استمرار الخدمة لمدة سنة كاملة</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>كافة الخصائص والمميزات كاملة</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>إعداد فوري وسهل للمتجر</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-brand-400 font-bold">✓</span>
-                                <span>عمولة 0% بدون أي رسوم إضافية</span>
-                            </li>
-                        </ul>
                     </div>
-                    <a href="create-store.html?pkg=vip" class="btn-open-store w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-2xl text-xs text-center transition block">
-                        اختر الباقة السنوية
-                    </a>
                 </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all">
+                    <div>
+                        <div class="flex text-amber-400 gap-1 text-xs mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6 font-medium">
+                            "من أسهل القرارات اللي أخذتها لمتجري. خدمة العملاء كانت ممتازة جداً والمظهر احترافي."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 border-t pt-4 border-slate-100">
+                        <img src="https://placehold.co/100x100/e0e7ff/3730a3?text=رنا" alt="رنا" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900">رنا أبوحمد</h4>
+                            <p class="text-[10px] text-slate-400">مشروعي حلويات</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- FAQ SECTION -->
-        <section class="space-y-8 max-w-3xl mx-auto">
-            <div class="text-center space-y-2">
-                <span class="text-brand-400 text-xs font-black uppercase tracking-widest">معلومات تهمك</span>
-                <h2 class="text-2xl sm:text-3xl font-black text-white">الأسئلة الشائعة</h2>
+    <!-- SECTION 7: FAQ ACCORDION (أسئلة شائعة) -->
+    <section id="faq" class="py-16 bg-white relative z-10">
+        <div class="max-w-5xl mx-auto px-4 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight">أسئلة شائعة</h2>
+                <p class="text-slate-500 mt-2 text-sm">إجابات مختصرة على أكثر الأسئلة المتكررة.</p>
             </div>
 
-            <div class="space-y-4">
-                <details class="glass-card rounded-2xl p-4 sm:p-5 group cursor-pointer border-slate-800 transition">
-                    <summary class="font-bold text-sm sm:text-base text-white flex justify-between items-center list-none select-none">
-                        <span>كيف تصلني طلبات العملاء من المتجر؟</span>
-                        <span class="text-brand-400 transition group-open:rotate-180">▼</span>
-                    </summary>
-                    <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed border-t border-slate-800/60 pt-3">
-                        عندما يختار الزبون المنتجات ويضع تفاصيل التوصيل، يقوم النظام بصياغة رسالة واضحة تحتوي على أسماء المنتجات والسعر الإجمالي والموقع، ويتم تحويله مباشرة لإرسالها لك عبر الواتساب.
-                    </p>
-                </details>
+            <!-- Accordion Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- FAQ 1 -->
+                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
+                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
+                        <span>هل أحتاج خبرة برمجية؟</span>
+                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
+                        لا أبداً، كل شيء مجهز وجاهز للاستخدام مباشرة دون أي حاجة لأي خبرة تقنية.
+                    </div>
+                </div>
 
-                <details class="glass-card rounded-2xl p-4 sm:p-5 group cursor-pointer border-slate-800 transition">
-                    <summary class="font-bold text-sm sm:text-base text-white flex justify-between items-center list-none select-none">
-                        <span>هل توجد عمولة على المبيعات التي أحققها؟</span>
-                        <span class="text-brand-400 transition group-open:rotate-180">▼</span>
-                    </summary>
-                    <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed border-t border-slate-800/60 pt-3">
-                        لا، العمولات 0%. كافة مبيعاتك وأرباحك تعود لك بالكامل دون استقطاع أي جزء منها.
-                    </p>
-                </details>
+                <!-- FAQ 2 -->
+                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
+                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
+                        <span>كيف تصلني طلبات العملاء؟</span>
+                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
+                        تصلك الطلبات مباشرة برسالة واتساب مرتبة تحتوي على الأسماء، الكميات، والتوتال النهائي.
+                    </div>
+                </div>
 
-                <details class="glass-card rounded-2xl p-4 sm:p-5 group cursor-pointer border-slate-800 transition">
-                    <summary class="font-bold text-sm sm:text-base text-white flex justify-between items-center list-none select-none">
-                        <span>هل يمكنني رفع صور المنتجات مباشرة من هاتفي المحمول؟</span>
-                        <span class="text-brand-400 transition group-open:rotate-180">▼</span>
-                    </summary>
-                    <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed border-t border-slate-800/60 pt-3">
-                        نعم، يمكنك اختيار الصور مباشرة من الاستوديو بجهازك أثناء إضافة أي منتج في لوحة التحكم بسهولة.
-                    </p>
-                </details>
+                <!-- FAQ 3 -->
+                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
+                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
+                        <span>ماذا يحدث عند انتهاء الاشتراك؟</span>
+                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
+                        يمكنك التجديد في أي وقت بسهولة وبدون فقدان بيانات متجرك أو منتجاتك.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
+                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
+                        <span>هل أستطيع إضافة منتجات وصور جديدة؟</span>
+                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
+                        نعم بالتأكيد، من خلال لوحة الإدارة المبسطة يمكنك تعديل وإضافة أي منتج بسهولة.
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
+                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
+                        <span>كيف أطلب متجري؟</span>
+                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
+                        اضغط على زر "اطلب متجرك الآن" وسيتواصل معك فريقنا على الواتساب فوراً.
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden transition-all">
+                    <button class="faq-btn w-full p-4 text-right flex items-center justify-between font-bold text-slate-800 text-sm hover:text-brand-600">
+                        <span>هل أستطيع تغيير رقم الواتساب؟</span>
+                        <i class="fa-solid fa-plus text-xs transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/50 pt-2">
+                        نعم، يمكنك تحديث رقم الواتساب المربوط بالمتجر في أي وقت دون مشاكل.
+                    </div>
+                </div>
+
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- BOTTOM CALL TO ACTION -->
-        <section class="glass-card p-8 sm:p-12 rounded-3xl text-center space-y-5 border-brand-500/30 max-w-4xl mx-auto">
-            <h2 class="text-2xl sm:text-3xl font-black text-white">هل أنت مستعد لإطلاق متجرك الإلكتروني اليوم؟</h2>
-            <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
-                ابدأ رحلتك في التجارة الإلكترونية بخطوات بسيطة، واعرض منتجاتك للعملاء بأسلوب عصري ومريح.
-            </p>
-            <div class="pt-2">
-                <a href="create-store.html" class="btn-open-store inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 active:scale-95 text-slate-950 font-black px-8 py-3.5 sm:py-4 rounded-2xl shadow-xl shadow-brand-500/25 transition text-xs sm:text-sm">
-                    <span>افتح متجرك الآن</span>
-                    <span>🚀</span>
+    <!-- SECTION 8: PRE-FOOTER CALL TO ACTION BANNER -->
+    <section class="py-12 bg-slate-50 relative z-10 px-4">
+        <div class="max-w-6xl mx-auto bg-slate-900 text-white rounded-3xl p-8 sm:p-12 relative overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
+            
+            <!-- Glowing Background Circles -->
+            <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="space-y-3 text-center md:text-right relative z-10">
+                <div class="inline-flex items-center gap-2 bg-brand-500/20 text-brand-300 text-xs font-bold px-3 py-1 rounded-full border border-brand-500/30">
+                    <i class="fa-solid fa-gem"></i>
+                    <span>متجر حقيقي .. شركاء لنجاحك</span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-black">مشروعك يستحق أن يكون بين أيدي عملائك</h3>
+                <p class="text-slate-400 text-sm max-w-xl">تواصل معنا الآن وابدأ رحلتك نحو متجر إلكتروني خاص بك.</p>
+            </div>
+
+            <div class="relative z-10 w-full md:w-auto">
+                <a href="https://wa.me/962779926984" target="_blank" class="w-full md:w-auto bg-brand-500 hover:bg-brand-600 text-white font-extrabold px-8 py-4 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 text-base hover:scale-105 active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                    <span>اطلب متجرك عبر واتساب</span>
                 </a>
             </div>
-        </section>
-
-    </main>
+        </div>
+    </section>
 
     <!-- FOOTER -->
-    <footer class="border-t border-slate-800/80 bg-slate-950/80 py-8 text-center text-xs text-slate-400 px-4">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <span class="font-black text-white">متجرك <span class="gradient-text">Jo</span></span>
-                <span>— المنصة الأردنية للمتاجر الإلكترونية 🇯🇴</span>
+    <footer class="bg-white border-t border-slate-200 py-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-100">
+                
+                <!-- Logo Footer -->
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-lg">Jo</div>
+                    <div>
+                        <div class="font-extrabold text-lg text-slate-900">متجرك <span class="text-brand-600">Jo</span></div>
+                        <div class="text-[10px] text-slate-400">منصة متاجر المشاريع الصغيرة</div>
+                    </div>
+                </div>
+
+                <!-- Navigation Links Footer -->
+                <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-bold text-slate-600">
+                    <a href="#hero" class="hover:text-brand-600">الرئيسية</a>
+                    <a href="#features" class="hover:text-brand-600">المميزات</a>
+                    <a href="#preview" class="hover:text-brand-600">كيف تبدأ؟</a>
+                    <a href="#pricing" class="hover:text-brand-600">الباقات</a>
+                    <a href="#faq" class="hover:text-brand-600">الأسئلة الشائعة</a>
+                </div>
+
+                <!-- Contact Info & Socials -->
+                <div class="flex items-center gap-4">
+                    <a href="https://wa.me/962779926984" target="_blank" class="text-xs font-bold text-slate-700 hover:text-brand-600 flex items-center gap-1.5 dir-ltr">
+                        <i class="fa-brands fa-whatsapp text-brand-600 text-base"></i>
+                        <span>962779926984</span>
+                    </a>
+                    <div class="flex items-center gap-2 text-slate-400">
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-500 hover:text-white transition-colors text-xs"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-500 hover:text-white transition-colors text-xs"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-500 hover:text-white transition-colors text-xs"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+
             </div>
-            <p class="text-[11px] text-slate-400">جميع الحقوق محفوظة &copy; 2026 متجرك Jo</p>
+
+            <!-- Copyright -->
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-slate-400 text-xs gap-2">
+                <p>© متجرك Jo - جميع الحقوق محفوظة.</p>
+                <p class="flex items-center gap-1">
+                    <span>متجرك يبدأ بأفكار... وننمو بفرصة حقيقية</span>
+                    <i class="fa-solid fa-heart text-rose-500"></i>
+                </p>
+            </div>
         </div>
     </footer>
 
-    <!-- SCRIPT LOGIC -->
+    <!-- FLOATING WHATSAPP BUTTON (ALWAYS VISIBLE) -->
+    <a href="https://wa.me/962779926984" target="_blank" class="fixed bottom-6 left-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center text-3xl shadow-2xl transition-all hover:scale-110 active:scale-95 animate-pulse-glow" title="تواصل معنا عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- JAVASCRIPT FOR INTERACTIVE LOGIC & ANIMATIONS -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Check existing store state from localStorage
-            try {
-                const storeDataRaw = localStorage.getItem('matjarakjo_store');
-                if (storeDataRaw) {
-                    const storeData = JSON.parse(storeDataRaw);
-                    if (storeData && storeData.active === true) {
-                        // Hide open-store buttons
-                        const openButtons = document.querySelectorAll('.btn-open-store');
-                        openButtons.forEach(btn => btn.style.display = 'none');
+        // --- 1. CAROUSEL SLIDER LOGIC ---
+        const track = document.getElementById('carouselTrack');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = document.querySelectorAll('#carouselDots button');
+        let currentIndex = 1; // start middle
 
-                        // Show header dashboard button
-                        const dashBtn = document.getElementById('btn-header-dash');
-                        if (dashBtn) {
-                            dashBtn.classList.remove('hidden');
-                        }
-                    }
+        function updateCarousel(index) {
+            currentIndex = index;
+            const items = document.querySelectorAll('.carousel-item');
+            
+            // Adjust index wrap
+            if (currentIndex < 0) currentIndex = items.length - 1;
+            if (currentIndex >= items.length) currentIndex = 0;
+
+            items.forEach((item, idx) => {
+                if (idx === currentIndex) {
+                    item.classList.add('scale-105', 'border-brand-500', 'z-10');
+                    item.classList.remove('border-slate-700');
+                } else {
+                    item.classList.remove('scale-105', 'border-brand-500', 'z-10');
+                    item.classList.add('border-slate-700');
                 }
-            } catch (e) {
-                console.error("Error reading store state from localStorage:", e);
-            }
-
-            // Smooth Scroll Reveal Engine
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15
-            };
-
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.reveal').forEach(el => {
-                revealObserver.observe(el);
             });
 
-            // Dynamic Headline Phrases Carousel
-            const phrases = [
-                "أنشئ متجرك الإلكتروني بسهولة",
-                "اعرض منتجاتك بطريقة احترافية",
-                "استقبل طلباتك عبر الواتساب مباشرة",
-                "شارك رابط متجرك المخصص مع عملائك",
-                "ابدأ رحلتك التجارية بخطوات بسيطة"
-            ];
-            let currentPhraseIdx = 0;
-            const rotatingElement = document.getElementById('rotating-text');
+            // Update dots
+            dots.forEach((dot, idx) => {
+                if (idx === currentIndex) {
+                    dot.classList.add('bg-brand-500', 'w-6');
+                    dot.classList.remove('bg-slate-700', 'w-3');
+                } else {
+                    dot.classList.remove('bg-brand-500', 'w-6');
+                    dot.classList.add('bg-slate-700', 'w-3');
+                }
+            });
+        }
 
-            if (rotatingElement) {
-                setInterval(() => {
-                    rotatingElement.style.opacity = '0';
-                    rotatingElement.style.transform = 'translateY(-6px)';
+        prevBtn.addEventListener('click', () => updateCarousel(currentIndex - 1));
+        nextBtn.addEventListener('click', () => updateCarousel(currentIndex + 1));
+        dots.forEach((dot, idx) => dot.addEventListener('click', () => updateCarousel(idx)));
 
-                    setTimeout(() => {
-                        currentPhraseIdx = (currentPhraseIdx + 1) % phrases.length;
-                        rotatingElement.textContent = phrases[currentPhraseIdx];
-                        rotatingElement.style.opacity = '1';
-                        rotatingElement.style.transform = 'translateY(0)';
-                    }, 350);
-                }, 3800);
+        // Auto slide every 4 seconds
+        setInterval(() => {
+            updateCarousel(currentIndex + 1);
+        }, 4000);
+
+        // --- 2. FAQ ACCORDION LOGIC ---
+        const faqBtns = document.querySelectorAll('.faq-btn');
+        faqBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('i');
+                
+                // Toggle current FAQ
+                const isHidden = content.classList.contains('hidden');
+                
+                // Close all others
+                document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.faq-btn i').forEach(i => i.className = 'fa-solid fa-plus text-xs transition-transform');
+
+                if (isHidden) {
+                    content.classList.remove('hidden');
+                    icon.className = 'fa-solid fa-minus text-xs transition-transform text-brand-600';
+                }
+            });
+        });
+
+        // --- 3. PARALLAX MOUSE EFFECT ON HERO SECTION ---
+        const heroSection = document.getElementById('hero');
+        const parallaxContainer = document.getElementById('hero-parallax-container');
+
+        if (heroSection && parallaxContainer) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const { clientX, clientY } = e;
+                const moveX = (clientX - window.innerWidth / 2) * 0.015;
+                const moveY = (clientY - window.innerHeight / 2) * 0.015;
+                
+                parallaxContainer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+            });
+        }
+
+        // --- 4. STICKY NAVBAR SHADOW ON SCROLL ---
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-3');
+            } else {
+                navbar.classList.add('py-3');
+                navbar.classList.remove('py-2');
             }
         });
     </script>
